@@ -24,11 +24,11 @@ x-consul:
   image: consul:latest
   volumes:
     - stack_volume:/consul
-    - ./bin:/bin:ro
+    - ./scripts:/usr/local/bin
   networks:
     consul_network: {}
   env_file:
-    - ./bin/consul.env
+    - ./scripts/consul.env
   environment:
     - NUM_OF_MGR_NODES
     - NODE_IP
@@ -42,8 +42,8 @@ x-consul:
 services:
   server:
     << : *consul-default
-    entrypoint: /bin/server_setup.sh
-    command: agent -client-dir=/consul/config/servers
+    entrypoint: server_setup.sh
+    command: agent -config-dir=/consul/config
     ports:
       - target: 8500
         published: 8500
@@ -64,8 +64,8 @@ services:
 
   client:
     << : *consul-default
-    entrypoint: /bin/client_setup.sh
-    command: agent -client-dir=/consul/config/clients
+    entrypoint: client_setup.sh
+    command: agent -config-dir=/consul/config
     networks:
       consul_network:
         aliases:
