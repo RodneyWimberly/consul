@@ -1,0 +1,90 @@
+###########################################################################################################
+# Service Registry Stack
+# HA Service discovery, health checks, load-balancing,
+# DNS name lookup, routing intentions, KV store,
+# DNS Server, Secret Store/Vault
+###########################################################################################################
+version: "3.8"
+
+volumes:
+  stack_volume:
+
+networks:
+  consul_network:
+    external: true
+
+configs:
+  consul_server_base:
+    file: ./config/server-base-config.json
+  consul_client_base:
+    file: ./config/client-base-config.json
+
+x-consul:
+  &consul-default
+  image: consul:latest
+  volumes:
+    - stack_volume:/consul
+    - ./bin:/bin:ro
+  networks:
+    consul_network: {}
+  env_file:
+    - ./bin/consul.env
+  environment:
+    - NUM_OF_MGR_NODES
+    - NODE_IP
+    - NODE_ID
+    - NODE_NAME
+    - NODE_IS_MANAGER
+  deploy:
+    endpoint_mode: dnsrr
+    mode: global
+
+services:
+  server:
+    << : *consul-default
+    entrypoint: /bin/server_setup.sh
+    command: agent -client-dir=/consul/config/servers
+    ports:
+      - target: 8500
+        published: 8500
+        mode: host
+      - target: 8501
+        published: 8501
+        mode: host
+    networks:
+      consul_network:
+        aliases:
+          - consul-server.service.consul
+    configs:
+      - source: consul_server_base
+        target: /consul/config/server.json
+    deploy:
+      placement:
+        constraints: [node.role ==  manager]
+
+  client:
+    << : *consul-default
+    entrypoint: /bin/client_setup.sh
+    command: agent -client-dir=/consul/config/clients
+    networks:
+      consul_network:
+        aliases:
+          - consul-client.service.consul
+    depends_on:
+      - server
+    configs:
+      - source: consul_client_base
+        target: /consul/config/client.json
+    deploy:
+      placement:
+        constraints: [node.role !=  manager]
+
+  registrator:
+    image: gliderlabs/registrator:master
+    command: -internal consul://consul-server.service.consul:8500
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock
+    networks:
+      consul_network: {}
+    deploy:
+      mode: global

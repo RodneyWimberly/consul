@@ -1,0 +1,14 @@
+{
+  "datacenter": "stable",
+  "data_dir": "/consul/data",
+  "ui": true,
+  "dns_config": {
+    "allow_stale": false
+  },
+  "node_name": "${NODE_NAME}",
+  "client_addr": "${NODE_IP}",
+  "server": ${NODE_IS_MANAGER},
+  "bootstrap_expect": ${NUM_OF_MGR_NODES},
+  "check_update_interval": "0s",
+  "disable_update_check": true
+}
