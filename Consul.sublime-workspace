@@ -1,0 +1,525 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"do",
+				"docker-compose"
+			],
+			[
+				"Build",
+				"build"
+			],
+			[
+				"va",
+				"variable"
+			],
+			[
+				"colle",
+				"collection"
+			],
+			[
+				"pa",
+				"params"
+			],
+			[
+				"se",
+				"settingType"
+			],
+			[
+				"Ses",
+				"Settings"
+			],
+			[
+				"app",
+				"appKey"
+			],
+			[
+				"g",
+				"globals"
+			],
+			[
+				"Has",
+				"hasError"
+			],
+			[
+				"re",
+				"request"
+			],
+			[
+				"GetS",
+				"GetAuthSetting"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/User/python27.sublime-build",
+					""
+				],
+				[
+					"Packages/User/Python35.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/User/Python35.sublime-build",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Packages/sublime-docker/Docker Compose.sublime-build",
+					""
+				],
+				[
+					"Packages/sublime-docker/Docker Compose.sublime-build",
+					"Docker-compose build"
+				],
+				[
+					"Packages/sublime-docker/Docker Compose.sublime-build",
+					"Docker-compose kill"
+				],
+				[
+					"Packages/sublime-docker/Docker Compose.sublime-build",
+					"Docker-compose ports"
+				],
+				[
+					"Packages/sublime-docker/Docker Compose.sublime-build",
+					"Docker-compose rm"
+				],
+				[
+					"Packages/sublime-docker/Docker Compose.sublime-build",
+					"Docker-compose stop"
+				],
+				[
+					"Packages/sublime-docker/Docker Compose.sublime-build",
+					"Docker-compose restart"
+				],
+				[
+					"Packages/sublime-docker/Docker Compose.sublime-build",
+					"Docker-compose ps"
+				]
+			],
+			[
+				"Packages/sublime-docker/Docker Compose.sublime-build",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Packages/sublime-docker/Dockerfile.sublime-build",
+					""
+				],
+				[
+					"Packages/sublime-docker/Dockerfile.sublime-build",
+					"Dockerfile run in background"
+				],
+				[
+					"Packages/sublime-docker/Dockerfile.sublime-build",
+					"Dockerfile run in foreground non interactive"
+				],
+				[
+					"Packages/sublime-docker/Dockerfile.sublime-build",
+					"Dockerfile deploy to GAE"
+				],
+				[
+					"Packages/sublime-docker/Dockerfile.sublime-build",
+					"Dockerfile deploy to Deis"
+				],
+				[
+					"Packages/sublime-docker/Dockerfile.sublime-build",
+					"Dockerfile deploy to OVH"
+				]
+			],
+			[
+				"Packages/sublime-docker/Dockerfile.sublime-build",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"build",
+				"Build: New Build System"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Upgrade/Overwrite All Packages"
+			],
+			[
+				"Package Control: a",
+				"Package Control: Advanced Install Package"
+			],
+			[
+				"Package Control: in",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: inst",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: ins",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: install",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: insta",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: instal",
+				"Package Control: Install Package"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"Ins",
+				"Package Control: Install Package"
+			],
+			[
+				"Install Package Control",
+				"Package Control: Install Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"them",
+				"UI: Select Theme"
+			],
+			[
+				"col",
+				"UI: Select Color Scheme"
+			],
+			[
+				"color",
+				"UI: Select Color Scheme"
+			],
+			[
+				"theme",
+				"UI: Select Color Scheme"
+			]
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 156.0,
+		"history":
+		[
+			"exit",
+			"cd",
+			"ls",
+			"dir"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/D/Consul/soakes/consul"
+	],
+	"file_history":
+	[
+		"/D/em/Core/Log-Stack.yml",
+		"/D/em/Core/DevOps/Deploy/devops-stack.yml",
+		"/D/em/Core/Diagnostics/Dockerfile",
+		"/D/em/Core/DevOps/Deploy/deploy.sh",
+		"/D/em/Core/docker-hub.sh",
+		"/C/Program Files/Sublime Text 3/Data/Packages/User/set_unix_line_endings.py",
+		"/D/em/Core/Scripts/start-core-stack.sh",
+		"/D/em/Core/Scripts/start-diagnostics-stack.sh",
+		"/D/em/Core/Scripts/stop-core-stack.sh",
+		"/D/em/Core/Scripts/unassign-configs-and-secrets.sh",
+		"/D/em/Core/Scripts/build-diagnostics-stack.sh",
+		"/D/em/Core/Scripts/common.sh",
+		"/D/em/Core/Diagnostics/Deploy/diagnostics-stack.yml",
+		"/D/em/Core/Scripts/setup-pwd.sh",
+		"/D/em/Core/Scripts/show-logs.sh",
+		"/D/em/Core/Scripts/diag.sh",
+		"/D/em/Core/Scripts/docker-logs-localtime.sh",
+		"/D/em/Core/Scripts/init-swarm.sh",
+		"/D/em/Core/Scripts/githubtoken.txt",
+		"/D/em/Core/Scripts/reconfigure-service.sh",
+		"/D/em/Core/tools-stack.yml",
+		"/D/em/Core/Scripts/connet-to-pwd.sh",
+		"/D/em/Core/Scripts/add-configs-and-secrets.sh",
+		"/D/em/Core/Scripts/assign-configs-and-secrets.sh",
+		"/D/em/Core/Scripts/build-core-stack.sh",
+		"/D/em/Core/Diagnostics/Deploy/deploy.sh",
+		"/D/em/Core/Diagnostics/Deploy",
+		"/D/em/Core/diagnostics-stack.yml",
+		"/D/em/Core/agent-stack.yml",
+		"/D/em/Core/DevOps/deploy.sh",
+		"/D/em/Core/DevOps/devops-stack.yml",
+		"/D/em/Core/docker-compose.yml",
+		"/D/em/Core/devops-stack.yml",
+		"/D/em/Core/Dns/Dockerfile",
+		"/D/Projects/EventManager/Api/Identity/docker-compose.yml",
+		"/D/Projects/docker-compose-ha-consul-vault-ui/templates/nginx.conf",
+		"/D/Projects/docker-compose-ha-consul-vault-ui/templates/index.html",
+		"/D/em/Core/portainer-stack.yml",
+		"/D/em/Core/Dns/registry-agent.sh",
+		"/D/em/Core/Vault/scripts/curl-api.sh",
+		"/D/Downloads/node-id.txt",
+		"/D/em/Core/Diagnostics/docker-compose.yml",
+		"/D/em/Core/Portal/root/etc/nginx/tmp/nginx.conf",
+		"/D/em/Core/Dns/dnsmasq.conf",
+		"/D/em/Core/Dns/containerpilot.json5",
+		"/D/em/Core/backup",
+		"/D/em/Core/Scripts/start-diag-stack.sh",
+		"/D/em/Core/Dns/docker-entrypoint.sh",
+		"/D/em/Core/Registry/Dockerfile",
+		"/D/em/Core/Portal/root/etc/containerpilot.json5",
+		"/D/em/Core/Portal/root/etc/nginx/certs/cacerts.pem",
+		"/D/em/Core/Portal/root/etc/nginx/certs/cacerts.crt",
+		"/D/em/Core/hello/root/consul/config/hello.json",
+		"/D/em/Core/Portal/root/consul/config/portal.json",
+		"/D/em/Core/Vault/docs/vault-auth-by-cidr.md",
+		"/D/em/Core/Vault/docs/vault-for-humans.md",
+		"/D/em/Core/Vault/scripts/enable-docker-approle.sh",
+		"/D/em/Core/Vault/vault.json",
+		"/D/em/Core/world/root/consul/config/world.json",
+		"/D/em/Core/Diagnostics/start-diag.sh",
+		"/D/em/Core/hello/Dockerfile",
+		"/D/em/Core/Diagnostics/diag.sh",
+		"/D/em/Core/foo",
+		"/D/em/Core/Vault/secret.txt",
+		"/D/em/Core/Portal/Dockerfile",
+		"/D/em/Core/Vault/Dockerfile",
+		"/D/em/Core/world/Dockerfile",
+		"/D/em/Core/Dns/docker-client-em-0-key.pem",
+		"/D/em/Core/Dns/registry-events.sh",
+		"/D/em/Core/Dns/dns.json",
+		"/D/em/Core/Vault/docker-entrypoint.sh",
+		"/D/em/Core/Vault/registry-agent.sh",
+		"/D/em/Core/Vault/docker-client-em-0.pem",
+		"/D/em/Core/Registry/MakeCerts.sh",
+		"/D/em/Core/hello/root/consul/config/dns.json",
+		"/D/em/Core/Dns/EventManager.csproj",
+		"/D/em/Core/Dns/em.docker-agent-ca.pem",
+		"/D/em/Core/Scripts/view-stack-logs.sh",
+		"/D/em/Core/Dns/consul-events.sh",
+		"/D/em/Core/Dns/em.docker-agent-ca-key.pem",
+		"/D/em/Core/ReverseProxy/root/etc/containerpilot.json5",
+		"/D/em/Core/world/containerpilot.json5",
+		"/D/em/Core/hello/containerpilot.json5",
+		"/D/em/Core/ReverseProxy/root/etc/nginx/mime.types",
+		"/D/em/Core/ReverseProxy/root/etc/nginx/nginx.conf",
+		"/D/em/Core/registry-leader/kube-deployment.yml",
+		"/D/em/Core/registry-leader/kube-service.yml",
+		"/D/em/Core/ReverseProxy/kube-deployment.yml",
+		"/D/em/Core/ReverseProxy/kube-service.yml",
+		"/D/em/Core/ReverseProxy/root/bin/reload-nginx.sh",
+		"/D/em/Core/ReverseProxy/root/etc/nginx/fastcgi_params",
+		"/D/em/Core/ReverseProxy/root/etc/nginx/gzip.conf",
+		"/D/em/Core/ReverseProxy/root/etc/nginx/http.conf",
+		"/D/em/Core/ReverseProxy/root/etc/containerpilot/nginx.conf.ctmpl",
+		"/D/em/Core/ReverseProxy/root/etc/nginx/proxy.conf",
+		"/D/em/Core/registry-leader/root/consul/config/server.hcl",
+		"/D/em/Core/registry-leader/root/etc/containerpilot.json5",
+		"/D/em/Core/ReverseProxy/root/etc/consul.d/client.hcl",
+		"/D/em/Core/registry-leader/Dockerfile",
+		"/D/em/Core/ReverseProxy/Dockerfile",
+		"/D/Downloads/hello-world-master/triton-docker-setup.sh",
+		"/D/em/Core/docker-compose.override.yml",
+		"/C/Program Files/Sublime Text 3/Data/Settings/SideBarEnhancements.json",
+		"/C/em/EventManager.sln",
+		"/C/Program Files/Sublime Text 3/Data/Packages/Pretty YAML/Pretty YAML.sublime-settings",
+		"/C/Program Files/Sublime Text 3/Data/Packages/User/ShellCommand.sublime-keymap",
+		"/C/Program Files/Sublime Text 3/Data/Packages/ShellCommand/Default.sublime-keymap",
+		"/C/Program Files/Sublime Text 3/Data/Packages/ShellCommand/Default.sublime-commands",
+		"/C/Program Files/Sublime Text 3/Data/Packages/User/Default (Windows).sublime-keymap",
+		"/C/Program Files/Sublime Text 3/Data/Packages/PrettyYAMLnode/Pretty YAML Node.sublime-settings",
+		"/C/WINDOWS/system32/assoc.txt",
+		"/C/Projects/EventManager/Scripts/BuildSolution.cmd",
+		"/C/Windows/System32/drivers/etc/hosts",
+		"/C/em/Core/StartEventManagerCore.cmd",
+		"/C/Program Files/Sublime Text 3/Data/Packages/ShellCommand/ShellCommand.sublime-settings",
+		"/C/Program Files/Sublime Text 3/Data/Packages/User/ShellCommand.sublime-settings",
+		"/C/Projects/EventManager/Scripts/DotNetCoreMakeCerts.cmd",
+		"/C/Projects/EventManager/Scripts/NginxMakeCerts.cmd",
+		"/C/Projects/EventManager/Scripts/ConsulMakeCerts.cmd",
+		"/C/Projects/EventManager/Api/Identity/shared/consul/certs/key.txt",
+		"/C/Projects/EventManager/Api/Identity/shared/consul/leader/config/leader.hcl",
+		"/C/Projects/EventManager/Api/Identity/shared/consul/config/server.hcl",
+		"/C/Projects/EventManager/Scripts/MakeCerts.cmd",
+		"/C/Projects/EventManager/Api/Identity/shared/consul/config.d/server.hcl",
+		"/C/Users/Rodney/Desktop/foo.txt",
+		"/C/Users/Rodney/Desktop/# Overrides for Development",
+		"/C/Projects/EventManager/Api/Identity/src/EventManager.Identity.Admin.Api/publish/web.config",
+		"/C/Projects/EventManager/Api/Identity/src/EventManager.Identity.Admin.Api/publish/appsettings.json"
+	],
+	"find":
+	{
+		"height": 32.0
+	},
+	"find_in_files":
+	{
+		"height": 164.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 32.0
+	},
+	"input":
+	{
+		"height": 72.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.SublimeLinter":
+	{
+		"height": 0.0
+	},
+	"output.exec":
+	{
+		"height": 57.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.mdpopups":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "Packages/sublime-docker/Docker Compose.sublime-build",
+	"project": "Consul.sublime-project",
+	"replace":
+	{
+		"height": 60.0
+	},
+	"save_all_on_build": false,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"D:\\Projects\\hello-world-cp\\hello-world.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 243.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+		"max_columns": 1
+	}
+}
