@@ -2,7 +2,7 @@
 
 set -e
 
-source ./bin/consul.env
+source ./scripts/consul.env
 
 echo "*** >=>=>=>  Deployment Details  <=<=<=< ***"
 export NUM_OF_MGR_NODES=$(docker info --format "{{.Swarm.Managers}}")
