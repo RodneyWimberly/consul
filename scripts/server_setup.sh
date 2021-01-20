@@ -10,14 +10,20 @@ set -e
 mkdir -p ${SERVER_BOOTSTRAP_CONFIG}
 mkdir -p ${CLIENTS_BOOTSTRAP_CONFIG}
 
+# Make sure consul user has access to our new folders
+chown consul:consul ${SERVER_BOOTSTRAP_CONFIG}
+chown consul:consul ${CLIENTS_BOOTSTRAP_CONFIG}
+chown consul:consul ${SCRIPT_PATH}
+
+# Make sure our all our scripts are marked executable
+chmod u+x ${SCRIPT_PATH}/*.sh
+
 if [ -z "${ENABLE_APK}" ]; then
 	echo "The enable APK flag is disabled, please ensure these dependencies are installed: bash curl jq openssl"
 else
 	apk update
 	apk add bash curl jq openssl
 fi
-
-mkdir -p ${SERVER_BOOTSTRAP_CONFIG}
 
 export PATH=/usr/local/bin:${PATH}
 echo "Current Path ${PATH}"
@@ -90,7 +96,10 @@ EOL
 
   echo "Starting server in 'local only' mode to not allow node registering during configuration"
   docker-entrypoint.sh "$@" -bind 127.0.0.1 &
-  consul_pid="$!"
+    consul_pid="$!"
+
+  #su-exec consul:consul consul agent -data-dir=/consul/data -config-dir=/consul/config -bind=127.0.0.1 -client=0.0.0.0 &
+  #  consul_pid="$!"
 
   echo " ---- waiting for the server to come up"
   ${SCRIPT_PATH}/wait-for-it.sh --timeout=300 --host=127.0.0.1 --port=8500 --strict -- echo " ---- consul found" || (echo "ERROR: Failed to locate consul" && exit 1)
@@ -119,3 +128,4 @@ echo "Node Is Manager: ${NODE_IS_MANAGER}"
 
 echo "Starting server ${CONSUL_HTTP} ${CONSUL_HTTPS}"
 exec docker-entrypoint.sh "$@"
+# su-exec consul:consul consul agent -data-dir=/consul/data -config-dir=/consul/config -bind=192.168.1.3 -client=0.0.0.0
