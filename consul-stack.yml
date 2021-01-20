@@ -43,7 +43,7 @@ x-consul:
 services:
   server:
     << : *consul-default
-    entrypoint: server_setup.sh
+    entrypoint: /usr/local/scripts/server_setup.sh
     ports:
       - target: 8500
         published: 8500
@@ -57,14 +57,14 @@ services:
           - consul-server.service.consul
     configs:
       - source: consul_server_config
-        target: /consul/data/server/config.json
+        target: /consul/config/config.json
     deploy:
       placement:
         constraints: [node.role ==  manager]
 
   client:
     << : *consul-default
-    entrypoint: client_setup.sh
+    entrypoint: /usr/local/scripts/client_setup.sh
     networks:
       admin_network:
         aliases:
@@ -73,7 +73,7 @@ services:
       - server
     configs:
       - source: consul_client_config
-        target: /consul/data/client/config.json
+        target: /consul/config/config.json
     deploy:
       placement:
         constraints: [node.role !=  manager]
