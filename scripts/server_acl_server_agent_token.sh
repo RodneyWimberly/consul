@@ -11,7 +11,7 @@ if [ -f ${SERVER_BOOTSTRAP_CONFIG}/server_acl_agent_acl_token.json ]; then
 fi
 
 if [ ! -f ${SERVER_BOOTSTRAP_CONFIG}/server_acl_agent_acl_token.json ] || [ ! -f ${SERVER_BOOTSTRAP_CONFIG}/server_general_acl_token.json ] || [ -z "${current_acl_agent_token}" ]; then
-    echo "Generate server agent token to let the server access by ACLs"
+    echo "Configuring server agent token to let the server access by ACLs"
     ACL_MASTER_TOKEN=`cat ${SERVER_BOOTSTRAP_CONFIG}/server_acl_master_token.json | jq -r -M '.acl_master_token'`
 
     # this is actually not neede with 1.0 - thats the defaul. So no permissions at all
@@ -25,9 +25,9 @@ if [ ! -f ${SERVER_BOOTSTRAP_CONFIG}/server_acl_agent_acl_token.json ] || [ ! -f
     if [ -z "$ACL_AGENT_TOKEN" ]; then
       echo "FATAL: error generating ACL agent token, return acl token was empty when talking the the REST endpoint - no permissions?"
     else
-      echo "Setting acl agent token for the server"
+      echo "Configuring acl agent token for the server"
       echo "{\"acl_agent_token\": \"${ACL_AGENT_TOKEN}\"}" > ${SERVER_BOOTSTRAP_CONFIG}/server_acl_agent_acl_token.json
-      echo "Setting acl token for the server"
+      echo "Configuring acl token for the server"
       echo "{\"acl_token\": \"${ACL_AGENT_TOKEN}\"}" > ${SERVER_BOOTSTRAP_CONFIG}/server_general_acl_token.json
     fi
 else

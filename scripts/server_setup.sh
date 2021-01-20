@@ -1,6 +1,6 @@
 #!/bin/sh
 
-echo "Starting Consul server, please wait..."
+echo "Checking current configuration to ensure the cluster is bootstrapped"
 
 ## ensure consul is yet not running - important due to supervisor restart
 pkill consul
@@ -20,6 +20,7 @@ fi
 mkdir -p ${SERVER_BOOTSTRAP_CONFIG}
 
 export PATH=/usr/local/bin:${PATH}
+echo "Current Path ${PATH}"
 export CONSUL_HTTP=http://${NODE_IP}:8500
 export CONSUL_HTTPS=https://${NODE_IP}:8501
 
@@ -43,15 +44,15 @@ if [ -f ${SERVER_BOOTSTRAP_CONFIG}/.firstsetup ] && [ -f  ${CLIENTS_BOOTSTRAP_CO
     echo "WARNING: ACL is missconifgured / outdated"
     echo "Attempting to reconfigure ACL."
     echo "Starting the sever in 'local only' mode, reconfigure the cluster ACL if needed and then start normally"
-    docker-entrypoint.sh "$@" -bind 127.0.0.1 &
+    ${SCRIPT_PATH}/docker-entrypoint.sh "$@" -bind 127.0.0.1 &
     consul_pid="$!"
 
     echo " ---- waiting for the server to come up - 5 seconds"
-    wait-for-it -t 300 -h 127.0.0.1 -p 8500 --strict -- echo+ " ---- consul found" || (echo "ERROR: Failed to located consul." && exit 1)
+    ${SCRIPT_PATH}/wait-for-it -t 300 -h 127.0.0.1 -p 8500 --strict -- echo+ " ---- consul found" || (echo "ERROR: Failed to located consul." && exit 1)
     sleep 5s
 
     echo " ---- continuing to repair the cluster ACL configuration"
-    server_acl.sh
+    ${SCRIPT_PATH}/server_acl.sh
     kill ${consul_pid}
 
     echo " ---- wait for the local server (pid: ${consul_pid}) to fully shutdown - 5 seconds"
@@ -71,10 +72,10 @@ else
       until [ -f ${CLIENTS_BOOTSTRAP_CONFIG}/.bootstrapped ]; do sleep 1;echo ' ---- waiting for the bootstrap process to be completed'; done;
   fi
 
-  server_tls.sh `hostname -f`
-  server_gossip.sh
+  ${SCRIPT_PATH}/server_tls.sh `hostname -f`
+  ${SCRIPT_PATH}/server_gossip.sh
 
-  echo "Enabling ACL support before we start the server"
+  echo "Configuring ACL support before we start the server"
   if [ -n "${ENABLE_ACL}" ] && [ ! "${ENABLE_ACL}" -eq "0" ] ; then
   	# this needs to be done before the server starts, we cannot move that into server_acl.sh
   	# locks down our consul server from leaking any data to anybody - full anon block
@@ -88,17 +89,17 @@ EOL
   fi
 
   echo "Starting server in 'local only' mode to not allow node registering during configuration"
-  docker-entrypoint.sh "$@" -bind 127.0.0.1 &
+  ${SCRIPT_PATH}/docker-entrypoint.sh "$@" -bind 127.0.0.1 &
   consul_pid="$!"
 
   echo " ---- waiting for the server to come up"
-  wait-for-it -t 300 -h 127.0.0.1 -p 8500 --strict -- echo " ---- consul found" || (echo "ERROR: Failed to locate consul" && exit 1)
+  ${SCRIPT_PATH}/wait-for-it -t 300 -h 127.0.0.1 -p 8500 --strict -- echo " ---- consul found" || (echo "ERROR: Failed to locate consul" && exit 1)
 
   echo " ---- waiting further 15 seconds to ensure our server is fully bootstrapped"
   sleep 15s
 
   echo " ---- continuing the cluster boostraping process"
-  server_acl.sh
+  ${SCRIPT_PATH}/server_acl.sh
 
   echo "Shutting down 'local only' server (pid: ${consul_pid}) and then starting usual server"
   kill ${consul_pid}
@@ -117,4 +118,4 @@ echo "Node Name: ${NODE_NAME}"
 echo "Node Is Manager: ${NODE_IS_MANAGER}"
 
 echo "Starting server ${CONSUL_HTTP} ${CONSUL_HTTPS}"
-exec docker-entrypoint.sh "$@"
+exec ${SCRIPT_PATH}/docker-entrypoint.sh "$@"

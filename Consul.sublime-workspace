@@ -249,18 +249,21 @@
 	},
 	"file_history":
 	[
+		"/D/Consul/soakes/consul/devops-stack.yml",
 		"/D/Consul/soakes/consul/bootstrap-deployment.sh",
+		"/D/Consul/soakes/consul/scripts/consul.env",
+		"/D/Consul/soakes/consul/get-latest.sh",
+		"/D/Consul/soakes/consul/scripts/server_setup.sh",
+		"/D/Consul/soakes/consul/scripts/server_gossip.sh",
 		"/D/Consul/soakes/consul/scripts/client_setup.sh",
+		"/D/Consul/soakes/consul/scripts/server_acl_server_agent_token.sh",
+		"/D/Consul/soakes/consul/scripts/server_acl_client_general_token.sh",
 		"/D/Consul/soakes/consul/scripts/server_acl.sh",
 		"/D/Consul/soakes/consul/scripts/server_acl_anon.sh",
-		"/D/Consul/soakes/consul/scripts/server_acl_client_general_token.sh",
-		"/D/Consul/soakes/consul/scripts/server_acl_server_agent_token.sh",
-		"/D/Consul/soakes/consul/scripts/server_gossip.sh",
-		"/D/Consul/soakes/consul/scripts/server_setup.sh",
 		"/D/Consul/soakes/consul/scripts/server_tls.sh",
-		"/D/Consul/soakes/consul/consul-stack.yml",
-		"/D/Consul/soakes/consul/scripts/consul.env",
 		"/D/Consul/soakes/consul/scripts/wait-for-it.sh",
+		"/D/Consul/soakes/consul/deploy.sh",
+		"/D/Consul/soakes/consul/consul-stack.yml",
 		"/D/em/Core/Log-Stack.yml",
 		"/D/em/Core/DevOps/Deploy/devops-stack.yml",
 		"/D/em/Core/Diagnostics/Dockerfile",
@@ -373,10 +376,7 @@
 		"/C/Program Files/Sublime Text 3/Data/Packages/PrettyYAMLnode/Pretty YAML Node.sublime-settings",
 		"/C/WINDOWS/system32/assoc.txt",
 		"/C/Projects/EventManager/Scripts/BuildSolution.cmd",
-		"/C/Windows/System32/drivers/etc/hosts",
-		"/C/em/Core/StartEventManagerCore.cmd",
-		"/C/Program Files/Sublime Text 3/Data/Packages/ShellCommand/ShellCommand.sublime-settings",
-		"/C/Program Files/Sublime Text 3/Data/Packages/User/ShellCommand.sublime-settings"
+		"/C/Windows/System32/drivers/etc/hosts"
 	],
 	"find":
 	{

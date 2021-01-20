@@ -14,8 +14,29 @@ echo "${GITHUB_ACCESS_TOKEN}" > key.txt && \
 gh auth login --with-token < key.txt && \
 rm -rf /tmp/consul && \
 echo "Cloning Consul repo" && \
-gh repo clone RodneyWimberly/consul /tmp/consul -b DevelopmentTest && \
+git clone -b DeploymentTest https://rodneywimberly:Mich$11$!@github.com/RodneyWimberly/consul.git /tmp/consul && \
+git pull --progress "origin" DeploymentTest:DeploymentTest && \
+git clone -b DeploymentTest https://rodneywimberly:b606a0781f57605d4e5b00b753a6f26c23ff8908@github.com/RodneyWimberly/
+consul.git /tmp/consul
 cd /tmp/consul && \
 chmod u+x *.sh && \
 chmod u+x ./scripts/*.sh && \
 ./deploy.sh
+
+
+
+echo "Adding Git" && \
+apk update && \
+apk add git && \\
+echo "Cloning Consul repo" && \
+rm -rf /tmp/consul && \
+git clone -b DeploymentTest \
+    https://rodneywimberly:b606a0781f57605d4e5b00b753a6f26c23ff8908@github.com/RodneyWimberly/consul.git \
+    /tmp/consul && \
+cd /tmp/consul && \
+chmod u+x *.sh && \
+chmod u+x ./scripts/*.sh && \
+./deploy.sh
+
+
+https://github.com/RodneyWimberly/consul.git
