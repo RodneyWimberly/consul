@@ -6,18 +6,18 @@ if [ -z "$ENABLE_ACL" ] || [ "$ENABLE_ACL" -eq "0" ] ; then
     echo "ACLs is disabled, skipping configuration"
     echo "Creating dummy general_acl_token.json file so the clients can start"
 
-    mkdir -p ${CLIENTS_BOOTSTRAP_CONFIG}
-    echo "{}" > ${CLIENTS_BOOTSTRAP_CONFIG}/general_acl_token.json
+    mkdir -p ${CLIENT_BOOTSTRAP_DIR}
+    echo "{}" > ${CLIENT_BOOTSTRAP_DIR}/general_acl_token.json
     exit 0
 fi
 
 echo "Configuring ACL security"
 # get our one-time boostrap token we can use to generate all other tokens. It can only be done once thus save the token
-if [ ! -f ${SERVER_BOOTSTRAP_CONFIG}/server_acl_master_token.json ]; then
+if [ ! -f ${SERVER_BOOTSTRAP_DIR}/server_acl_master_token.json ]; then
 	echo "Getting acl boostrap token / generating master token"
 	ACL_MASTER_TOKEN=`curl -sS -X PUT http://127.0.0.1:8500/v1/acl/bootstrap | jq -r -M '.ID'`
 	# save our token
-	cat > ${SERVER_BOOTSTRAP_CONFIG}/server_acl_master_token.json <<EOL
+	cat > ${SERVER_BOOTSTRAP_DIR}/server_acl_master_token.json <<EOL
 {
   "acl_master_token": "${ACL_MASTER_TOKEN}"
 }

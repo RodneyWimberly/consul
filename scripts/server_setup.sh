@@ -1,5 +1,14 @@
 #!/bin/sh
 
+
+setup-config-file() {
+  if [ -f "$1"/"$2" ]; then
+    ln -s "$1"/"$2" ${CONSUL_CONFIG_DIR}/"$2"
+  else
+    rm -f ${CONSUL_CONFIG_DIR}/"$2" > /dev/null
+  fi
+}
+
 echo "Checking current configuration to ensure the cluster is bootstrapped"
 
 ## ensure consul is yet not running - important due to supervisor restart
@@ -7,12 +16,12 @@ pkill consul
 
 set -e
 
-mkdir -p ${SERVER_BOOTSTRAP_CONFIG}
-mkdir -p ${CLIENTS_BOOTSTRAP_CONFIG}
+mkdir -p ${SERVER_BOOTSTRAP_DIR}
+mkdir -p ${CLIENT_BOOTSTRAP_DIR}
 
 # Make sure consul user has access to our new folders
-chown consul:consul ${SERVER_BOOTSTRAP_CONFIG}
-chown consul:consul ${CLIENTS_BOOTSTRAP_CONFIG}
+chown consul:consul ${SERVER_BOOTSTRAP_DIR}
+chown consul:consul ${CLIENT_BOOTSTRAP_DIR}
 chown consul:consul ${SCRIPT_PATH}
 
 # Make sure our all our scripts are marked executable
@@ -25,33 +34,43 @@ else
 	apk add bash curl jq openssl
 fi
 
-export PATH=/usr/local/bin:${PATH}
+export PATH=${SCRIPT_PATH}:${PATH}
 echo "Current Path ${PATH}"
 export CONSUL_HTTP=http://${NODE_IP}:8500
 export CONSUL_HTTPS=https://${NODE_IP}:8501
+
+# Write out configuration that needs environment variables expanded
+echo "{\"datacenter\": \"${CONSUL_DATACENTER}\", \"data_dir\": \"${CONSUL_DATA_DIR}\", \"node_name\": \"${NODE_NAME}\", \"client_addr\": \"${NODE_IP}\", \"server\": ${NODE_IS_MANAGER}, \"bootstrap_expect\": ${NUM_OF_MGR_NODES}}" > ${CONSUL_CONFIG_DIR}/server.json
 
 # Both files means it is ok for all servers and clients to come up
 # Neither file means only 1 server should bootstrap, all other servers need to wait for both files
 #     and clients need to wait on just .bootstrapped
 # having .firstsetup and no .bootstrapped means 1 server is currently bootstrapping so wait on him to finish
-if [ -f ${SERVER_BOOTSTRAP_CONFIG}/.firstsetup ] && [ -f  ${CLIENTS_BOOTSTRAP_CONFIG}/.bootstrapped ]; then
+if [ -f ${SERVER_BOOTSTRAP_DIR}/.firstsetup ] && [ -f  ${CLIENT_BOOTSTRAP_DIR}/.bootstrapped ]; then
   echo "The cluster has been bootstrapped"
   # try to converge
-  current_acl_agent_token=$(cat ${SERVER_BOOTSTRAP_CONFIG}/server_acl_agent_acl_token.json | jq -r -M '.acl_agent_token')
+  current_acl_agent_token=$(cat ${SERVER_BOOTSTRAP_DIR}/server_acl_agent_acl_token.json | jq -r -M '.acl_agent_token')
 
   if [ -z "$ENABLE_ACL" ] || [ "$ENABLE_ACL" -eq "0" ]; then
-    if [ -f ${SERVER_BOOTSTRAP_CONFIG}/.aclanonsetup ]; then
+    if [ -f ${SERVER_BOOTSTRAP_DIR}/.aclanonsetup ]; then
 
       echo "WARNING: ACL flag is no longer present, removing the ACL configuration"
-      rm -f ${SERVER_BOOTSTRAP_CONFIG}/.aclanonsetup ${CLIENTS_BOOTSTRAP_CONFIG}/general_acl_token.json ${SERVER_BOOTSTRAP_CONFIG}/server_acl_master_token.json ${SERVER_BOOTSTRAP_CONFIG}/server_acl_agent_acl_token.json
+      rm -f ${SERVER_BOOTSTRAP_DIR}/.aclanonsetup \
+        ${CLIENT_BOOTSTRAP_DIR}/general_acl_token.json \
+        ${SERVER_BOOTSTRAP_DIR}/server_acl_master_token.json \
+        ${SERVER_BOOTSTRAP_DIR}/server_acl_agent_acl_token.json
     fi
-  elif [ ! -f ${SERVER_BOOTSTRAP_CONFIG}/.aclanonsetup ] || [ ! -f ${CLIENTS_BOOTSTRAP_CONFIG}/general_acl_token.json ] ||  [ ! -f ${SERVER_BOOTSTRAP_CONFIG}/server_acl_master_token.json ] || [ ! -f ${SERVER_BOOTSTRAP_CONFIG}/server_acl_agent_acl_token.json ] || [ -z "${current_acl_agent_token}" ]; then
+  elif [ ! -f ${SERVER_BOOTSTRAP_DIR}/.aclanonsetup ] || \
+    [ ! -f ${CLIENT_BOOTSTRAP_DIR}/general_acl_token.json ] ||  \
+    [ ! -f ${SERVER_BOOTSTRAP_DIR}/server_acl_master_token.json ] || \
+    [ ! -f ${SERVER_BOOTSTRAP_DIR}/server_acl_agent_acl_token.json ] || \
+    [ -z "${current_acl_agent_token}" ]; then
 
     echo "WARNING: ACL is missconifgured / outdated"
     echo "Attempting to reconfigure ACL."
     echo "Starting the sever in 'local only' mode, reconfigure the cluster ACL if needed and then start normally"
     docker-entrypoint.sh "$@" -bind 127.0.0.1 &
-    consul_pid="$!"
+      consul_pid="$!"
 
     echo " ---- waiting for the server to come up - 5 seconds"
     ${SCRIPT_PATH}/wait-for-it.sh --timeout=300 --host=127.0.0.1 --port=8500 --strict -- echo+ " ---- consul found" || (echo "ERROR: Failed to located consul." && exit 1)
@@ -68,14 +87,14 @@ if [ -f ${SERVER_BOOTSTRAP_CONFIG}/.firstsetup ] && [ -f  ${CLIENTS_BOOTSTRAP_CO
 else
   echo "WARNING: The cluster hasn't been bootstrapped"
   echo "All services (Client and Server) are restricted from starup until the bootstrap process has completed"
-  if [ ! -f ${CLIENTS_BOOTSTRAP_CONFIG}/.bootstrapped ]; then
+  if [ ! -f ${CLIENT_BOOTSTRAP_DIR}/.bootstrapped ]; then
       # This is the first server to start so it will drop .firstsetup to note it is running the
       # bootstrap and the other servers need to wait just like the clients until .bootstrapped is dropped.
       echo "This server will begin the bootstrap process"
-      touch ${SERVER_BOOTSTRAP_CONFIG}/.firstsetup
+      touch ${SERVER_BOOTSTRAP_DIR}/.firstsetup
     else
       echo "The cluster is currently undergoing the bootstrap process by another service."
-      until [ -f ${CLIENTS_BOOTSTRAP_CONFIG}/.bootstrapped ]; do sleep 1;echo ' ---- waiting for the bootstrap process to be completed'; done;
+      until [ -f ${CLIENT_BOOTSTRAP_DIR}/.bootstrapped ]; do sleep 1;echo ' ---- waiting for the bootstrap process to be completed'; done;
   fi
 
   ${SCRIPT_PATH}/server_tls.sh `hostname -f`
@@ -85,7 +104,7 @@ else
   if [ -n "${ENABLE_ACL}" ] && [ ! "${ENABLE_ACL}" -eq "0" ] ; then
   	# this needs to be done before the server starts, we cannot move that into server_acl.sh
   	# locks down our consul server from leaking any data to anybody - full anon block
-	cat > ${SERVER_BOOTSTRAP_CONFIG}/server_acl.json <<EOL
+	cat > ${SERVER_BOOTSTRAP_DIR}/server_acl.json <<EOL
 {
   "acl_datacenter": "stable",
   "acl_default_policy": "deny",
@@ -95,11 +114,8 @@ EOL
   fi
 
   echo "Starting server in 'local only' mode to not allow node registering during configuration"
-  docker-entrypoint.sh "$@" -bind 127.0.0.1 &
+  docker-entrypoint.sh agent -bind 127.0.0.1 &
     consul_pid="$!"
-
-  #su-exec consul:consul consul agent -data-dir=/consul/data -config-dir=/consul/config -bind=127.0.0.1 -client=0.0.0.0 &
-  #  consul_pid="$!"
 
   echo " ---- waiting for the server to come up"
   ${SCRIPT_PATH}/wait-for-it.sh --timeout=300 --host=127.0.0.1 --port=8500 --strict -- echo " ---- consul found" || (echo "ERROR: Failed to locate consul" && exit 1)
@@ -117,8 +133,16 @@ EOL
   sleep 10s
 
   echo "Informing other services that the cluster bootstrapping proces is complete and the startup restriction has been removed"
-  touch ${CLIENTS_BOOTSTRAP_CONFIG}/.bootstrapped
+  touch ${CLIENT_BOOTSTRAP_DIR}/.bootstrapped
 fi
+
+setup-config-file ${SERVER_BOOTSTRAP_DIR} tls.json
+setup-config-file ${SERVER_BOOTSTRAP_DIR} gossip.json
+setup-config-file ${SERVER_BOOTSTRAP_DIR} server_acl.json
+setup-config-file ${SERVER_BOOTSTRAP_DIR} server_general_acl_token.json
+setup-config-file ${SERVER_BOOTSTRAP_DIR} server_acl_master_token.json
+setup-config-file ${SERVER_BOOTSTRAP_DIR} server_acl_agent_acl_token.json
+
 echo "Swarm Information: "
 echo "Number of Manager Nodes: ${NUM_OF_MGR_NODES}"
 echo "Node IP: ${NODE_IP}"
@@ -128,4 +152,3 @@ echo "Node Is Manager: ${NODE_IS_MANAGER}"
 
 echo "Starting server ${CONSUL_HTTP} ${CONSUL_HTTPS}"
 exec docker-entrypoint.sh "$@"
-# su-exec consul:consul consul agent -data-dir=/consul/data -config-dir=/consul/config -bind=192.168.1.3 -client=0.0.0.0
