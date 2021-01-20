@@ -23,7 +23,8 @@ echo "Node Is Manager: ${NODE_IS_MANAGER}"
 
 echo " --> Removing the following stacks: logging, ${CONSUL_STACK_PROJECT_NAME}"
 set +e
-docker stack rm logging "${CONSUL_STACK_PROJECT_NAME}"
+docker stack rm "${CONSUL_STACK_PROJECT_NAME}"
+#logging
 
 echo " --> Removing the following services: devops_proxy"
 #docker service rm devops_proxy
@@ -45,8 +46,8 @@ set -e
 echo " --> Deploying DevOps Stack to Swarm"
 docker stack deploy --compose-file=./devops-stack.yml devops
 
-echo " --> Deploying Logging Stack to Swarm"
-docker stack deploy --compose-file=./logging-stack.yml logging
+#echo " --> Deploying Logging Stack to Swarm"
+#docker stack deploy --compose-file=./logging-stack.yml logging
 
 echo " --> Deploying Consul Stack to Swarm"
 docker stack deploy --compose-file=./consul-stack.yml "${CONSUL_STACK_PROJECT_NAME}"
