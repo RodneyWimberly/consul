@@ -1,6 +1,7 @@
 # Install GitHub CLI (curl), Clone Consul repo, and run deployment script.
 # This can be used to build application stacks on bare containers
 
+touch run-stack.sh && \
 rm run-stack.sh && \
 touch run-stack.sh && \
 cat > run-stack.sh <<EOL
@@ -16,6 +17,7 @@ chmod u+x ./scripts/*.sh
 ./deploy.sh
 exit
 EOL
+chmod u+x run-stack.sh
 
 
 apk add git && \

@@ -16,6 +16,7 @@ echo "Configuring ACL security"
 if [ ! -f ${SERVER_BOOTSTRAP_DIR}/server_acl_master_token.json ]; then
 	echo "Getting acl boostrap token / generating master token"
 	ACL_MASTER_TOKEN=`curl -sS -X PUT http://127.0.0.1:8500/v1/acl/bootstrap | jq -r -M '.ID'`
+    echo "Master token  ${ACL_MASTER_TOKEN} was generated"
 	# save our token
 	cat > ${SERVER_BOOTSTRAP_DIR}/server_acl_master_token.json <<EOL
 {
