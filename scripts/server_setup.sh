@@ -1,7 +1,7 @@
 #!/bin/sh
 
 
-setup-config-file() {
+function setup_config_file() {
   if [ -f "$1"/"$2" ]; then
     ln -s "$1"/"$2" ${CONSUL_CONFIG_DIR}/"$2"
   else
@@ -136,12 +136,12 @@ EOL
   touch ${CLIENT_BOOTSTRAP_DIR}/.bootstrapped
 fi
 
-setup-config-file ${SERVER_BOOTSTRAP_DIR} tls.json
-setup-config-file ${SERVER_BOOTSTRAP_DIR} gossip.json
-setup-config-file ${SERVER_BOOTSTRAP_DIR} server_acl.json
-setup-config-file ${SERVER_BOOTSTRAP_DIR} server_general_acl_token.json
-setup-config-file ${SERVER_BOOTSTRAP_DIR} server_acl_master_token.json
-setup-config-file ${SERVER_BOOTSTRAP_DIR} server_acl_agent_acl_token.json
+setup_config_file ${SERVER_BOOTSTRAP_DIR} tls.json
+setup_config_file ${SERVER_BOOTSTRAP_DIR} gossip.json
+setup_config_file ${SERVER_BOOTSTRAP_DIR} server_acl.json
+setup_config_file ${SERVER_BOOTSTRAP_DIR} server_general_acl_token.json
+setup_config_file ${SERVER_BOOTSTRAP_DIR} server_acl_master_token.json
+setup_config_file ${SERVER_BOOTSTRAP_DIR} server_acl_agent_acl_token.json
 
 echo "Swarm Information: "
 echo "Number of Manager Nodes: ${NUM_OF_MGR_NODES}"
