@@ -28,7 +28,9 @@ git clone -b DeploymentTest \
     /tmp/consul && \
 cd /tmp/consul && \
 chmod u+x *.sh && \
-chmod u+x ./scripts/*.sh && \
+chmod u+x ./scripts/*.sh
+
+&& \
 ./deploy.sh && \
 exit
 
