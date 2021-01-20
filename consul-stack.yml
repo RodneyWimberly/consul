@@ -42,7 +42,7 @@ x-consul:
 services:
   server:
     << : *consul-default
-    entrypoint: server_setup.sh
+    entrypoint: /usr/local/scripts/server_setup.sh
     command: agent -config-dir=/consul/config
     ports:
       - target: 8500
@@ -64,7 +64,7 @@ services:
 
   client:
     << : *consul-default
-    entrypoint: client_setup.sh
+    entrypoint: /usr/local/scripts/client_setup.sh
     command: agent -config-dir=/consul/config
     networks:
       admin_network:
