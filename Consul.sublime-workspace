@@ -53,9 +53,6 @@
 			]
 		]
 	},
-	"buffers":
-	[
-	],
 	"build_system": "",
 	"build_system_choices":
 	[
@@ -250,12 +247,20 @@
 		"side_bar_visible": false,
 		"status_bar_visible": false
 	},
-	"expanded_folders":
-	[
-		"/D/Consul/soakes/consul"
-	],
 	"file_history":
 	[
+		"/D/Consul/soakes/consul/bootstrap-deployment.sh",
+		"/D/Consul/soakes/consul/scripts/client_setup.sh",
+		"/D/Consul/soakes/consul/scripts/server_acl.sh",
+		"/D/Consul/soakes/consul/scripts/server_acl_anon.sh",
+		"/D/Consul/soakes/consul/scripts/server_acl_client_general_token.sh",
+		"/D/Consul/soakes/consul/scripts/server_acl_server_agent_token.sh",
+		"/D/Consul/soakes/consul/scripts/server_gossip.sh",
+		"/D/Consul/soakes/consul/scripts/server_setup.sh",
+		"/D/Consul/soakes/consul/scripts/server_tls.sh",
+		"/D/Consul/soakes/consul/consul-stack.yml",
+		"/D/Consul/soakes/consul/scripts/consul.env",
+		"/D/Consul/soakes/consul/scripts/wait-for-it.sh",
 		"/D/em/Core/Log-Stack.yml",
 		"/D/em/Core/DevOps/Deploy/devops-stack.yml",
 		"/D/em/Core/Diagnostics/Dockerfile",
@@ -371,29 +376,18 @@
 		"/C/Windows/System32/drivers/etc/hosts",
 		"/C/em/Core/StartEventManagerCore.cmd",
 		"/C/Program Files/Sublime Text 3/Data/Packages/ShellCommand/ShellCommand.sublime-settings",
-		"/C/Program Files/Sublime Text 3/Data/Packages/User/ShellCommand.sublime-settings",
-		"/C/Projects/EventManager/Scripts/DotNetCoreMakeCerts.cmd",
-		"/C/Projects/EventManager/Scripts/NginxMakeCerts.cmd",
-		"/C/Projects/EventManager/Scripts/ConsulMakeCerts.cmd",
-		"/C/Projects/EventManager/Api/Identity/shared/consul/certs/key.txt",
-		"/C/Projects/EventManager/Api/Identity/shared/consul/leader/config/leader.hcl",
-		"/C/Projects/EventManager/Api/Identity/shared/consul/config/server.hcl",
-		"/C/Projects/EventManager/Scripts/MakeCerts.cmd",
-		"/C/Projects/EventManager/Api/Identity/shared/consul/config.d/server.hcl",
-		"/C/Users/Rodney/Desktop/foo.txt",
-		"/C/Users/Rodney/Desktop/# Overrides for Development",
-		"/C/Projects/EventManager/Api/Identity/src/EventManager.Identity.Admin.Api/publish/web.config",
-		"/C/Projects/EventManager/Api/Identity/src/EventManager.Identity.Admin.Api/publish/appsettings.json"
+		"/C/Program Files/Sublime Text 3/Data/Packages/User/ShellCommand.sublime-settings"
 	],
 	"find":
 	{
-		"height": 32.0
+		"height": 70.0
 	},
 	"find_in_files":
 	{
-		"height": 164.0,
+		"height": 158.0,
 		"where_history":
 		[
+			"D:\\Consul\\soakes\\consul"
 		]
 	},
 	"find_state":
@@ -401,6 +395,9 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"SERVER_CONFIG_STORE",
+			"CLIENTS_SHARED_CONFIG_STORE",
+			"SERVER_CONFIG_STORE"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -408,6 +405,8 @@
 		"regex": false,
 		"replace_history":
 		[
+			"SERVER_BOOTSTRAP_CONFIG",
+			"CLIENTS_BOOTSTRAP_CONFIG"
 		],
 		"reverse": false,
 		"show_context": true,
@@ -415,14 +414,6 @@
 		"whole_word": false,
 		"wrap": true
 	},
-	"groups":
-	[
-		{
-			"sheets":
-			[
-			]
-		}
-	],
 	"incremental_find":
 	{
 		"height": 32.0
@@ -471,7 +462,6 @@
 		"height": 0.0
 	},
 	"pinned_build_system": "Packages/sublime-docker/Docker Compose.sublime-build",
-	"project": "Consul.sublime-project",
 	"replace":
 	{
 		"height": 60.0
@@ -508,7 +498,6 @@
 		],
 		"width": 0.0
 	},
-	"selected_group": 0,
 	"settings":
 	{
 	},
@@ -516,7 +505,7 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 243.0,
+	"side_bar_width": 217.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
