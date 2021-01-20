@@ -249,21 +249,25 @@
 	},
 	"file_history":
 	[
-		"/D/Consul/soakes/consul/devops-stack.yml",
-		"/D/Consul/soakes/consul/bootstrap-deployment.sh",
-		"/D/Consul/soakes/consul/scripts/consul.env",
-		"/D/Consul/soakes/consul/get-latest.sh",
-		"/D/Consul/soakes/consul/scripts/server_setup.sh",
-		"/D/Consul/soakes/consul/scripts/server_gossip.sh",
-		"/D/Consul/soakes/consul/scripts/client_setup.sh",
-		"/D/Consul/soakes/consul/scripts/server_acl_server_agent_token.sh",
-		"/D/Consul/soakes/consul/scripts/server_acl_client_general_token.sh",
-		"/D/Consul/soakes/consul/scripts/server_acl.sh",
-		"/D/Consul/soakes/consul/scripts/server_acl_anon.sh",
-		"/D/Consul/soakes/consul/scripts/server_tls.sh",
 		"/D/Consul/soakes/consul/scripts/wait-for-it.sh",
 		"/D/Consul/soakes/consul/deploy.sh",
+		"/D/Consul/soakes/consul/bootstrap-deployment.sh",
+		"/D/Consul/soakes/consul/scripts/server_setup.sh",
 		"/D/Consul/soakes/consul/consul-stack.yml",
+		"/D/Consul/soakes/consul/scripts/consul.env",
+		"/D/Consul/soakes/consul/diagnostics-stack.yml",
+		"/D/Consul/soakes/consul/devops-stack.yml",
+		"/D/Consul/soakes/consul/scripts/server_tls.sh",
+		"/D/Consul/soakes/consul/logging-stack.yml",
+		"/D/Consul/soakes/consul/stacks/diagnostics-stack.yml",
+		"/D/Consul/soakes/consul/scripts/server_acl.sh",
+		"/D/Consul/soakes/consul/scripts/server_acl_anon.sh",
+		"/D/Consul/soakes/consul/scripts/server_acl_client_general_token.sh",
+		"/D/Consul/soakes/consul/log-stack.yml",
+		"/D/Consul/soakes/consul/scripts/client_setup.sh",
+		"/D/Consul/soakes/consul/get-latest.sh",
+		"/D/Consul/soakes/consul/scripts/server_gossip.sh",
+		"/D/Consul/soakes/consul/scripts/server_acl_server_agent_token.sh",
 		"/D/em/Core/Log-Stack.yml",
 		"/D/em/Core/DevOps/Deploy/devops-stack.yml",
 		"/D/em/Core/Diagnostics/Dockerfile",
@@ -372,11 +376,7 @@
 		"/C/Program Files/Sublime Text 3/Data/Packages/User/ShellCommand.sublime-keymap",
 		"/C/Program Files/Sublime Text 3/Data/Packages/ShellCommand/Default.sublime-keymap",
 		"/C/Program Files/Sublime Text 3/Data/Packages/ShellCommand/Default.sublime-commands",
-		"/C/Program Files/Sublime Text 3/Data/Packages/User/Default (Windows).sublime-keymap",
-		"/C/Program Files/Sublime Text 3/Data/Packages/PrettyYAMLnode/Pretty YAML Node.sublime-settings",
-		"/C/WINDOWS/system32/assoc.txt",
-		"/C/Projects/EventManager/Scripts/BuildSolution.cmd",
-		"/C/Windows/System32/drivers/etc/hosts"
+		"/C/Program Files/Sublime Text 3/Data/Packages/User/Default (Windows).sublime-keymap"
 	],
 	"find":
 	{
@@ -395,6 +395,15 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"docker",
+			"timeout",
+			"expo",
+			"/tmp/consul/stacks/scripts/",
+			"consul_network",
+			"overlay_network",
+			"admin_network",
+			"/consul/config",
+			"/consul/con",
 			"SERVER_CONFIG_STORE",
 			"CLIENTS_SHARED_CONFIG_STORE",
 			"SERVER_CONFIG_STORE"
@@ -405,6 +414,8 @@
 		"regex": false,
 		"replace_history":
 		[
+			"admin_network",
+			"consul_network",
 			"SERVER_BOOTSTRAP_CONFIG",
 			"CLIENTS_BOOTSTRAP_CONFIG"
 		],
@@ -464,7 +475,7 @@
 	"pinned_build_system": "Packages/sublime-docker/Docker Compose.sublime-build",
 	"replace":
 	{
-		"height": 60.0
+		"height": 114.0
 	},
 	"save_all_on_build": false,
 	"select_file":
