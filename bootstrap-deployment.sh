@@ -14,7 +14,7 @@ echo "${GITHUB_ACCESS_TOKEN}" > key.txt && \
 ./gh auth login --with-token < key.txt && \
 rm -rf /tmp/consul && \
 echo "Cloning Consul repo" && \
-./gh repo clone RodneyWimberly/consul /tmp && \
+./gh repo clone RodneyWimberly/consul /tmp -b DevelopmentTest&& \
 cd /tmp && \
 chmod u+x *.sh && \
 chmod u+x ./scripts/*.sh && \
