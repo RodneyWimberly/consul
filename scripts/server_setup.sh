@@ -101,9 +101,13 @@ else
   	# locks down our consul server from leaking any data to anybody - full anon block
 	cat > ${SERVER_BOOTSTRAP_DIR}/server_acl.json <<EOL
 {
-  "acl_datacenter": "stable",
-  "acl_default_policy": "deny",
-  "acl_down_policy": "deny"
+  "primary_datacenter": "${CONSUL_DATACENTER}",
+  "acl": {
+    "enabled": true,
+    "default_policy": "deny",
+    "down_policy": "deny"
+    }
+  }
 }
 EOL
   fi
