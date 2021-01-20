@@ -36,6 +36,7 @@ NET_ID=$(docker network ls -f name=admin_network -q)
 if [[ ! -z "$NET_ID" ]]; then
     echo " --> Removing network 'admin_network'"
     docker network rm admin_network
+    sleep 2
 fi
 
 echo " --> Creating attachable overlay network 'admin_network'"
