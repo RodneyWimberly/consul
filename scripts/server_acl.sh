@@ -11,7 +11,7 @@ if [ -z "$ENABLE_ACL" ] || [ "$ENABLE_ACL" -eq "0" ] ; then
     exit 0
 fi
 
-echo "Enabling ACL"
+echo "Configuring ACL security"
 # get our one-time boostrap token we can use to generate all other tokens. It can only be done once thus save the token
 if [ ! -f ${SERVER_BOOTSTRAP_CONFIG}/server_acl_master_token.json ]; then
 	echo "Getting acl boostrap token / generating master token"
@@ -24,6 +24,6 @@ if [ ! -f ${SERVER_BOOTSTRAP_CONFIG}/server_acl_master_token.json ]; then
 EOL
 fi
 
-server_acl_server_agent_token.sh
-server_acl_anon.sh
-server_acl_client_general_token.sh
+${SCRIPT_PATH}/server_acl_server_agent_token.sh
+${SCRIPT_PATH}/server_acl_anon.sh
+${SCRIPT_PATH}/server_acl_client_general_token.sh

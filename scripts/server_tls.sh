@@ -13,7 +13,7 @@ if [ -z "$1" ]; then
 fi
 ip=$1
 
-echo "Enabling up TLS"
+echo "Configuring TLS communication"
 # Specify where we will install
 # the xip.io certificate
 SSL_DIR=${SERVER_BOOTSTRAP_CONFIG}
@@ -65,6 +65,3 @@ cat > ${SERVER_BOOTSTRAP_CONFIG}/tls.json <<EOL
 	}
 }
 EOL
-
-echo "Current TLS configuration:"
-cat ${SERVER_BOOTSTRAP_CONFIG}/tls.json

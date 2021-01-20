@@ -4,7 +4,9 @@ set -e
 
 source ./scripts/consul.env
 
-echo "*** >=>=>=>  Deployment Details  <=<=<=< ***"
+echo "*** >=>=>=>  Stack Deployment  <=<=<=< ***"
+
+echo " --> Swarm Details"
 export NUM_OF_MGR_NODES=$(docker info --format "{{.Swarm.Managers}}")
 echo "Number of Manager Nodes: ${NUM_OF_MGR_NODES}"
 
@@ -19,14 +21,11 @@ echo "Node Name: ${NODE_NAME}"
 
 export NODE_IS_MANAGER=$(docker info --format "{{.Swarm.ControlAvailable}}")
 echo "Node Is Manager: ${NODE_IS_MANAGER}"
-echo "********************************************"
-
-echo "************ Configuring Swarm *************"
 
 echo " --> Validating swarm network infrastructure"
 NET_ID=$(docker network ls -f name=consul_network -q)
 if [[ -z "$NET_ID" ]]; then
-    echo " --> Creating attachable overlay network 'consul_network'"
+    echo "Creating attachable overlay network 'consul_network'"
     set +e
     docker network create --driver=overlay --attachable --subnet=192.168.1.0/24 consul_network
     set -e

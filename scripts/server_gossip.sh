@@ -7,7 +7,7 @@ if [ -z "${ENABLE_GOSSIP}" ] || [ "${ENABLE_GOSSIP}" -eq "0" ]; then
     exit 0
 fi
 
-echo "Enabling Gossip encryption"
+echo "Configuring Gossip encryption"
 if [ ! -f ${SERVER_BOOTSTRAP_CONFIG}/gossip.json ]; then
     echo "Generating new Gossip Encryption Key"
 	GOSSIP_KEY=`consul keygen`

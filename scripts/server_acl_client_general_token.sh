@@ -7,7 +7,7 @@ set -e
 mkdir -p ${CLIENTS_BOOTSTRAP_CONFIG}
 
 if [ ! -f ${CLIENTS_BOOTSTRAP_CONFIG}/general_acl_token.json ]; then
-    echo "Generating consul client general ACL token for usual access"
+    echo "Configuring consul client ACL token for usual access"
     ACL_MASTER_TOKEN=`cat ${SERVER_BOOTSTRAP_CONFIG}/server_acl_master_token.json | jq -r -M '.acl_master_token'`
 
     # this generates a token for all our agent clients to register with the server, write kvs and register services
