@@ -113,6 +113,7 @@ EOL
   fi
 
   echo "Starting server in 'local only' mode to not allow node registering during configuration"
+  setup_config_file ${SERVER_BOOTSTRAP_DIR} server_acl.json
   docker-entrypoint.sh agent -datacenter ${CONSUL_DATACENTER} -bind 127.0.0.1 &
     consul_pid="$!"
 
