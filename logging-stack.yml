@@ -50,7 +50,7 @@ services:
         LOGS_TOKEN: 177434fe-0862-43e4-a162-de767c346723
         # Sematext Cloud region US or EU (default: US). The receiver URL will be set to EU/US default values. When using REGION, you don't need to set LOGS_RECEIVER_URL #- REGION=US
         # The URL of your Elasticsearch Endpoint (defaults to Sematext Cloud US https://logsene-receiver.sematext.com).
-        LOGS_RECEIVER_URL: http://elasticsearch.service.em.docker:9200
+        LOGS_RECEIVER_URL: http://elasticsearch:9200
         # Semicolon-separated list of file globs
         LOG_GLOB: /mylogs//*.log;/var/log//*.log;/var/log/**/*.log
         # Additional command line arguments for Logagent
@@ -127,11 +127,11 @@ services:
       GRAYLOG_PASSWORD_SECRET: eventmanagersecret
       # Password: admin
       GRAYLOG_ROOT_PASSWORD_SHA2: 8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918
-      GRAYLOG_HTTP_EXTERNAL_URI: https://www.em.host/admin/logs/
+      GRAYLOG_HTTP_EXTERNAL_URI: http://ip172-18-0-58-c046nor6hnp000cgumdg-9003.direct.labs.play-with-docker.com/
     depends_on:
       - api
     ports:
-      - 12201:12201/udp
+      - 9003:9000
     volumes:
       - logs_web_volume:/usr/share/graylog/data
     networks:

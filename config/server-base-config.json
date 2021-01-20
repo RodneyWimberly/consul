@@ -7,8 +7,8 @@
   },
   "node_name": "${NODE_NAME}",
   "client_addr": "${NODE_IP}",
-  "server": ${NODE_IS_MANAGER},
-  "bootstrap_expect": ${NUM_OF_MGR_NODES},
+  "server": "${NODE_IS_MANAGER}",
+  "bootstrap_expect": "${NUM_OF_MGR_NODES}",
   "check_update_interval": "0s",
   "disable_update_check": true
 }
