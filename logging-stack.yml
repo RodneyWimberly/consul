@@ -109,9 +109,6 @@ services:
           memory: 1g
     volumes:
       - logs_api_volume:/usr/share/elasticsearch/data
-    expose:
-      - 9200
-      - 9300
     networks:
       admin_network: {}
       log_network:
@@ -135,18 +132,6 @@ services:
       - api
     ports:
       - 12201:12201/udp
-    expose:
-      - 1514
-      - 1514/udp
-      - 5555
-      - 5555/udp
-      - 9000
-      - 12201
-      - 12201/udp
-      - 12301
-      - 12301/udp
-      - 12302
-      - 12302/udp
     volumes:
       - logs_web_volume:/usr/share/graylog/data
     networks:
