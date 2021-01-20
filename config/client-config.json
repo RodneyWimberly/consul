@@ -1,0 +1,4 @@
+{
+  "disable_remote_exec": true,
+  "retry_join": [ "server" ]
+}

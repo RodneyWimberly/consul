@@ -1,0 +1,6 @@
+{
+  "ui": true,
+  "dns_config": { "allow_stale": false },
+  "check_update_interval": "0s",
+  "disable_update_check": true
+}

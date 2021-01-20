@@ -7,23 +7,24 @@
 version: "3.8"
 
 volumes:
-  stack_volume:
+  data_volume:
 
 networks:
   admin_network:
     external: true
 
 configs:
-  consul_server_base:
-    file: ./config/server-base-config.json
-  consul_client_base:
-    file: ./config/client-base-config.json
+  consul_server_config:
+    file: ./config/server-config.json
+  consul_client_config:
+    file: ./config/client-config.json
 
 x-consul:
   &consul-default
   image: consul:latest
+  command: agent
   volumes:
-    - stack_volume:/consul
+    - data_volume:/consul/data
     - ./scripts:/usr/local/scripts
   networks:
     admin_network: {}
@@ -42,8 +43,7 @@ x-consul:
 services:
   server:
     << : *consul-default
-    entrypoint: /usr/local/scripts/server_setup.sh
-    command: agent -config-dir=/consul/config
+    entrypoint: server_setup.sh
     ports:
       - target: 8500
         published: 8500
@@ -56,16 +56,15 @@ services:
         aliases:
           - consul-server.service.consul
     configs:
-      - source: consul_server_base
-        target: /consul/config/server.json
+      - source: consul_server_config
+        target: /consul/data/server/config.json
     deploy:
       placement:
         constraints: [node.role ==  manager]
 
   client:
     << : *consul-default
-    entrypoint: /usr/local/scripts/client_setup.sh
-    command: agent -config-dir=/consul/config
+    entrypoint: client_setup.sh
     networks:
       admin_network:
         aliases:
@@ -73,8 +72,8 @@ services:
     depends_on:
       - server
     configs:
-      - source: consul_client_base
-        target: /consul/config/client.json
+      - source: consul_client_config
+        target: /consul/data/client/config.json
     deploy:
       placement:
         constraints: [node.role !=  manager]
