@@ -4,11 +4,10 @@ set -e
 
 # generates an acl_token with all usual ops a agent client need to fully utilize the consul server
 # stores it on a share volume so it can be consumed by out consul agent clients
-
 mkdir -p ${CLIENTS_BOOTSTRAP_CONFIG}
 
 if [ ! -f ${CLIENTS_BOOTSTRAP_CONFIG}/general_acl_token.json ]; then
-    echo "generating consul client general ACL token for usual access"
+    echo "Generating consul client general ACL token for usual access"
     ACL_MASTER_TOKEN=`cat ${SERVER_BOOTSTRAP_CONFIG}/server_acl_master_token.json | jq -r -M '.acl_master_token'`
 
     # this generates a token for all our agent clients to register with the server, write kvs and register services
@@ -25,7 +24,7 @@ if [ ! -f ${CLIENTS_BOOTSTRAP_CONFIG}/general_acl_token.json ]; then
     # echo "Agent client token: ${AGENT_CLIENT_TOKEN}"
     echo "{\"acl_token\": \"${ACL_TOKEN}\"}" > ${CLIENTS_BOOTSTRAP_CONFIG}/general_acl_token.json
 else
-    echo "skipping acl_token setup .. already configured";
+    echo "Skipping acl_token setup .. already configured";
 fi
 
 

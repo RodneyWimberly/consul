@@ -1,6 +1,6 @@
 #!/bin/sh
 
-echo "**** >=>=>=>  Hosting Details  <=<=<=< ****"
+echo "**** >=>=>=>  Swarm Details  <=<=<=< ****"
 echo "Number of Manager Nodes: ${NUM_OF_MGR_NODES}"
 echo "Node IP: ${NODE_IP}"
 echo "Node ID: ${NODE_ID}"
@@ -8,7 +8,7 @@ echo "Node Name: ${NODE_NAME}"
 echo "Node Is Manager: ${NODE_IS_MANAGER}"
 echo "*******************************************"
 
-#export PATH=/usr/local/bin;${PATH}
+export PATH=/usr/local/bin:${PATH}
 export CONSUL_HTTP=http://${NODE_IP}:8500
 export CONSUL_HTTPS=https://${NODE_IP}:8501
 
