@@ -44,7 +44,7 @@ if [ -f ${SERVER_BOOTSTRAP_CONFIG}/.firstsetup ] && [ -f  ${CLIENTS_BOOTSTRAP_CO
     echo "WARNING: ACL is missconifgured / outdated"
     echo "Attempting to reconfigure ACL."
     echo "Starting the sever in 'local only' mode, reconfigure the cluster ACL if needed and then start normally"
-    ${SCRIPT_PATH}/docker-entrypoint.sh "$@" -bind 127.0.0.1 &
+    docker-entrypoint.sh "$@" -bind 127.0.0.1 &
     consul_pid="$!"
 
     echo " ---- waiting for the server to come up - 5 seconds"
@@ -89,7 +89,7 @@ EOL
   fi
 
   echo "Starting server in 'local only' mode to not allow node registering during configuration"
-  ${SCRIPT_PATH}/docker-entrypoint.sh "$@" -bind 127.0.0.1 &
+  docker-entrypoint.sh "$@" -bind 127.0.0.1 &
   consul_pid="$!"
 
   echo " ---- waiting for the server to come up"
@@ -118,4 +118,4 @@ echo "Node Name: ${NODE_NAME}"
 echo "Node Is Manager: ${NODE_IS_MANAGER}"
 
 echo "Starting server ${CONSUL_HTTP} ${CONSUL_HTTPS}"
-exec ${SCRIPT_PATH}/docker-entrypoint.sh "$@"
+exec docker-entrypoint.sh "$@"
