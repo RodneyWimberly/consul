@@ -22,10 +22,12 @@ export NODE_IS_MANAGER=$(docker info --format "{{.Swarm.ControlAvailable}}")
 echo "Node Is Manager: ${NODE_IS_MANAGER}"
 
 echo " --> Removing the following stacks: logging, ${CONSUL_STACK_PROJECT_NAME}"
+set +e
 docker stack rm logging "${CONSUL_STACK_PROJECT_NAME}"
 
 echo " --> Removing the following services: devops_proxy"
 docker service rm devops_proxy
+set -e
 
 echo " --> Validating swarm network infrastructure"
 NET_ID=$(docker network ls -f name=admin_network -q)
