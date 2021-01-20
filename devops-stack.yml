@@ -2,8 +2,9 @@
 # DevOps Stack - Used to manage dev-ops stuff like Docker
 #####################################################
 # External Ports
-# 9000/tcp     = web HTTP UI
-# 9001/tcp:udp = agent HTTP REST
+# 1080:host/tcp     = proxy - SOCKS4/SOCKS5 proxy server
+# 9000:ingress/tcp  = web - HTTP UI
+# 9001:host/tcp:udp = agent - HTTP REST
 
 version: '3.8'
 
@@ -11,9 +12,9 @@ services:
   web:
     image: portainer/portainer
     ports:
-      - '9000:9000'
+      - 9000:9000
     volumes:
-      - 'web_volume:/data'
+      - web_volume:/data
     networks:
       - agent_network
     deploy:
@@ -35,6 +36,16 @@ services:
       mode: global
       placement:
         constraints: [node.platform.os == linux]
+
+  proxy:
+    image: wernight/dante
+    ports:
+      - target: 1080
+        published: 1080
+        protocol: tcp
+        mode: host
+    networks:
+      - admin_network
 
 volumes:
   web_volume:
