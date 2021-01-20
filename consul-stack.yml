@@ -24,7 +24,7 @@ x-consul:
   image: consul:latest
   volumes:
     - stack_volume:/consul
-    - ./scripts:/usr/local/bin
+    - ./scripts:/usr/local/scripts
   networks:
     admin_network: {}
   env_file:

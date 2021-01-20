@@ -32,13 +32,13 @@ if [[ -z "$NET_ID" ]]; then
 fi
 
 echo " --> Deploying DevOps Stack to Swarm"
-docker stack deploy --compose-file=./stacks/devops-stack.yml devops
+docker stack deploy --compose-file=./devops-stack.yml devops
 
 echo " --> Deploying Logging Stack to Swarm"
-docker stack deploy --compose-file=./stacks/logging-stack.yml logging
+docker stack deploy --compose-file=./logging-stack.yml logging
 
 echo " --> Deploying Consul Stack to Swarm"
-docker stack deploy --compose-file=./stacks/consul-stack.yml "${CONSUL_STACK_PROJECT_NAME}"
+docker stack deploy --compose-file=./consul-stack.yml "${CONSUL_STACK_PROJECT_NAME}"
 
 echo " --> Deploying Diagnostics Stack to Swarm"
-docker stack deploy --compose-file=./stacks/diagnostics-stack.yml diagnostics
+docker stack deploy --compose-file=./diagnostics-stack.yml diagnostics
