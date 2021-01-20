@@ -37,15 +37,15 @@ services:
       placement:
         constraints: [node.platform.os == linux]
 
-  proxy:
-    image: wernight/dante
-    ports:
-      - target: 1080
-        published: 1080
-        protocol: tcp
-        mode: host
-    networks:
-      - admin_network
+  #proxy:
+  #  image: wernight/dante
+  #  ports:
+  #    - target: 1080
+  #      published: 1080
+  #      protocol: tcp
+  #      mode: host
+  #  networks:
+  #    - admin_network
 
 volumes:
   web_volume:
@@ -54,5 +54,5 @@ networks:
   agent_network:
     driver: overlay
     attachable: true
-  admin_network:
-    external: true
+  #admin_network:
+  #  external: true

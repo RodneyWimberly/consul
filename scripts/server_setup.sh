@@ -1,6 +1,5 @@
 #!/bin/sh
 
-
 function setup_config_file() {
   if [ -f "$1"/"$2" ]; then
     ln -s "$1"/"$2" ${CONSUL_CONFIG_DIR}/"$2"
@@ -38,9 +37,6 @@ export PATH=${SCRIPT_PATH}:${PATH}
 echo "Current Path ${PATH}"
 export CONSUL_HTTP=http://${NODE_IP}:8500
 export CONSUL_HTTPS=https://${NODE_IP}:8501
-
-# Write out configuration that needs environment variables expanded
-echo "{\"datacenter\": \"${CONSUL_DATACENTER}\", \"data_dir\": \"${CONSUL_DATA_DIR}\", \"node_name\": \"${NODE_NAME}\", \"client_addr\": \"${NODE_IP}\", \"server\": ${NODE_IS_MANAGER}, \"bootstrap_expect\": ${NUM_OF_MGR_NODES}}" > ${CONSUL_CONFIG_DIR}/server.json
 
 # Both files means it is ok for all servers and clients to come up
 # Neither file means only 1 server should bootstrap, all other servers need to wait for both files
@@ -142,6 +138,8 @@ setup_config_file ${SERVER_BOOTSTRAP_DIR} server_acl.json
 setup_config_file ${SERVER_BOOTSTRAP_DIR} server_general_acl_token.json
 setup_config_file ${SERVER_BOOTSTRAP_DIR} server_acl_master_token.json
 setup_config_file ${SERVER_BOOTSTRAP_DIR} server_acl_agent_acl_token.json
+# Write out configuration that needs environment variables expanded
+echo "{\"datacenter\": \"${CONSUL_DATACENTER}\", \"data_dir\": \"${CONSUL_DATA_DIR}\", \"node_name\": \"${NODE_NAME}\", \"client_addr\": \"${NODE_IP}\", \"bootstrap_expect\": ${NUM_OF_MGR_NODES}}" > ${CONSUL_CONFIG_DIR}/server.json
 
 echo "Swarm Information: "
 echo "Number of Manager Nodes: ${NUM_OF_MGR_NODES}"
@@ -150,5 +148,5 @@ echo "Node ID: ${NODE_ID}"
 echo "Node Name: ${NODE_NAME}"
 echo "Node Is Manager: ${NODE_IS_MANAGER}"
 
-echo "Starting server ${CONSUL_HTTP} ${CONSUL_HTTPS}"
+echo "Starting consul server (${CONSUL_HTTP} ${CONSUL_HTTPS}) with the following arguments $@"
 exec docker-entrypoint.sh "$@"
