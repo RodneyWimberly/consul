@@ -1,6 +1,6 @@
 #!/bin/sh
 
-setup-config-file() {
+function setup_config_file() {
   if [ -f "$1"/"$2" ]; then
     ln -s "$1"/"$2" ${CONSUL_CONFIG_DIR}/"$2"
   else
@@ -26,7 +26,7 @@ export CONSUL_HTTPS=https://${NODE_IP}:8501
 
 until [ -f ${CLIENT_BOOTSTRAP_DIR}/.bootstrapped ]; do sleep 1;echo 'waiting for consul configuration for agent clients to be generated'; done;
 
-setup-config-file ${CLIENT_BOOTSTRAP_DIR} gossip.json
-setup-config-file ${CLIENT_BOOTSTRAP_DIR} general_acl_token.json
+setup_config_file ${CLIENT_BOOTSTRAP_DIR} gossip.json
+setup_config_file ${CLIENT_BOOTSTRAP_DIR} general_acl_token.json
 
 exec docker-entrypoint.sh "$@"
