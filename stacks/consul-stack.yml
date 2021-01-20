@@ -10,7 +10,7 @@ volumes:
   stack_volume:
 
 networks:
-  consul_network:
+  admin_network:
     external: true
 
 configs:
@@ -26,7 +26,7 @@ x-consul:
     - stack_volume:/consul
     - ./scripts:/usr/local/bin
   networks:
-    consul_network: {}
+    admin_network: {}
   env_file:
     - ./scripts/consul.env
   environment:
@@ -52,7 +52,7 @@ services:
         published: 8501
         mode: host
     networks:
-      consul_network:
+      admin_network:
         aliases:
           - consul-server.service.consul
     configs:
@@ -67,7 +67,7 @@ services:
     entrypoint: client_setup.sh
     command: agent -config-dir=/consul/config
     networks:
-      consul_network:
+      admin_network:
         aliases:
           - consul-client.service.consul
     depends_on:
@@ -85,6 +85,6 @@ services:
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock
     networks:
-      consul_network: {}
+      admin_network: {}
     deploy:
       mode: global
