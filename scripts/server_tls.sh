@@ -7,15 +7,13 @@ if [ -z "$ENABLE_TLS" ] || [ "$ENABLE_TLS" -eq "0" ]; then
     exit 0
 fi
 
-echo "Setting up tls"
-
-
 if [ -z "$1" ]; then
-    echo "please pass the ip as the first parameter"
+    echo "please pass the ip as the first parameter as host or IP"
     exit 1
 fi
-
 ip=$1
+
+echo "Enabling up TLS"
 # Specify where we will install
 # the xip.io certificate
 SSL_DIR=${SERVER_BOOTSTRAP_CONFIG}
@@ -44,9 +42,10 @@ openssl x509 -req -days 1825 -in ${SSL_DIR}/cert.csr -CA ${SSL_DIR}/ca.crt -CAke
 
 cp ${SSL_DIR}/ca.crt /usr/local/share/ca-certificates/consul-ca.crt
 
-# https://github.com/gliderlabs/docker-alpine/issues/30#issuecomment-372020089
+echo "Updating the local CA Authority with our certs"
 update-ca-certificates 2>/dev/null || true
 
+echo "Updating file permissions for the new certs"
 chown consul:consul $SSL_DIR/tls.key
 chmod 400 $SSL_DIR/tls.key
 chown consul:consul $SSL_DIR/cert.crt
@@ -67,3 +66,5 @@ cat > ${SERVER_BOOTSTRAP_CONFIG}/tls.json <<EOL
 }
 EOL
 
+echo "Current TLS configuration:"
+cat ${SERVER_BOOTSTRAP_CONFIG}/tls.json
