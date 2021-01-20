@@ -43,7 +43,6 @@ export CONSUL_HTTPS=https://${NODE_IP}:8501
 #     and clients need to wait on just .bootstrapped
 # having .firstsetup and no .bootstrapped means 1 server is currently bootstrapping so wait on him to finish
 if [ -f ${SERVER_BOOTSTRAP_DIR}/.firstsetup ] && [ -f  ${CLIENT_BOOTSTRAP_DIR}/.bootstrapped ]; then
-  echo "The cluster has been bootstrapped"
   # try to converge
   current_acl_agent_token=$(cat ${SERVER_BOOTSTRAP_DIR}/server_acl_agent_acl_token.json | jq -r -M '.acl_agent_token')
 
@@ -141,7 +140,9 @@ setup_config_file ${SERVER_BOOTSTRAP_DIR} server_acl_agent_acl_token.json
 # Write out configuration that needs environment variables expanded
 echo "{\"datacenter\": \"${CONSUL_DATACENTER}\", \"data_dir\": \"${CONSUL_DATA_DIR}\", \"node_name\": \"${NODE_NAME}\", \"client_addr\": \"${NODE_IP}\", \"bootstrap_expect\": ${NUM_OF_MGR_NODES}}" > ${CONSUL_CONFIG_DIR}/server.json
 
-echo "Swarm Information: "
+echo "The cluster has been bootstrapped"
+
+echo ">=>=>=>=>=>  Swarm/Node Details  <=<=<=<=<=<"
 echo "Number of Manager Nodes: ${NUM_OF_MGR_NODES}"
 echo "Node IP: ${NODE_IP}"
 echo "Node ID: ${NODE_ID}"

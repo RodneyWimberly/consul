@@ -15,6 +15,7 @@ echo "Configuring ACL security"
 # get our one-time boostrap token we can use to generate all other tokens. It can only be done once thus save the token
 if [ ! -f ${SERVER_BOOTSTRAP_DIR}/server_acl_master_token.json ]; then
 	echo "Getting acl boostrap token / generating master token"
+    echo "$(curl -sS -X PUT http://127.0.0.1:8500/v1/acl/bootstrap)"
 	ACL_MASTER_TOKEN=`curl -sS -X PUT http://127.0.0.1:8500/v1/acl/bootstrap | jq -r -M '.ID'`
     echo "Master token  ${ACL_MASTER_TOKEN} was generated"
 	# save our token
