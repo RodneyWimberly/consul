@@ -48,7 +48,7 @@ if [ -f ${SERVER_BOOTSTRAP_CONFIG}/.firstsetup ] && [ -f  ${CLIENTS_BOOTSTRAP_CO
     consul_pid="$!"
 
     echo " ---- waiting for the server to come up - 5 seconds"
-    ${SCRIPT_PATH}/wait-for-it -t 300 -h 127.0.0.1 -p 8500 --strict -- echo+ " ---- consul found" || (echo "ERROR: Failed to located consul." && exit 1)
+    ${SCRIPT_PATH}/wait-for-it.sh -t 300 -h 127.0.0.1 -p 8500 --strict -- echo+ " ---- consul found" || (echo "ERROR: Failed to located consul." && exit 1)
     sleep 5s
 
     echo " ---- continuing to repair the cluster ACL configuration"
@@ -93,7 +93,7 @@ EOL
   consul_pid="$!"
 
   echo " ---- waiting for the server to come up"
-  ${SCRIPT_PATH}/wait-for-it -t 300 -h 127.0.0.1 -p 8500 --strict -- echo " ---- consul found" || (echo "ERROR: Failed to locate consul" && exit 1)
+  ${SCRIPT_PATH}/wait-for-it.sh -t 300 -h 127.0.0.1 -p 8500 --strict -- echo " ---- consul found" || (echo "ERROR: Failed to locate consul" && exit 1)
 
   echo " ---- waiting further 15 seconds to ensure our server is fully bootstrapped"
   sleep 15s
