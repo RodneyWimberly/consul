@@ -54,3 +54,5 @@ networks:
   agent_network:
     driver: overlay
     attachable: true
+  admin_network:
+    external: true
