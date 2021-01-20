@@ -6,16 +6,16 @@ echo "Downloading GitHub CLI version "$VERSION && \
 curl -sSL https://github.com/cli/cli/releases/download/v${VERSION}/gh_${VERSION}_linux_amd64.tar.gz -o gh_${VERSION}_linux_amd64.tar.gz && \
 tar xvf gh_${VERSION}_linux_amd64.tar.gz && \
 rm gh_${VERSION}_linux_amd64.tar.gz && \
-cp gh_${VERSION}_linux_amd64/bin/gh ./ && \
+cp gh_${VERSION}_linux_amd64/bin/gh /bin/gh && \
 rm -rf ./gh_${VERSION}_linux_amd64 && \
-./gh version && \
+gh version && \
 echo "GitHub CLI was successfully installed" && \
 echo "${GITHUB_ACCESS_TOKEN}" > key.txt && \
-./gh auth login --with-token < key.txt && \
+gh auth login --with-token < key.txt && \
 rm -rf /tmp/consul && \
 echo "Cloning Consul repo" && \
-./gh repo clone RodneyWimberly/consul /tmp -b DevelopmentTest&& \
-cd /tmp && \
+gh repo clone RodneyWimberly/consul /tmp/consul -b DevelopmentTest && \
+cd /tmp/consul && \
 chmod u+x *.sh && \
 chmod u+x ./scripts/*.sh && \
 ./deploy.sh
