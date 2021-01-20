@@ -26,7 +26,7 @@ set +e
 docker stack rm logging "${CONSUL_STACK_PROJECT_NAME}"
 
 echo " --> Removing the following services: devops_proxy"
-docker service rm devops_proxy
+#docker service rm devops_proxy
 set -e
 
 echo " --> Validating swarm network infrastructure"

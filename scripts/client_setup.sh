@@ -8,17 +8,6 @@ function setup_config_file() {
   fi
 }
 
-echo "**** >=>=>=>  Swarm Details  <=<=<=< ****"
-echo "Number of Manager Nodes: ${NUM_OF_MGR_NODES}"
-echo "Node IP: ${NODE_IP}"
-echo "Node ID: ${NODE_ID}"
-echo "Node Name: ${NODE_NAME}"
-echo "Node Is Manager: ${NODE_IS_MANAGER}"
-echo "*******************************************"
-
-# Write out configuration that needs environment variables expanded
-echo "{\"datacenter\": \"${CONSUL_DATACENTER}\", \"data_dir\": \"${CONSUL_DATA_DIR}\", \"node_name\": \"${NODE_NAME}\", \"server\": ${NODE_IS_MANAGER}, \"addresses\": { \"http\": \"${NODE_IP}\" } }" > ${CONSUL_CONFIG_DIR}/client.json
-
 export PATH=${SCRIPT_PATH}:${PATH}
 echo "Current Path ${PATH}"
 export CONSUL_HTTP=http://${NODE_IP}:8500
@@ -28,5 +17,16 @@ until [ -f ${CLIENT_BOOTSTRAP_DIR}/.bootstrapped ]; do sleep 1;echo 'waiting for
 
 setup_config_file ${CLIENT_BOOTSTRAP_DIR} gossip.json
 setup_config_file ${CLIENT_BOOTSTRAP_DIR} general_acl_token.json
+# Write out configuration that needs environment variables expanded
+echo "{\"datacenter\": \"${CONSUL_DATACENTER}\", \"data_dir\": \"${CONSUL_DATA_DIR}\", \"node_name\": \"${NODE_NAME}\", \"addresses\": { \"http\": \"${NODE_IP}\" } }" > ${CONSUL_CONFIG_DIR}/client.json
 
+echo "**** >=>=>=>  Swarm Details  <=<=<=< ****"
+echo "Number of Manager Nodes: ${NUM_OF_MGR_NODES}"
+echo "Node IP: ${NODE_IP}"
+echo "Node ID: ${NODE_ID}"
+echo "Node Name: ${NODE_NAME}"
+echo "Node Is Manager: ${NODE_IS_MANAGER}"
+echo "*******************************************"
+
+echo "Starting consul client with the following arguments $@"
 exec docker-entrypoint.sh "$@"
