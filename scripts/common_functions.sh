@@ -1,24 +1,26 @@
 #!/bin/sh
 
+cmdname=$(basename $0)
+
 function add_path() {
   export PATH=$1:${PATH}
   log "PATH has been updated to ${PATH}"
 }
 
 function log() {
-    if [[ $QUIET -ne 1 ]]; then echo "$@"; fi
+    if [[ $QUIET -ne 1 ]]; then echo "$cmdname: $1"; fi
 }
 
 function log_detail() {
-    if [[ $QUIET -ne 1 ]]; then echo " ---> $@"; fi
+    if [[ $QUIET -ne 1 ]]; then echo " ---> $cmdname: $1"; fi
 }
 
 function log_error() {
-    if [[ $QUIET -ne 1 ]]; then echo "[ERROR]: $@" 1>&2; fi
+    if [[ $QUIET -ne 1 ]]; then echo "[ERROR]: $cmdname: $1"; fi
 }
 
 function log_warning() {
-    if [[ $QUIET -ne 1 ]]; then echo "[WARN]: $@"; fi
+    if [[ $QUIET -ne 1 ]]; then echo "[WARN]: $cmdname: $1"; fi
 }
 
 function expand_config_file() {
