@@ -26,7 +26,7 @@ echo "Linking bootstrap configuration files to the config folder"
 setup_config_file ${CLIENT_BOOTSTRAP_DIR} gossip.json
 setup_config_file ${CLIENT_BOOTSTRAP_DIR} general_acl_token.json
 # Write out configuration that needs environment variables expanded
-echo "{\"datacenter\": \"${CONSUL_DATACENTER}\", \"data_dir\": \"${CONSUL_DATA_DIR}\", \"node_name\": \"${NODE_NAME}\", \"addresses\": { \"http\": \"${NODE_IP}\" } }" > ${CONSUL_CONFIG_DIR}/client.json
+echo "{\"bind_addr\": \"${NODE_IP}\", \"client_addr\": \"${NODE_IP}\", \"datacenter\": \"${CONSUL_DATACENTER}\", \"data_dir\": \"${CONSUL_DATA_DIR}\", \"node_name\": \"${NODE_NAME}\", \"addresses\": { \"http\": \"${NODE_IP}\" } }" > ${CONSUL_CONFIG_DIR}/client.json
 
 echo ">=>=>=>=>=>  Swarm/Node Details  <=<=<=<=<=<"
 echo "Number of Manager Nodes: ${NUM_OF_MGR_NODES}"
