@@ -45,6 +45,10 @@ function wait_for_bootstrap_completion() {
     if [ ! -f ${CONSUL_BOOTSTRAP_DIR}/.bootstrapped ]; then
       log_warning "The cluster hasn't been bootstrapped"
       log "All services (Client and Server) are restricted from starup until the bootstrap process has completed"
-      until [ -f ${CONSUL_BOOTSTRAP_DIR}/.bootstrapped ]; do sleep 1; log_detail 'Waiting for consul cluster bootstrapping process to be complete'; done;
+      until [ -f ${CONSUL_BOOTSTRAP_DIR}/.firstsetup ] && [ -f  ${CONSUL_BOOTSTRAP_DIR}/.bootstrapped ]; do
+        sleep 1
+        log_detail 'Waiting for consul cluster bootstrapping process to be complete'
+        if [ -f ${CONSUL_BOOTSTRAP_DIR}/.firstsetup ] && [ -f  ${CONSUL_BOOTSTRAP_DIR}/.bootstrapped ]; then; break; fi
+      done
     fi
 }
