@@ -2,7 +2,7 @@
 
 set -e
 source "${CONSUL_SCRIPT_DIR}"/common_functions.sh
-
+cmdname=$(basename $0)
 # locks down our consul server from leaking any data to anybody - full anon block
 if [ ! -f ${CONSUL_BOOTSTRAP_DIR}/.aclanonsetup ]; then
     log "Configuring anon access"

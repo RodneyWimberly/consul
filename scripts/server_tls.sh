@@ -2,7 +2,7 @@
 
 set -e
 source "${CONSUL_SCRIPT_DIR}"/common_functions.sh
-
+cmdname=$(basename $0)
 if [ -z "$CONSUL_ENABLE_TLS" ] || [ "$CONSUL_ENABLE_TLS" -eq "0" ]; then
     log_warning "TLS is disabled, skipping configuration"
     exit 0
@@ -54,9 +54,6 @@ cat > ${CONSUL_BOOTSTRAP_DIR}/tls.json <<EOL
 	"cert_file": "${CONSUL_CERT_DIR}/cert.crt",
 	"ca_file": "${CONSUL_CERT_DIR}/ca.crt",
     "ca_path": "${CONSUL_CERT_DIR}",
-    //"verify_incoming": true,
-    //"verify_outgoing": true,
-    //"verify_server_hostname": true,
 	"addresses": {
 		"http": "0.0.0.0",
 		"https": "0.0.0.0"
@@ -67,3 +64,7 @@ cat > ${CONSUL_BOOTSTRAP_DIR}/tls.json <<EOL
 	}
 }
 EOL
+
+#//"verify_incoming": true,
+#//"verify_outgoing": true,
+#//"verify_server_hostname": true,

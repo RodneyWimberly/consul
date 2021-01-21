@@ -1,7 +1,7 @@
 #!/bin/sh
 
 source "${CONSUL_SCRIPT_DIR}"/common_functions.sh
-
+cmdname=$(basename $0)
 add_path ${CONSUL_SCRIPT_DIR}
 
 wait_for_bootstrap_completion
