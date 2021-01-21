@@ -61,6 +61,8 @@ services:
     deploy:
       placement:
         constraints: [node.role ==  manager]
+      restart_policy:
+        condition: none
 
   client:
     << : *consul-default
