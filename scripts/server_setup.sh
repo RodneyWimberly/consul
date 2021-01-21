@@ -101,7 +101,7 @@ else
   if [ -n "${ENABLE_ACL}" ] && [ ! "${ENABLE_ACL}" -eq "0" ] ; then
   	# this needs to be done before the server starts, we cannot move that into server_acl.sh
   	# locks down our consul server from leaking any data to anybody - full anon block
-    echo "{ \"primary_datacenter\": \"${CONSUL_DATACENTER}\", \"acl\": { \"enabled\": true, \"default_policy\": \"deny\", \"down_policy\": \"deny\" } } }" > ${SERVER_BOOTSTRAP_DIR}/server_acl.json
+    echo "{ \"primary_datacenter\": \"${CONSUL_DATACENTER}\", \"acl\": { \"enabled\": true, \"default_policy\": \"deny\", \"down_policy\": \"deny\" } }" > ${SERVER_BOOTSTRAP_DIR}/server_acl.json
   fi
 
   echo "Starting server in 'local only' mode to not allow node registering during configuration"
