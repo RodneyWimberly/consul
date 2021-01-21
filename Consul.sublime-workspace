@@ -153,6 +153,14 @@
 		"selected_items":
 		[
 			[
+				"git",
+				"Git: Commit"
+			],
+			[
+				"Package Control: in",
+				"Package Control: Install Package"
+			],
+			[
 				"build",
 				"Build: New Build System"
 			],
@@ -163,10 +171,6 @@
 			[
 				"Package Control: a",
 				"Package Control: Advanced Install Package"
-			],
-			[
-				"Package Control: in",
-				"Package Control: Install Package"
 			],
 			[
 				"Package Control: inst",
@@ -249,25 +253,36 @@
 	},
 	"file_history":
 	[
-		"/D/Consul/soakes/consul/scripts/wait-for-it.sh",
-		"/D/Consul/soakes/consul/deploy.sh",
-		"/D/Consul/soakes/consul/bootstrap-deployment.sh",
 		"/D/Consul/soakes/consul/scripts/server_setup.sh",
-		"/D/Consul/soakes/consul/consul-stack.yml",
-		"/D/Consul/soakes/consul/scripts/consul.env",
-		"/D/Consul/soakes/consul/diagnostics-stack.yml",
-		"/D/Consul/soakes/consul/devops-stack.yml",
+		"/D/Consul/soakes/consul/config/common.json",
+		"/D/Consul/soakes/consul/config/server.json",
+		"/D/Consul/soakes/consul/config/client.json",
+		"/D/Consul/soakes/consul/bootstrap-deployment.sh",
+		"/D/Consul/soakes/consul/deploy.sh",
+		"/D/Consul/soakes/consul/scripts/client_setup.sh",
 		"/D/Consul/soakes/consul/scripts/server_tls.sh",
-		"/D/Consul/soakes/consul/logging-stack.yml",
-		"/D/Consul/soakes/consul/stacks/diagnostics-stack.yml",
+		"/D/Consul/soakes/consul/scripts/wait-for-it.sh",
 		"/D/Consul/soakes/consul/scripts/server_acl.sh",
 		"/D/Consul/soakes/consul/scripts/server_acl_anon.sh",
 		"/D/Consul/soakes/consul/scripts/server_acl_client_general_token.sh",
-		"/D/Consul/soakes/consul/log-stack.yml",
-		"/D/Consul/soakes/consul/scripts/client_setup.sh",
-		"/D/Consul/soakes/consul/get-latest.sh",
-		"/D/Consul/soakes/consul/scripts/server_gossip.sh",
 		"/D/Consul/soakes/consul/scripts/server_acl_server_agent_token.sh",
+		"/D/Consul/soakes/consul/scripts/server_gossip.sh",
+		"/D/Consul/soakes/consul/scripts/common_functions.sh",
+		"/D/Consul/soakes/consul/scripts/consul.env",
+		"/D/Consul/soakes/consul/consul-stack.yml",
+		"/D/Consul/soakes/consul/devops-stack.yml",
+		"/D/Consul/soakes/consul/config/server-config.json",
+		"/D/Consul/soakes/consul/config/client-config.json",
+		"/D/Consul/soakes/consul/scripts/shell_expansion.sh",
+		"/C/Program Files/Sublime Text 3/Data/Packages/Git/Git.sublime-settings",
+		"/D/Consul/config/acl.hcl",
+		"/D/Consul/soakes/consul/get-latest.sh",
+		"/D/Consul/soakes/consul/config/server-base-config.json",
+		"/D/Consul/soakes/consul/config/client-base-config.json",
+		"/D/Consul/soakes/consul/logging-stack.yml",
+		"/D/Consul/soakes/consul/diagnostics-stack.yml",
+		"/D/Consul/soakes/consul/stacks/diagnostics-stack.yml",
+		"/D/Consul/soakes/consul/log-stack.yml",
 		"/D/em/Core/Log-Stack.yml",
 		"/D/em/Core/DevOps/Deploy/devops-stack.yml",
 		"/D/em/Core/Diagnostics/Dockerfile",
@@ -365,18 +380,7 @@
 		"/D/em/Core/ReverseProxy/root/etc/nginx/proxy.conf",
 		"/D/em/Core/registry-leader/root/consul/config/server.hcl",
 		"/D/em/Core/registry-leader/root/etc/containerpilot.json5",
-		"/D/em/Core/ReverseProxy/root/etc/consul.d/client.hcl",
-		"/D/em/Core/registry-leader/Dockerfile",
-		"/D/em/Core/ReverseProxy/Dockerfile",
-		"/D/Downloads/hello-world-master/triton-docker-setup.sh",
-		"/D/em/Core/docker-compose.override.yml",
-		"/C/Program Files/Sublime Text 3/Data/Settings/SideBarEnhancements.json",
-		"/C/em/EventManager.sln",
-		"/C/Program Files/Sublime Text 3/Data/Packages/Pretty YAML/Pretty YAML.sublime-settings",
-		"/C/Program Files/Sublime Text 3/Data/Packages/User/ShellCommand.sublime-keymap",
-		"/C/Program Files/Sublime Text 3/Data/Packages/ShellCommand/Default.sublime-keymap",
-		"/C/Program Files/Sublime Text 3/Data/Packages/ShellCommand/Default.sublime-commands",
-		"/C/Program Files/Sublime Text 3/Data/Packages/User/Default (Windows).sublime-keymap"
+		"/D/em/Core/ReverseProxy/root/etc/consul.d/client.hcl"
 	],
 	"find":
 	{
@@ -395,6 +399,36 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"cmdname",
+			"waiting",
+			"echoerr",
+			"()",
+			"echo",
+			"link_config_file",
+			"ENABLE_TLS",
+			"ENABLE_ACL",
+			"ENABLE_GOSSIP",
+			"ENABLE_APK",
+			"SCRIPT_PATH",
+			"CLIENT_BOOTSTRAP_DIR",
+			"SERVER_BOOTSTRAP_DIR",
+			"\\\"",
+			"output",
+			"setup_config_file",
+			"https",
+			"X-Consul-Token",
+			"server_acl",
+			"docker",
+			"ACL support disabled",
+			"setup-config-file",
+			"SSL_DIR",
+			"docker-e",
+			"CONSUL_CONFIG_DIR",
+			"CLIENTS_BOOTSTRAP_CONFIG",
+			"CLIENT_BOOTSTRAP_CONFIG",
+			"SERVER_BOOTSTRAP_CONFIG",
+			"CONSUL_CONFIG",
+			"stack_volume",
 			"docker",
 			"timeout",
 			"expo",
@@ -414,6 +448,21 @@
 		"regex": false,
 		"replace_history":
 		[
+			"expand_config_file",
+			"CONSUL_ENABLE_TLS",
+			"CONSUL_ENABLE_ACL",
+			"CONSUL_ENABLE_GOSSIP",
+			"CONSUL_ENABLE_APK",
+			"CONSUL_SCRIPT_DIR",
+			"CONSUL_BOOTSTRAP_DIR",
+			"\"",
+			"link_config_file",
+			"setup_config_file",
+			"CONSUL_CERT_DIR",
+			"CLIENT_BOOTSTRAP_DIR",
+			"SERVER_BOOTSTRAP_DIR",
+			"CONSUL_CONFIG_DIR",
+			"data_volume",
 			"admin_network",
 			"consul_network",
 			"SERVER_BOOTSTRAP_CONFIG",
@@ -467,6 +516,10 @@
 	"output.find_results":
 	{
 		"height": 0.0
+	},
+	"output.git":
+	{
+		"height": 100.0
 	},
 	"output.mdpopups":
 	{
