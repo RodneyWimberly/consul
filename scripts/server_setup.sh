@@ -33,7 +33,7 @@ if [ -z "${CONSUL_ENABLE_APK}" ]; then
 	echo "The enable APK flag is disabled, please ensure these dependencies are installed: bash curl jq openssl"
 else
 	apk update
-	apk add bash curl jq openssl
+	apk add bash curl jq openssl gettext
 fi
 
 export PATH=${CONSUL_SCRIPT_DIR}:${PATH}
