@@ -66,7 +66,7 @@ if [ -f ${SERVER_BOOTSTRAP_DIR}/.firstsetup ] && [ -f  ${CLIENT_BOOTSTRAP_DIR}/.
     echo "WARNING: ACL is missconifgured / outdated"
     echo "Attempting to reconfigure ACL."
     echo "Starting the sever in 'local only' mode, reconfigure the cluster ACL if needed and then start normally"
-    docker-entrypoint.sh agent -config-dir ${CONSUL_CONFIG_DIR} -data-dir ${CONSUL_DATA_DIR} -datacenter ${CONSUL_DATACENTER} -bind 127.0.0.1 &
+    docker-entrypoint.sh agent -datacenter ${CONSUL_DATACENTER} -bind 127.0.0.1 &
       consul_pid="$!"
 
     echo " ---- waiting for the server to come up - 5 seconds"
@@ -101,12 +101,12 @@ else
   if [ -n "${ENABLE_ACL}" ] && [ ! "${ENABLE_ACL}" -eq "0" ] ; then
   	# this needs to be done before the server starts, we cannot move that into server_acl.sh
   	# locks down our consul server from leaking any data to anybody - full anon block
-    echo "{ \"primary_datacenter\": \"${CONSUL_DATACENTER}\", \"acl\": { \"enabled\": true, \"default_policy\": \"deny\", \"down_policy\": \"deny\" } }" > ${SERVER_BOOTSTRAP_DIR}/server_acl.json
+    echo "{ \"acl\": { \"enabled\": true, \"default_policy\": \"deny\", \"down_policy\": \"deny\" } }" > ${SERVER_BOOTSTRAP_DIR}/server_acl.json
   fi
 
   echo "Starting server in 'local only' mode to not allow node registering during configuration"
   setup_config_file ${SERVER_BOOTSTRAP_DIR} server_acl.json
-  docker-entrypoint.sh agent -config-dir ${CONSUL_CONFIG_DIR} -data-dir ${CONSUL_DATA_DIR} -datacenter ${CONSUL_DATACENTER} -bind 127.0.0.1 &
+  docker-entrypoint.sh agent -datacenter ${CONSUL_DATACENTER} -bind 127.0.0.1 &
     consul_pid="$!"
 
   echo " ---- waiting for the server to come up"
