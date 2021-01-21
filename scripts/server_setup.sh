@@ -140,7 +140,7 @@ link_config_file server_acl_master_token.json
 link_config_file server_acl_agent_acl_token.json
 echo "Generating configuration that needs environment variables expanded into ${CONSUL_CONFIG_DIR}/server.json"
 #echo "{\"datacenter\": \"${CONSUL_DATACENTER}\", \"data_dir\": \"${CONSUL_DATA_DIR}\", \"node_name\": \"${NODE_NAME}\", \"bootstrap_expect\": ${NUM_OF_MGR_NODES}}" > ${CONSUL_CONFIG_DIR}/server.json
-cat "${CONSUL_BOOTSTRAP_DIR}"/config.json | envsubst > "${CONSUL_CONFIG_DIR}"/config.json
+cat "${CONSUL_BOOTSTRAP_DIR}"/server.json | envsubst > "${CONSUL_CONFIG_DIR}"/server.json
 
 
 #'{{ GetInterfaceIP \"eth0\" }}'
