@@ -39,6 +39,8 @@ x-consul:
   deploy:
     endpoint_mode: dnsrr
     mode: global
+    placement:
+      max_replicas_per_node: 1
 
 services:
   server:
@@ -59,10 +61,15 @@ services:
       - source: consul_server_config
         target: /consul/config/config.json
     deploy:
+      replicas: 1
       placement:
         constraints: [node.role ==  manager]
       restart_policy:
         condition: none
+      update_config:
+        parallelism: 1
+        delay: 10s
+        order: stop-first
 
   client:
     << : *consul-default

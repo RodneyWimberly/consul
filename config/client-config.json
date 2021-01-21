@@ -1,4 +1,4 @@
 {
   "disable_remote_exec": true,
-  "retry_join": [ "server" ]
+  "retry_join": [ "consul-server.service.consul" ]
 }

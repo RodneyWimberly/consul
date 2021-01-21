@@ -3,6 +3,7 @@
 function setup_config_file() {
   if [ -f "$1"/"$2" ]; then
     echo "Linking $1/$2 to ${CONSUL_CONFIG_DIR}/$2"
+    if [ -f ${CONSUL_CONFIG_DIR}/"$2" ]; then rm -f ${CONSUL_CONFIG_DIR}/"$2"; fi
     ln -s "$1"/"$2" ${CONSUL_CONFIG_DIR}/"$2"
   else
     echo "$1/$2 was not found, removing ${CONSUL_CONFIG_DIR}/$2"
@@ -138,7 +139,7 @@ setup_config_file ${SERVER_BOOTSTRAP_DIR} server_general_acl_token.json
 setup_config_file ${SERVER_BOOTSTRAP_DIR} server_acl_master_token.json
 setup_config_file ${SERVER_BOOTSTRAP_DIR} server_acl_agent_acl_token.json
 # Write out configuration that needs environment variables expanded
-echo "{\"datacenter\": \"${CONSUL_DATACENTER}\", \"data_dir\": \"${CONSUL_DATA_DIR}\", \"node_name\": \"${NODE_NAME}\", \"client_addr\": \"${NODE_IP}\", \"bootstrap_expect\": ${NUM_OF_MGR_NODES}}" > ${CONSUL_CONFIG_DIR}/server.json
+echo "{\"bind_addr\": \"${NODE_IP}\", \"client_addr\": \"${NODE_IP}\", \"datacenter\": \"${CONSUL_DATACENTER}\", \"data_dir\": \"${CONSUL_DATA_DIR}\", \"node_name\": \"${NODE_NAME}\", \"client_addr\": \"${NODE_IP}\", \"bootstrap_expect\": ${NUM_OF_MGR_NODES}}" > ${CONSUL_CONFIG_DIR}/server.json
 
 echo ">=>=>=>=>=>  Swarm/Node Details  <=<=<=<=<=<"
 echo "Number of Manager Nodes: ${NUM_OF_MGR_NODES}"
