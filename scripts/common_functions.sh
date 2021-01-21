@@ -2,7 +2,7 @@
 
 function add_path() {
   export PATH=$1:${PATH}
-  log "PATH has been updated to ${PATH}"
+  log "PATH has been updated to ${PATH} "
 }
 
 function log() {
