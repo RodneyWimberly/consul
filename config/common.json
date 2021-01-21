@@ -1,6 +1,6 @@
 {
-  "advertise_addr": "{{ GetAllInterfaces | include \"network\" \"${CONSUL_SUBNET}\" }}",
-  "bind_addr": "{{ GetAllInterfaces | include \"network\" \"${CONSUL_SUBNET}\" }}",
+  "advertise_addr": "{{ GetInterfaceIP \"eth0\" }}",
+  "bind_addr": "{{ GetInterfaceIP \"eth0\" }}",
   "check_update_interval": "0s",
   "client_addr": "0.0.0.0",
   "data_dir": "${CONSUL_DATA_DIR}",
