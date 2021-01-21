@@ -68,10 +68,10 @@ else
   if [ ! -f ${CONSUL_BOOTSTRAP_DIR}/.bootstrapped ]; then
       # This is the first server to start so it will drop .firstsetup to note it is running the
       # bootstrap and the other servers need to wait just like the clients until .bootstrapped is dropped.
+      touch ${CONSUL_BOOTSTRAP_DIR}/.firstsetup
       log_warning "The cluster hasn't been bootstrapped"
       log "All services (Client and Server) are restricted from starup until the bootstrap process has completed"
       log "This server will begin the bootstrap process"
-      touch ${CONSUL_BOOTSTRAP_DIR}/.firstsetup
     else
       wait_for_bootstrap_completion
   fi
@@ -88,7 +88,7 @@ else
 
   log "Starting server in bootstrap mode. The ACL will be in legacy mode until a leader is elected."
   log_detail "Server will be started in 'local only' mode to not allow node registering while bootstraping"
-  expand_config_file server_acl.json
+  expand_config_file_from server_acl.json
   docker-entrypoint.sh agent -server=true -bootstrap-expect=1 -datacenter=${CONSUL_DATACENTER} -bind=127.0.0.1 &
     consul_pid="$!"
 
@@ -113,14 +113,14 @@ fi
 
 log "The cluster has been bootstrapped"
 log "Linking bootstrap configuration files to the config folder"
-expand_config_file tls.json
-expand_config_file common.json
-expand_config_file server.json
-expand_config_file gossip.json
-expand_config_file server_acl.json
-expand_config_file server_general_acl_token.json
-expand_config_file server_acl_master_token.json
-expand_config_file server_acl_agent_acl_token.json
+expand_config_file_from tls.json
+expand_config_file_from common.json
+expand_config_file_from server.json
+expand_config_file_from gossip.json
+expand_config_file_from server_acl.json
+expand_config_file_from server_general_acl_token.json
+expand_config_file_from server_acl_master_token.json
+expand_config_file_from server_acl_agent_acl_token.json
 
 #'{{ GetInterfaceIP \"eth0\" }}'
 #'{{ GetAllInterfaces | include "network" "192.168.0.0/16" }}'
