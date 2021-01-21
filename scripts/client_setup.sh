@@ -1,12 +1,13 @@
 #!/bin/sh
 
-function setup_config_file() {
-  if [ -f "$1"/"$2" ]; then
-    echo "Linking $1/$2 to ${CONSUL_CONFIG_DIR}/$2"
-    ln -s "$1"/"$2" ${CONSUL_CONFIG_DIR}/"$2"
+function link_config_file() {
+  if [ -f "${CLIENT_BOOTSTRAP_DIR}/$1" ]; then
+    echo "Linking ${CLIENT_BOOTSTRAP_DIR}/$1 to ${CONSUL_CONFIG_DIR}/$1"
+    if [ -f "${CONSUL_CONFIG_DIR}/$1" ]; then rm -f "${CONSUL_CONFIG_DIR}/$1"; fi
+    ln -s "${CLIENT_BOOTSTRAP_DIR}/$1" "${CONSUL_CONFIG_DIR}/$1"
   else
-    echo "$1/$2 was not found, removing ${CONSUL_CONFIG_DIR}/$2"
-    rm -f ${CONSUL_CONFIG_DIR}/"$2" > /dev/null
+    echo "${CLIENT_BOOTSTRAP_DIR}/$1 was not found, removing ${CONSUL_CONFIG_DIR}/$1"
+    rm -f "${CONSUL_CONFIG_DIR}/$1" > /dev/null
   fi
 }
 
@@ -23,10 +24,11 @@ fi
 
 echo "The cluster has been bootstrapped"
 echo "Linking bootstrap configuration files to the config folder"
-setup_config_file ${CLIENT_BOOTSTRAP_DIR} gossip.json
-setup_config_file ${CLIENT_BOOTSTRAP_DIR} general_acl_token.json
-# Write out configuration that needs environment variables expanded
-echo "{\"bind_addr\": \"${NODE_IP}\", \"client_addr\": \"${NODE_IP}\", \"datacenter\": \"${CONSUL_DATACENTER}\", \"data_dir\": \"${CONSUL_DATA_DIR}\", \"node_name\": \"${NODE_NAME}\", \"addresses\": { \"http\": \"${NODE_IP}\" } }" > ${CONSUL_CONFIG_DIR}/client.json
+link_config_file gossip.json
+link_config_file general_acl_token.json
+echo "Generating configuration that needs environment variables expanded into ${CONSUL_CONFIG_DIR}/client.json"
+#echo "{\"datacenter\": \"${CONSUL_DATACENTER}\", \"data_dir\": \"${CONSUL_DATA_DIR}\", \"node_name\": \"${NODE_NAME}\", \"addresses\": { \"http\": \"${NODE_IP}\" } }" > ${CONSUL_CONFIG_DIR}/client.json
+cat "${CLIENT_BOOTSTRAP_DIR}"/config.json | envsubst > "${CONSUL_CONFIG_DIR}"/config.json
 
 echo ">=>=>=>=>=>  Swarm/Node Details  <=<=<=<=<=<"
 echo "Number of Manager Nodes: ${NUM_OF_MGR_NODES}"
