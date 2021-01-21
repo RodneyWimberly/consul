@@ -1,7 +1,5 @@
 #!/bin/sh
 
-cmdname=$(basename $0)
-
 function add_path() {
   export PATH=$1:${PATH}
   log "PATH has been updated to ${PATH}"
