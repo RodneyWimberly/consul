@@ -43,7 +43,7 @@ fi
 
 echo " --> Creating attachable overlay network 'admin_network'"
 set +e
-docker network create --driver=overlay --attachable --subnet=192.168.1.0/24 admin_network
+docker network create --driver=overlay --attachable --subnet=${CONSUL_SUBNET} admin_network
 set -e
 
 echo " --> Deploying DevOps Stack to Swarm"

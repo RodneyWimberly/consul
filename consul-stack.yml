@@ -63,7 +63,7 @@ services:
         mode: host
     configs:
       - source: consul_server_config
-        target: /consul/config/config.json
+        target: /consul/data/server/config.json
     deploy:
       replicas: 1
       placement:
@@ -76,7 +76,7 @@ services:
       - server
     configs:
       - source: consul_client_config
-        target: /consul/config/config.json
+        target: /consul/data/client/config.json
     deploy:
       placement:
         constraints: [node.role !=  manager]

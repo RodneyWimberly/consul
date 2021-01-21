@@ -1,7 +1,14 @@
 {
   "ui_config": { "enabled": false },
   "dns_config": { "allow_stale": false },
-  "check_update_interval": "0s",
   "server": true,
-  "disable_update_check": true
+  "check_update_interval": "0s",
+  "disable_update_check": true,
+  "bind_addr": "'{{ GetAllInterfaces | include \"network\" \"${CONSUL_SUBNET}\" }}'",
+  "advertise_addr": "'{{ GetAllInterfaces | include \"network\" \"${CONSUL_SUBNET}\" }}'",
+  "client_addr": "0.0.0.0",
+  "datacenter": "${CONSUL_DATACENTER}",
+  "data_dir": "${CONSUL_DATA_DIR}",
+  "node_name": "${NODE_NAME}",
+  "bootstrap_expect": ${NUM_OF_MGR_NODES}
 }
