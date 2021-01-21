@@ -2,22 +2,23 @@
 
 function add_path() {
   export PATH=$1:${PATH}
+  log "PATH has been updated to ${PATH}"
 }
 
 function log() {
-    echo "$1"
+    if [[ $QUIET -ne 1 ]]; then echo "$@"; fi
 }
 
 function log_detail() {
-    echo " ---> $1"
+    if [[ $QUIET -ne 1 ]]; then echo " ---> $@"; fi
 }
 
 function log_error() {
-    echo "[ERROR] $1"
+    if [[ $QUIET -ne 1 ]]; then echo "[ERROR]: $@" 1>&2; fi
 }
 
 function log_warning() {
-    echo "[WARN]: $1"
+    if [[ $QUIET -ne 1 ]]; then echo "[WARN]: $@"; fi
 }
 
 function expand_config_file() {
