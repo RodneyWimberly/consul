@@ -27,7 +27,9 @@ x-consul:
     - data_volume:/consul/data
     - ./scripts:/usr/local/scripts
   networks:
-    admin_network: {}
+    admin_network:
+      aliases:
+        - consul.service.consul
   env_file:
     - ./scripts/consul.env
   environment:
@@ -41,6 +43,12 @@ x-consul:
     mode: global
     placement:
       max_replicas_per_node: 1
+    restart_policy:
+      condition: none
+    update_config:
+      parallelism: 1
+      delay: 10s
+      order: stop-first
 
 services:
   server:
@@ -53,10 +61,6 @@ services:
       - target: 8501
         published: 8501
         mode: host
-    networks:
-      admin_network:
-        aliases:
-          - consul-server.service.consul
     configs:
       - source: consul_server_config
         target: /consul/config/config.json
@@ -64,20 +68,10 @@ services:
       replicas: 1
       placement:
         constraints: [node.role ==  manager]
-      restart_policy:
-        condition: none
-      update_config:
-        parallelism: 1
-        delay: 10s
-        order: stop-first
 
   client:
     << : *consul-default
     entrypoint: /usr/local/scripts/client_setup.sh
-    networks:
-      admin_network:
-        aliases:
-          - consul-client.service.consul
     depends_on:
       - server
     configs:
