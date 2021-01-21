@@ -19,7 +19,7 @@ if [ ! -f ${SERVER_BOOTSTRAP_DIR}/server_acl_master_token.json ]; then
         ACL_MASTER_TOKEN=`curl -sS -X PUT http://127.0.0.1:8500/v1/acl/bootstrap | jq -r -M '.ID'`
         if [ ! -z ${ACL_MASTER_TOKEN} ]; then break
         echo ' ---- The server will remain in ACL Legacy mode unti an election occurs and a leader is chosen.'
-        echo " ---- Waiting 1 second before retring to obtain an ACL bootstrap token"
+        echo " ---- Waiting 1 second  before retring to obtain an ACL bootstrap token"
         sleep 1
     done
     echo "Master token  ${ACL_MASTER_TOKEN} was generated"
