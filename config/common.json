@@ -9,5 +9,6 @@
   "disable_update_check": true,
   "dns_config": { "allow_stale": false },
   "node_name": "${NODE_NAME}",
-  "ui_config": { "enabled": true }
+  "ui_config": { "enabled": true },
+  "telemetry": { "disable_compat_1.9": true }
 }

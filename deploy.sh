@@ -5,7 +5,6 @@ set -e
 
 source ./scripts/consul.env
 source ./scripts/common_functions.sh
-cmdname=$(basename $0)
 
 log "*** >=>=>=>  Stack Deployment  <=<=<=< ***"
 

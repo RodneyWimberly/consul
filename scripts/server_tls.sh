@@ -2,7 +2,6 @@
 
 set -e
 source "${CONSUL_SCRIPT_DIR}"/common_functions.sh
-cmdname=$(basename $0)
 if [ -z "$CONSUL_ENABLE_TLS" ] || [ "$CONSUL_ENABLE_TLS" -eq "0" ]; then
     log_warning "TLS is disabled, skipping configuration"
     exit 0

@@ -1,7 +1,6 @@
 #!/bin/sh
 
 source "${CONSUL_SCRIPT_DIR}"/common_functions.sh
-cmdname=$(basename $0)
 log "Checking current configuration to ensure the cluster is bootstrapped"
 
 ## ensure consul is yet not running - important due to supervisor restart
