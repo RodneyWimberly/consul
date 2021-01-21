@@ -14,9 +14,14 @@ fi
 echo "Configuring ACL security"
 # get our one-time boostrap token we can use to generate all other tokens. It can only be done once thus save the token
 if [ ! -f ${SERVER_BOOTSTRAP_DIR}/server_acl_master_token.json ]; then
-	echo "Getting acl boostrap token / generating master token"
-    echo "$(curl -sS -X PUT http://127.0.0.1:8500/v1/acl/bootstrap)"
-	ACL_MASTER_TOKEN=`curl -sS -X PUT http://127.0.0.1:8500/v1/acl/bootstrap | jq -r -M '.ID'`
+    until [ -z ${ACL_MASTER_TOKEN} ]; do
+        echo " ---- Getting ACL bootstrap token / generating master token"
+        ACL_MASTER_TOKEN=`curl -sS -X PUT http://127.0.0.1:8500/v1/acl/bootstrap | jq -r -M '.ID'`
+        if [ ! -z ${ACL_MASTER_TOKEN} ]; then break
+        echo ' ---- The server will remain in ACL Legacy mode unti an election occurs and a leader is chosen.'
+        echo " ---- Waiting 1 second before retring to obtain an ACL bootstrap token"
+        sleep 1
+    done
     echo "Master token  ${ACL_MASTER_TOKEN} was generated"
 	# save our token
 	cat > ${SERVER_BOOTSTRAP_DIR}/server_acl_master_token.json <<EOL
