@@ -19,8 +19,7 @@ chmod u+x ./scripts/*.sh
 ./deploy.sh
 exit
 EOL
-chmod u+x
-update-stack.sh
+chmod u+x update-stack.sh
 
 
 
@@ -37,5 +36,4 @@ git clone -b DeploymentTest \
     /tmp/consul
 exit
 EOL
-chmod u+x
-update-stack.sh
+chmod u+x update-stack.sh

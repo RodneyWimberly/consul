@@ -94,7 +94,7 @@ else
     consul_pid="$!"
 
   log_detail "waiting for the server to come up"
-  ${CONSUL_SCRIPT_DIR}/wait-for-it.sh --timeout=300 --host=127.0.0.1 --port=8500 --strict -- log_detail "consul found" || (log_error "Failed to locate consul" && exit 1)
+  ${CONSUL_SCRIPT_DIR}/wait-for-it.sh --timeout=300 --host=127.0.0.1 --port=8500 --strict -- echo "consul found" || (echo "Failed to locate consul" && exit 1)
 
   log_detail "waiting further 20 seconds to ensure a leader has been elected"
   sleep 20s
