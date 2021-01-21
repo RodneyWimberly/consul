@@ -107,15 +107,15 @@ else
 
   echo "Starting server in bootstrap mode. The ACL will be in legacy mode until a leader is elected."
   echo " --- Server will be started in 'local only' mode to not allow node registering while bootstraping"
-  link_config_file ${CONSUL_BOOTSTRAP_DIR} server_acl.json
+  link_config_file server_acl.json
   docker-entrypoint.sh agent -server=true -bootstrap-expect=1 -datacenter=${CONSUL_DATACENTER} -bind=127.0.0.1 &
     consul_pid="$!"
 
   echo " ---- waiting for the server to come up"
   ${CONSUL_SCRIPT_DIR}/wait-for-it.sh --timeout=300 --host=127.0.0.1 --port=8500 --strict -- echo " ---- consul found" || (echo "ERROR: Failed to locate consul" && exit 1)
 
-  echo " ---- waiting further 30 seconds to ensure a leader has been elected"
-  sleep 30s
+  echo " ---- waiting further 20 seconds to ensure a leader has been elected"
+  sleep 20s
 
   echo " ---- continuing the cluster boostraping process"
   ${CONSUL_SCRIPT_DIR}/server_acl.sh
