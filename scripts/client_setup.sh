@@ -2,8 +2,10 @@
 
 function setup_config_file() {
   if [ -f "$1"/"$2" ]; then
+    echo "Linking $1/$2 to ${CONSUL_CONFIG_DIR}/$2"
     ln -s "$1"/"$2" ${CONSUL_CONFIG_DIR}/"$2"
   else
+    echo "$1/$2 was not found, removing ${CONSUL_CONFIG_DIR}/$2"
     rm -f ${CONSUL_CONFIG_DIR}/"$2" > /dev/null
   fi
 }
@@ -19,12 +21,12 @@ if [ -f ${CLIENT_BOOTSTRAP_DIR}/.bootstrapped ]; then
     until [ -f ${CLIENT_BOOTSTRAP_DIR}/.bootstrapped ]; do sleep 1;echo ' ---- Waiting for consul cluster bootstrapping process to be complete'; done;
 fi
 
+echo "The cluster has been bootstrapped"
+echo "Linking bootstrap configuration files to the config folder"
 setup_config_file ${CLIENT_BOOTSTRAP_DIR} gossip.json
 setup_config_file ${CLIENT_BOOTSTRAP_DIR} general_acl_token.json
 # Write out configuration that needs environment variables expanded
 echo "{\"datacenter\": \"${CONSUL_DATACENTER}\", \"data_dir\": \"${CONSUL_DATA_DIR}\", \"node_name\": \"${NODE_NAME}\", \"addresses\": { \"http\": \"${NODE_IP}\" } }" > ${CONSUL_CONFIG_DIR}/client.json
-
-echo "The cluster has been bootstrapped"
 
 echo ">=>=>=>=>=>  Swarm/Node Details  <=<=<=<=<=<"
 echo "Number of Manager Nodes: ${NUM_OF_MGR_NODES}"

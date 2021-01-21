@@ -2,8 +2,10 @@
 
 function setup_config_file() {
   if [ -f "$1"/"$2" ]; then
+    echo "Linking $1/$2 to ${CONSUL_CONFIG_DIR}/$2"
     ln -s "$1"/"$2" ${CONSUL_CONFIG_DIR}/"$2"
   else
+    echo "$1/$2 was not found, removing ${CONSUL_CONFIG_DIR}/$2"
     rm -f ${CONSUL_CONFIG_DIR}/"$2" > /dev/null
   fi
 }
@@ -64,7 +66,7 @@ if [ -f ${SERVER_BOOTSTRAP_DIR}/.firstsetup ] && [ -f  ${CLIENT_BOOTSTRAP_DIR}/.
     echo "WARNING: ACL is missconifgured / outdated"
     echo "Attempting to reconfigure ACL."
     echo "Starting the sever in 'local only' mode, reconfigure the cluster ACL if needed and then start normally"
-    docker-entrypoint.sh "$@" -datacenter ${CONSUL_DATACENTER} -bind 127.0.0.1 &
+    docker-entrypoint.sh agent -config-dir ${CONSUL_CONFIG_DIR} -data-dir ${CONSUL_DATA_DIR} -datacenter ${CONSUL_DATACENTER} -bind 127.0.0.1 &
       consul_pid="$!"
 
     echo " ---- waiting for the server to come up - 5 seconds"
@@ -101,7 +103,7 @@ else
   	# locks down our consul server from leaking any data to anybody - full anon block
 	cat > ${SERVER_BOOTSTRAP_DIR}/server_acl.json <<EOL
 {
-  "primary_datacenter": "${CONSUL_DATACENTER}",
+  "primary_datacenter": \"${CONSUL_DATACENTER}\",
   "acl": {
     "enabled": true,
     "default_policy": "deny",
@@ -114,7 +116,7 @@ EOL
 
   echo "Starting server in 'local only' mode to not allow node registering during configuration"
   setup_config_file ${SERVER_BOOTSTRAP_DIR} server_acl.json
-  docker-entrypoint.sh agent -datacenter ${CONSUL_DATACENTER} -bind 127.0.0.1 &
+  docker-entrypoint.sh agent -config-dir ${CONSUL_CONFIG_DIR} -data-dir ${CONSUL_DATA_DIR} -datacenter ${CONSUL_DATACENTER} -bind 127.0.0.1 &
     consul_pid="$!"
 
   echo " ---- waiting for the server to come up"
@@ -136,6 +138,8 @@ EOL
   touch ${CLIENT_BOOTSTRAP_DIR}/.bootstrapped
 fi
 
+echo "The cluster has been bootstrapped"
+echo "Linking bootstrap configuration files to the config folder"
 setup_config_file ${SERVER_BOOTSTRAP_DIR} tls.json
 setup_config_file ${SERVER_BOOTSTRAP_DIR} gossip.json
 setup_config_file ${SERVER_BOOTSTRAP_DIR} server_acl.json
@@ -144,8 +148,6 @@ setup_config_file ${SERVER_BOOTSTRAP_DIR} server_acl_master_token.json
 setup_config_file ${SERVER_BOOTSTRAP_DIR} server_acl_agent_acl_token.json
 # Write out configuration that needs environment variables expanded
 echo "{\"datacenter\": \"${CONSUL_DATACENTER}\", \"data_dir\": \"${CONSUL_DATA_DIR}\", \"node_name\": \"${NODE_NAME}\", \"client_addr\": \"${NODE_IP}\", \"bootstrap_expect\": ${NUM_OF_MGR_NODES}}" > ${CONSUL_CONFIG_DIR}/server.json
-
-echo "The cluster has been bootstrapped"
 
 echo ">=>=>=>=>=>  Swarm/Node Details  <=<=<=<=<=<"
 echo "Number of Manager Nodes: ${NUM_OF_MGR_NODES}"
