@@ -1,25 +1,22 @@
 #!/bin/sh
 
 function link_config_file() {
-  if [ -f "${CLIENT_BOOTSTRAP_DIR}/$1" ]; then
-    echo "Linking ${CLIENT_BOOTSTRAP_DIR}/$1 to ${CONSUL_CONFIG_DIR}/$1"
+  if [ -f "${CONSUL_BOOTSTRAP_DIR}/$1" ]; then
+    echo "Linking ${CONSUL_BOOTSTRAP_DIR}/$1 to ${CONSUL_CONFIG_DIR}/$1"
     if [ -f "${CONSUL_CONFIG_DIR}/$1" ]; then rm -f "${CONSUL_CONFIG_DIR}/$1"; fi
-    ln -s "${CLIENT_BOOTSTRAP_DIR}/$1" "${CONSUL_CONFIG_DIR}/$1"
+    ln -s "${CONSUL_BOOTSTRAP_DIR}/$1" "${CONSUL_CONFIG_DIR}/$1"
   else
-    echo "${CLIENT_BOOTSTRAP_DIR}/$1 was not found, removing ${CONSUL_CONFIG_DIR}/$1"
+    echo "${CONSUL_BOOTSTRAP_DIR}/$1 was not found, removing ${CONSUL_CONFIG_DIR}/$1"
     rm -f "${CONSUL_CONFIG_DIR}/$1" > /dev/null
   fi
 }
 
-export PATH=${SCRIPT_PATH}:${PATH}
-echo "Current Path ${PATH}"
-export CONSUL_HTTP=http://${NODE_IP}:8500
-export CONSUL_HTTPS=https://${NODE_IP}:8501
+export PATH=${CONSUL_SCRIPT_DIR}:${PATH}
 
-if [ ! -f ${CLIENT_BOOTSTRAP_DIR}/.bootstrapped ]; then
+if [ ! -f ${CONSUL_BOOTSTRAP_DIR}/.bootstrapped ]; then
   echo "WARNING: The cluster hasn't been bootstrapped"
   echo "All services (Client and Server) are restricted from starup until the bootstrap process has completed"
-  until [ -f ${CLIENT_BOOTSTRAP_DIR}/.bootstrapped ]; do sleep 1;echo ' ---- Waiting for consul cluster bootstrapping process to be complete'; done;
+  until [ -f ${CONSUL_BOOTSTRAP_DIR}/.bootstrapped ]; do sleep 1;echo ' ---- Waiting for consul cluster bootstrapping process to be complete'; done;
 fi
 
 echo "The cluster has been bootstrapped"
@@ -28,7 +25,7 @@ link_config_file gossip.json
 link_config_file general_acl_token.json
 echo "Generating configuration that needs environment variables expanded into ${CONSUL_CONFIG_DIR}/client.json"
 #echo "{\"datacenter\": \"${CONSUL_DATACENTER}\", \"data_dir\": \"${CONSUL_DATA_DIR}\", \"node_name\": \"${NODE_NAME}\", \"addresses\": { \"http\": \"${NODE_IP}\" } }" > ${CONSUL_CONFIG_DIR}/client.json
-cat "${CLIENT_BOOTSTRAP_DIR}"/config.json | envsubst > "${CONSUL_CONFIG_DIR}"/config.json
+cat "${CONSUL_BOOTSTRAP_DIR}"/config.json | envsubst > "${CONSUL_CONFIG_DIR}"/config.json
 
 echo ">=>=>=>=>=>  Swarm/Node Details  <=<=<=<=<=<"
 echo "Number of Manager Nodes: ${NUM_OF_MGR_NODES}"

@@ -2,7 +2,7 @@
 
 set -e
 
-if [ -z "$ENABLE_TLS" ] || [ "$ENABLE_TLS" -eq "0" ]; then
+if [ -z "$CONSUL_ENABLE_TLS" ] || [ "$CONSUL_ENABLE_TLS" -eq "0" ]; then
     echo "TLS is disabled, skipping configuration"
     exit 0
 fi
@@ -47,7 +47,7 @@ chown consul:consul $CONSUL_CERT_DIR/tls.key
 chmod 400 $CONSUL_CERT_DIR/tls.key
 chown consul:consul $CONSUL_CERT_DIR/cert.crt
 
-cat > ${SERVER_BOOTSTRAP_DIR}/tls.json <<EOL
+cat > ${CONSUL_BOOTSTRAP_DIR}/tls.json <<EOL
 {
 	"key_file": "${CONSUL_CERT_DIR}/tls.key",
 	"cert_file": "${CONSUL_CERT_DIR}/cert.crt",
