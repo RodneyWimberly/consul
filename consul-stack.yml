@@ -21,7 +21,7 @@ configs:
 
 x-consul:
   &consul-default
-  image: consul:latest
+  image: consul:${CONSUL_VERSION-latest}
   command: agent
   configs:
     - source: server_config
@@ -80,7 +80,7 @@ services:
 
   registrator:
     image: gliderlabs/registrator:master
-    command: -internal consul://consul-server.service.consul:8500
+    command: -internal consul://consul.service.consul:8500
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock
     networks:
