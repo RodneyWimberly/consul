@@ -13,4 +13,3 @@ if [ ! -f ${CONSUL_BOOTSTRAP_DIR}/gossip.json ]; then
 	GOSSIP_KEY=`consul keygen`
 	echo "{\"encrypt\": \"${GOSSIP_KEY}\"}" > ${CONSUL_BOOTSTRAP_DIR}/gossip.json
 fi
-cp ${CONSUL_BOOTSTRAP_DIR}/gossip.json ${CONSUL_BOOTSTRAP_DIR}/gossip.json
