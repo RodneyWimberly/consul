@@ -139,7 +139,7 @@ echo "Generating configuration that needs environment variables expanded into ${
 #echo "{\"datacenter\": \"${CONSUL_DATACENTER}\", \"data_dir\": \"${CONSUL_DATA_DIR}\", \"node_name\": \"${NODE_NAME}\", \"bootstrap_expect\": ${NUM_OF_MGR_NODES}}" > ${CONSUL_CONFIG_DIR}/server.json
 cat "${CONSUL_BOOTSTRAP_DIR}"/server.json | envsubst > "${CONSUL_CONFIG_DIR}"/server.json
 
-
+echo $(cat "${CONSUL_CONFIG_DIR}"/server.json)
 #'{{ GetInterfaceIP \"eth0\" }}'
 #'{{ GetAllInterfaces | include "network" "192.168.0.0/16" }}'
 
