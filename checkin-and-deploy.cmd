@@ -15,3 +15,4 @@ echo " --> Executing update-stack.sh on Worker1"
 start "Worker1 Update" /B putty.exe -load Worker1
 echo " --> Executing update-stack.sh on Manager1"
 start "Manager1 Update" /B putty.exe -load Manager1
+start /B http://ip172-18-0-125-c04qss9lo55000bvt83g-9000.direct.labs.play-with-docker.com/#/containers
