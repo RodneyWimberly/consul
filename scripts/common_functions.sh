@@ -6,24 +6,24 @@ function add_path() {
 }
 
 function log() {
-    if [[ $QUIET -ne 1 ]]; then echo "$1"; fi
+    echo "$1"
 }
 
 function log_detail() {
-    if [[ $QUIET -ne 1 ]]; then echo " ---> $1"; fi
+    echo " --> $1"
 }
 
 function log_error() {
-    if [[ $QUIET -ne 1 ]]; then echo "[ERROR]: $1"; fi
+    echo "[ERROR]: $1"
 }
 
 function log_warning() {
-    if [[ $QUIET -ne 1 ]]; then echo "[WARN]: $1"; fi
+    echo "[WARN]: $1"
 }
 
-function expand_config_file() {
+function expand_config_file_from() {
   if [ -f "${CONSUL_BOOTSTRAP_DIR}/$1" ]; then
-    log "Processing ${CONSUL_BOOTSTRAP_DIR}/$1 with variable subsutition to ${CONSUL_CONFIG_DIR}/$1"
+    log "Processing ${CONSUL_BOOTSTRAP_DIR}/$1 with variable expansion to ${CONSUL_CONFIG_DIR}/$1"
     if [ -f "${CONSUL_CONFIG_DIR}/$1" ]; then rm -f "${CONSUL_CONFIG_DIR}/$1"; fi
     cat "${CONSUL_BOOTSTRAP_DIR}/$1" | envsubst > "${CONSUL_CONFIG_DIR}/$1"
   else
