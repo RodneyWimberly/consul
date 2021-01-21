@@ -11,6 +11,6 @@ echo "3"
 git pull --force --progress https://rodneywimberly:b606a0781f57605d4e5b00b753a6f26c23ff8908@github.com/RodneyWimberly/consul.git
 
 echo "Executing update-stack.sh on Worker1"
-putty -load Worker1
+start "putty -load Worker1"
 echo "Executing update-stack.sh on Manager1"
-putty -load Manager1
+start "putty -load Manager1"
