@@ -25,7 +25,7 @@ link_config_file gossip.json
 link_config_file general_acl_token.json
 echo "Generating configuration that needs environment variables expanded into ${CONSUL_CONFIG_DIR}/client.json"
 #echo "{\"datacenter\": \"${CONSUL_DATACENTER}\", \"data_dir\": \"${CONSUL_DATA_DIR}\", \"node_name\": \"${NODE_NAME}\", \"addresses\": { \"http\": \"${NODE_IP}\" } }" > ${CONSUL_CONFIG_DIR}/client.json
-cat "${CONSUL_BOOTSTRAP_DIR}"/config.json | envsubst > "${CONSUL_CONFIG_DIR}"/config.json
+cat "${CONSUL_BOOTSTRAP_DIR}"/client.json | envsubst > "${CONSUL_CONFIG_DIR}"/client.json
 
 echo ">=>=>=>=>=>  Swarm/Node Details  <=<=<=<=<=<"
 echo "Number of Manager Nodes: ${NUM_OF_MGR_NODES}"
