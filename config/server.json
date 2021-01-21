@@ -1,14 +1,4 @@
 {
-  "ui_config": { "enabled": ${NODE_IS_MANAGER} },
-  "dns_config": { "allow_stale": false },
-  "server": ${NODE_IS_MANAGER},
-  "check_update_interval": "0s",
-  "disable_update_check": true,
-  "bind_addr": "{{ GetInterfaceIP \"eth0\" }}",
-  "advertise_addr": "{{ GetInterfaceIP \"eth0\" }}",
-  "client_addr": "0.0.0.0",
-  "datacenter": "${CONSUL_DATACENTER}",
-  "data_dir": "${CONSUL_DATA_DIR}",
-  "node_name": "${NODE_NAME}",
-  "bootstrap_expect": ${NUM_OF_MGR_NODES}
+  "bootstrap_expect": ${NUM_OF_MGR_NODES},
+  "server": ${NODE_IS_MANAGER}
 }

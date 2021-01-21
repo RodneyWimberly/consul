@@ -18,12 +18,16 @@ configs:
     file: ./config/server.json
   client_config:
     file: ./config/client.json
+  common_config:
+    file: ./config/common.json
 
 x-consul:
   &consul-default
-  image: consul:${CONSUL_VERSION-latest}
+  image: consul:${CONSUL_VERSION:-latest}
   command: agent
   configs:
+    - source: common_config
+      target: /consul/data/bootstrap/common.json
     - source: server_config
       target: /consul/data/bootstrap/server.json
     - source: client_config
@@ -81,6 +85,8 @@ services:
   registrator:
     image: gliderlabs/registrator:master
     command: -internal consul://consul.service.consul:8500
+    env_file:
+      - ./scripts/consul.env
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock
     networks:

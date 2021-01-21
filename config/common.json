@@ -1,0 +1,13 @@
+{
+  "advertise_addr": "{{ GetAllInterfaces | include \"network\" \"${CONSUL_SUBNET}\" }}",
+  "bind_addr": "{{ GetAllInterfaces | include \"network\" \"${CONSUL_SUBNET}\" }}",
+  "check_update_interval": "0s",
+  "client_addr": "0.0.0.0",
+  "data_dir": "${CONSUL_DATA_DIR}",
+  "datacenter": "${CONSUL_DATACENTER}",
+  "disable_remote_exec": true,
+  "disable_update_check": true,
+  "dns_config": { "allow_stale": false },
+  "node_name": "${NODE_NAME}",
+  "ui_config": { "enabled": true }
+}
