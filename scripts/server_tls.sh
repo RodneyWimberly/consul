@@ -1,19 +1,20 @@
 #!/bin/sh
 
 set -e
+source "${CONSUL_SCRIPT_DIR}"/common_functions.sh
 
 if [ -z "$CONSUL_ENABLE_TLS" ] || [ "$CONSUL_ENABLE_TLS" -eq "0" ]; then
-    echo "TLS is disabled, skipping configuration"
+    log_warning "TLS is disabled, skipping configuration"
     exit 0
 fi
 
 if [ -z "$1" ]; then
-    echo "please pass the ip as the first parameter as host or IP"
+    log_warning "please pass the ip as the first parameter as host or IP"
     exit 1
 fi
 ip=$1
 
-echo "Configuring TLS communication"
+log "Configuring TLS communication"
 
 # Set our CSR variables
 SUBJ="
@@ -39,10 +40,10 @@ openssl x509 -req -days 1825 -in ${CONSUL_CERT_DIR}/cert.csr -CA ${CONSUL_CERT_D
 
 cp ${CONSUL_CERT_DIR}/ca.crt /usr/local/share/ca-certificates/consul-ca.crt
 
-echo "Updating the local CA Authority with our certs"
+log "Updating the local CA Authority with our certs"
 update-ca-certificates 2>/dev/null || true
 
-echo "Updating file permissions for the new certs"
+log "Updating file permissions for the new certs"
 chown consul:consul $CONSUL_CERT_DIR/tls.key
 chmod 400 $CONSUL_CERT_DIR/tls.key
 chown consul:consul $CONSUL_CERT_DIR/cert.crt
@@ -53,8 +54,11 @@ cat > ${CONSUL_BOOTSTRAP_DIR}/tls.json <<EOL
 	"cert_file": "${CONSUL_CERT_DIR}/cert.crt",
 	"ca_file": "${CONSUL_CERT_DIR}/ca.crt",
     "ca_path": "${CONSUL_CERT_DIR}",
+    //"verify_incoming": true,
+    //"verify_outgoing": true,
+    //"verify_server_hostname": true,
 	"addresses": {
-		"http": "127.0.0.1",
+		"http": "0.0.0.0",
 		"https": "0.0.0.0"
 	},
 	"ports": {
