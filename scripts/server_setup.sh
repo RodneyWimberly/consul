@@ -37,9 +37,6 @@ else
 fi
 
 export PATH=${CONSUL_SCRIPT_DIR}:${PATH}
-echo "Current Path ${PATH}"
-export CONSUL_HTTP=http://${NODE_IP}:8500
-export CONSUL_HTTPS=https://${NODE_IP}:8501
 
 # Both files means it is ok for all servers and clients to come up
 # Neither file means only 1 server should bootstrap, all other servers need to wait for both files
@@ -153,5 +150,5 @@ echo "Node ID: ${NODE_ID}"
 echo "Node Name: ${NODE_NAME}"
 echo "Node Is Manager: ${NODE_IS_MANAGER}"
 
-echo "Starting consul server (${CONSUL_HTTP} ${CONSUL_HTTPS}) with the following arguments $@"
+echo "Starting consul server with the following arguments $@"
 exec docker-entrypoint.sh "$@"
