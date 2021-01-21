@@ -1,7 +1,7 @@
 {
-  "ui_config": { "enabled": false },
+  "ui_config": { "enabled": ${NODE_IS_MANAGER} },
   "dns_config": { "allow_stale": false },
-  "server": true,
+  "server": ${NODE_IS_MANAGER},
   "check_update_interval": "0s",
   "disable_update_check": true,
   "bind_addr": "'{{ GetAllInterfaces | include \"network\" \"${CONSUL_SUBNET}\" }}'",

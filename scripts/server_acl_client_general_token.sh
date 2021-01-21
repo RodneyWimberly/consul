@@ -4,11 +4,11 @@ set -e
 
 # generates an acl_token with all usual ops a agent client need to fully utilize the consul server
 # stores it on a share volume so it can be consumed by out consul agent clients
-mkdir -p ${CLIENT_BOOTSTRAP_DIR}
+mkdir -p ${CONSUL_BOOTSTRAP_DIR}
 
-if [ ! -f ${CLIENT_BOOTSTRAP_DIR}/general_acl_token.json ]; then
+if [ ! -f ${CONSUL_BOOTSTRAP_DIR}/general_acl_token.json ]; then
     echo "Configuring consul client ACL token for usual access"
-    ACL_MASTER_TOKEN=`cat ${SERVER_BOOTSTRAP_DIR}/server_acl_master_token.json | jq -r -M '.acl_master_token'`
+    ACL_MASTER_TOKEN=`cat ${CONSUL_BOOTSTRAP_DIR}/server_acl_master_token.json | jq -r -M '.acl_master_token'`
 
     # this generates a token for all our agent clients to register with the server, write kvs and register services
     ACL_TOKEN=`curl -sS -X PUT --header "X-Consul-Token: ${ACL_MASTER_TOKEN}" \
@@ -22,7 +22,7 @@ if [ ! -f ${CLIENT_BOOTSTRAP_DIR}/general_acl_token.json ]; then
     # let the consul server properly adjust that this ACL exist - when we write the token below all our clients start to boot
     #sleep 1
     # echo "Agent client token: ${AGENT_CLIENT_TOKEN}"
-    echo "{\"acl_token\": \"${ACL_TOKEN}\"}" > ${CLIENT_BOOTSTRAP_DIR}/general_acl_token.json
+    echo "{\"acl_token\": \"${ACL_TOKEN}\"}" > ${CONSUL_BOOTSTRAP_DIR}/general_acl_token.json
 else
     echo "Skipping acl_token setup .. already configured";
 fi

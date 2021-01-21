@@ -8,5 +8,5 @@
   "datacenter": "${CONSUL_DATACENTER}",
   "data_dir": "${CONSUL_DATA_DIR}",
   "node_name": "${NODE_NAME}",
-  "addresses": { "http": "${NODE_IP}" }
+  "addresses": { "http": "127.0.0.1" }
 }

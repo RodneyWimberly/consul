@@ -6,16 +6,16 @@ set -e
 # but well... this lets us get rid of
 # [WARN] agent: Node info update blocked by ACLs
 # [WARN] agent: Coordinate update blocked by ACLs
-if [ -f ${SERVER_BOOTSTRAP_DIR}/server_acl_agent_acl_token.json ]; then
-    current_acl_agent_token=$(cat ${SERVER_BOOTSTRAP_DIR}/server_acl_agent_acl_token.json | jq -r -M '.acl_agent_token')
+if [ -f ${CONSUL_BOOTSTRAP_DIR}/server_acl_agent_acl_token.json ]; then
+    current_acl_agent_token=$(cat ${CONSUL_BOOTSTRAP_DIR}/server_acl_agent_acl_token.json | jq -r -M '.acl_agent_token')
 fi
 
-if [ ! -f ${SERVER_BOOTSTRAP_DIR}/server_acl_agent_acl_token.json ] || \
-  [ ! -f ${SERVER_BOOTSTRAP_DIR}/server_general_acl_token.json ] || \
+if [ ! -f ${CONSUL_BOOTSTRAP_DIR}/server_acl_agent_acl_token.json ] || \
+  [ ! -f ${CONSUL_BOOTSTRAP_DIR}/server_general_acl_token.json ] || \
   [ -z "${current_acl_agent_token}" ]; then
 
     echo "Configuring server agent token to let the server access by ACLs"
-    ACL_MASTER_TOKEN=`cat ${SERVER_BOOTSTRAP_DIR}/server_acl_master_token.json | jq -r -M '.acl_master_token'`
+    ACL_MASTER_TOKEN=`cat ${CONSUL_BOOTSTRAP_DIR}/server_acl_master_token.json | jq -r -M '.acl_master_token'`
 
     # this is actually not neede with 1.0 - thats the defaul. So no permissions at all
     ACL_AGENT_TOKEN=`curl -sS -X PUT --header "X-Consul-Token: ${ACL_MASTER_TOKEN}" \
@@ -30,10 +30,10 @@ if [ ! -f ${SERVER_BOOTSTRAP_DIR}/server_acl_agent_acl_token.json ] || \
       echo "FATAL: error generating ACL agent token, return acl token was empty when talking the the REST endpoint - no permissions?"
     else
       echo "Configuring acl agent token for the server"
-      echo "{\"acl_agent_token\": \"${ACL_AGENT_TOKEN}\"}" > ${SERVER_BOOTSTRAP_DIR}/server_acl_agent_acl_token.json
+      echo "{\"acl_agent_token\": \"${ACL_AGENT_TOKEN}\"}" > ${CONSUL_BOOTSTRAP_DIR}/server_acl_agent_acl_token.json
 
       echo "Configuring acl token for the server"
-      echo "{\"acl_token\": \"${ACL_AGENT_TOKEN}\"}" > ${SERVER_BOOTSTRAP_DIR}/server_general_acl_token.json
+      echo "{\"acl_token\": \"${ACL_AGENT_TOKEN}\"}" > ${CONSUL_BOOTSTRAP_DIR}/server_general_acl_token.json
     fi
 else
     echo "Skipping acl_agent_token setup .. already configured";
