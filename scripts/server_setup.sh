@@ -67,7 +67,7 @@ if [ -f ${CONSUL_BOOTSTRAP_DIR}/.firstsetup ] && [ -f  ${CONSUL_BOOTSTRAP_DIR}/.
     echo "WARNING: ACL is missconifgured / outdated"
     echo "Attempting to reconfigure ACL."
     echo "Starting the sever in 'local only' mode, reconfigure the cluster ACL if needed and then start normally"
-    docker-entrypoint.sh agent -server true -bootstrap-expect 1 -datacenter ${CONSUL_DATACENTER} -bind 127.0.0.1 &
+    docker-entrypoint.sh agent -server=true -bootstrap-expect=1 -datacenter=${CONSUL_DATACENTER} -bind=127.0.0.1 &
       consul_pid="$!"
 
     echo " ---- waiting for the server to come up - 5 seconds"
@@ -108,7 +108,7 @@ else
   echo "Starting server in bootstrap mode. The ACL will be in legacy mode until a leader is elected."
   echo " --- Server will be started in 'local only' mode to not allow node registering while bootstraping"
   link_config_file ${CONSUL_BOOTSTRAP_DIR} server_acl.json
-  docker-entrypoint.sh agent -server true -bootstrap-expect 1 -datacenter ${CONSUL_DATACENTER} -bind 127.0.0.1 &
+  docker-entrypoint.sh agent -server=true -bootstrap-expect=1 -datacenter=${CONSUL_DATACENTER} -bind=127.0.0.1 &
     consul_pid="$!"
 
   echo " ---- waiting for the server to come up"
