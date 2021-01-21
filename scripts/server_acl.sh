@@ -2,7 +2,7 @@
 
 set -e
 source "${CONSUL_SCRIPT_DIR}"/common_functions.sh
-
+cmdname=$(basename $0)
 if [ -z "$CONSUL_ENABLE_ACL" ] || [ "$CONSUL_ENABLE_ACL" -eq "0" ] ; then
     log_warning "ACLs is disabled, skipping configuration"
     log "Creating dummy general_acl_token.json file so the clients can start"
