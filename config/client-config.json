@@ -1,4 +1,7 @@
 {
   "disable_remote_exec": true,
-  "retry_join": [ "consul-server.service.consul" ]
+  "retry_join": [ "consul-server.service.consul" ],
+  "bind_addr": "'{{ GetAllInterfaces | include \"network\" \"192.168.100.0/24\" }}'",
+  "advertise_addr": "'{{ GetAllInterfaces | include \"network\" \"192.168.100.0/24\" }}'",
+  "client_addr": "0.0.0.0"
 }
