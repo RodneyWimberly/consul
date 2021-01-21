@@ -15,10 +15,10 @@ echo "Current Path ${PATH}"
 export CONSUL_HTTP=http://${NODE_IP}:8500
 export CONSUL_HTTPS=https://${NODE_IP}:8501
 
-if [ -f ${CLIENT_BOOTSTRAP_DIR}/.bootstrapped ]; then
+if [ ! -f ${CLIENT_BOOTSTRAP_DIR}/.bootstrapped ]; then
   echo "WARNING: The cluster hasn't been bootstrapped"
   echo "All services (Client and Server) are restricted from starup until the bootstrap process has completed"
-    until [ -f ${CLIENT_BOOTSTRAP_DIR}/.bootstrapped ]; do sleep 1;echo ' ---- Waiting for consul cluster bootstrapping process to be complete'; done;
+  until [ -f ${CLIENT_BOOTSTRAP_DIR}/.bootstrapped ]; do sleep 1;echo ' ---- Waiting for consul cluster bootstrapping process to be complete'; done;
 fi
 
 echo "The cluster has been bootstrapped"
