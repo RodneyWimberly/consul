@@ -1,14 +1,65 @@
 {
+  "acl": {
+    "default_policy": "deny",
+    "down_policy": "deny",
+    "enabled": true,
+    "enable_token_persistence": true
+  },
+  "addresses": {
+    "http": "0.0.0.0",
+    "https": "0.0.0.0"
+  },
   "advertise_addr": "{{ GetInterfaceIP \"eth0\" }}",
   "bind_addr": "{{ GetInterfaceIP \"eth0\" }}",
+  "connect": {
+    "enabled": true
+  },
+  "ca_file": "/consul/data/certs/ca.crt",
+  "ca_path": "/consul/data/certs",
+  "cert_file": "/consul/data/certs/cert.crt",
   "check_update_interval": "0s",
   "client_addr": "0.0.0.0",
+  "connect": {
+    "enabled": true
+  },
   "data_dir": "${CONSUL_DATA_DIR}",
   "datacenter": "${CONSUL_DATACENTER}",
+  "disable_host_node_id": true,
   "disable_remote_exec": true,
   "disable_update_check": true,
-  "dns_config": { "allow_stale": false },
+  "dns_config": {
+    "allow_stale": false
+  },
+  "encrypt": "JWMpFl50rO2oTv2Rz660mrUminAYRLDCrrw09qEVuLw=",
+  "encrypt_verify_incoming" : true,
+  "encrypt_verify_outgoing" : true,
+  "key_file": "/consul/data/certs/tls.key",
+  "http_config": {
+    "response_headers": {
+      "Access-Control-Allow-Origin": "*"
+    }
+  },
+  "ports": {
+    "http": 8500,
+    "https": 8501
+  },
+  "node_meta": {
+      "instance_type": "Docker container"
+  },
   "node_name": "${NODE_NAME}",
-  "ui_config": { "enabled": true },
-  "telemetry": { "disable_compat_1.9": true }
+  "leave_on_terminate" : true,
+  "log_level": "debug",
+  "server": ${NODE_IS_MANAGER},
+  "skip_leave_on_interrupt" : false,
+  "telemetry": {
+    "disable_compat_1.9": true
+  },
+  "ui_config": {
+    "enabled": true
+  },
+  "verify_incoming": false,
+  "verify_incoming_https" : false,
+  "verify_incoming_rpc" : true,
+  "verify_outgoing": true,
+  "verify_server_hostname": true
 }

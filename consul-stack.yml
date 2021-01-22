@@ -14,73 +14,53 @@ networks:
     external: true
 
 configs:
-  server_config:
-    file: ./config/server.json
-  client_config:
-    file: ./config/client.json
   common_config:
     file: ./config/common.json
-
-x-consul:
-  &consul-default
-  image: consul:${CONSUL_VERSION:-latest}
-  command: agent
-  configs:
-    - source: common_config
-      target: /consul/data/bootstrap/common.json
-    - source: server_config
-      target: /consul/data/bootstrap/server.json
-    - source: client_config
-      target: /consul/data/bootstrap/client.json
-  volumes:
-    - data_volume:/consul/data
-    - ./scripts:/usr/local/scripts
-  ports:
-    - target: 8500
-      published: 8500
-      mode: host
-  networks:
-    admin_network:
-      aliases:
-        - consul.service.consul
-  env_file:
-    - ./scripts/consul.env
-  environment:
-    - NUM_OF_MGR_NODES
-    - NODE_IP
-    - NODE_ID
-    - NODE_NAME
-    - NODE_IS_MANAGER
-  deploy:
-    endpoint_mode: dnsrr
-    mode: global
-    placement:
-      max_replicas_per_node: 1
-    restart_policy:
-      condition: none
-    update_config:
-      parallelism: 1
-      delay: 10s
-      order: stop-first
+  client_config:
+    file: ./config/client.json
+  server_config:
+    file: ./config/server.json
 
 services:
-  server:
-    << : *consul-default
-    entrypoint: /usr/local/scripts/server_setup.sh
+  consul:
+    image: consul:${CONSUL_VERSION:-latest}
+    entrypoint: /usr/local/scripts/startup-script.sh
+    command: agent
+    configs:
+      - source: common_config
+        target: /consul/data/bootstrap/config.json
+      - source: client_config
+        target: /consul/data/bootstrap/client.json
+      - source: server_config
+        target: /consul/data/bootstrap/server.json
+    volumes:
+      - data_volume:/consul/data
+      - ./scripts:/usr/local/scripts
+    ports:
+      - target: 8500
+        published: 8500
+        mode: host
+    networks:
+      admin_network:
+        aliases:
+          - consul.service.consul
+    env_file:
+      - ./scripts/consul.env
+    environment:
+      - NUM_OF_MGR_NODES
+      - NODE_IP
+      - NODE_ID
+      - NODE_NAME
+      - NODE_IS_MANAGER
     deploy:
-      replicas: 1
-      placement:
-        constraints: [node.role ==  manager]
-
-  client:
-    << : *consul-default
-    entrypoint: /usr/local/scripts/client_setup.sh
-    depends_on:
-      - server
-    deploy:
-      replicas: 1
-      placement:
-        constraints: [node.role !=  manager]
+      endpoint_mode: dnsrr
+      mode: global
+      restart_policy:
+        condition: none
+      update_config:
+        parallelism: 1
+        delay: 10s
+        order: stop-first
 
   registrator:
     image: gliderlabs/registrator:master
