@@ -2,15 +2,24 @@
 source "${CONSUL_SCRIPT_DIR}"/consul.env
 
 apk update
-apk add bash curl jq gettext go docker
+apk add bash curl jq gettext
+#go docker
 
 # Get Container Details
 export PATH=$1:${PATH}
-export NUM_OF_MGR_NODES=$(docker info --format "{{.Swarm.Managers}}")
-export NODE_IP=$(docker info --format "{{.Swarm.NodeAddr}}")
-export NODE_ID=$(docker info --format "{{.Swarm.NodeID}}")
-export NODE_NAME=$(docker info --format "{{.Name}}")
-export NODE_IS_MANAGER=$(docker info --format "{{.Swarm.ControlAvailable}}")
+#export NUM_OF_MGR_NODES=$(docker info --format "{{.Swarm.Managers}}")
+#export NODE_IP=$(docker info --format "{{.Swarm.NodeAddr}}")
+#export NODE_ID=$(docker info --format "{{.Swarm.NodeID}}")
+#export NODE_NAME=$(docker info --format "{{.Name}}")
+#export NODE_IS_MANAGER=$(docker info --format "{{.Swarm.ControlAvailable}}")
+
+NODE_INFO=$(curl --unix-socket /var/run/docker.sock http://localhost/info/json)
+echo ${NODE_INFO}
+export NUM_OF_MGR_NODES=$(echo ${NODE_INFO} | jq -r -M '.Swarm.Managers')
+export NODE_IP=$(echo ${NODE_INFO} | jq -r -M '.Swarm.NodeAddr')
+export NODE_ID=$(echo ${NODE_INFO} | jq -r -M '.Swarm.NodeID')
+export NODE_NAME=$(echo ${NODE_INFO} | jq -r -M '.Name')
+export NODE_IS_MANAGER=$(echo ${NODE_INFO} | jq -r -M '.Swarm.ControlAvailable')
 
 # Expand Config Files
 set +e
