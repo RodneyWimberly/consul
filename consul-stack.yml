@@ -21,6 +21,14 @@ configs:
   server_config:
     file: ./config/server.json
 
+secrets:
+  ca_file:
+    file: ./certs/ca.crt
+  cert_file:
+    file: ./certs/cert.crt
+  key_file:
+    file: ./certs/tls.key
+
 services:
   consul:
     image: consul:${CONSUL_VERSION:-latest}
@@ -33,6 +41,13 @@ services:
         target: /consul/data/bootstrap/client.json
       - source: server_config
         target: /consul/data/bootstrap/server.json
+    secrets:
+      - source: ca_file
+        target: /consul/data/certs/ca.crt
+      - source: cert_file
+        target: /consul/data/certs/cert.crt
+      - source: key_file
+        target: /consul/data/certs/tls.key
     volumes:
       - data_volume:/consul/data
       - ./scripts:/usr/local/scripts
@@ -52,17 +67,11 @@ services:
       - NODE_ID
       - NODE_NAME
       - NODE_IS_MANAGER
-    healthcheck:
-      test: ['CMD', '/bin/sh', '-c', 'curl -sfLo /dev/null http://127.0.0.1:8500/v1/health/node/$$HOSTNAME']
+    #healthcheck:
+      #test: ['CMD', '/bin/sh', '-c', 'curl -sfLo /dev/null http://127.0.0.1:8500/v1/health/node/$$HOSTNAME']
     deploy:
       endpoint_mode: dnsrr
       mode: global
-      restart_policy:
-        condition: none
-      update_config:
-        parallelism: 1
-        delay: 10s
-        order: stop-first
 
   registrator:
     image: gliderlabs/registrator:master
