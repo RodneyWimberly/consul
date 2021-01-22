@@ -1,6 +1,9 @@
 #!/bin/sh
 source "${CONSUL_SCRIPT_DIR}"/consul.env
 
+apk update
+apk add bash curl jq gettext
+
 export PATH=$1:${PATH}
 
 # Expand Config Files
@@ -8,7 +11,7 @@ set +e
 rm -f "${CONSUL_CONFIG_DIR}/common.json"
 cat "${CONSUL_BOOTSTRAP_DIR}/common.json" | envsubst > "${CONSUL_CONFIG_DIR}/common.json"
 echo $(cat "${CONSUL_CONFIG_DIR}/common.json")
-if [[ ${NODE_IS_MANAGER} eq "true" ]]; then;
+if [[ ${NODE_IS_MANAGER} eq "true" ]]; then
     rm -f "${CONSUL_CONFIG_DIR}/server.json"
     cat "${CONSUL_BOOTSTRAP_DIR}/server.json" | envsubst > "${CONSUL_CONFIG_DIR}/server.json"
     echo $(cat "${CONSUL_CONFIG_DIR}/server.json")
