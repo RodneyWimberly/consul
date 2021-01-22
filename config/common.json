@@ -46,10 +46,10 @@
   "node_meta": {
       "instance_type": "Docker container"
   },
-  "node_name": "{{ .Name }}",
+  "node_name": "${NODE_NAME}",
   "leave_on_terminate" : true,
   "log_level": "debug",
-  "server": {{ .Swarm.ControlAvailable }},
+  "server": ${NODE_IS_MANAGER},
   "skip_leave_on_interrupt" : false,
   "telemetry": {
     "disable_compat_1.9": true

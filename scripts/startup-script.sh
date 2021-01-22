@@ -3,18 +3,10 @@ source "${CONSUL_SCRIPT_DIR}"/consul.env
 
 apk update
 apk add bash curl jq gettext
-#go docker
 
 # Get Container Details
 export PATH=$1:${PATH}
-#export NUM_OF_MGR_NODES=$(docker info --format "{{.Swarm.Managers}}")
-#export NODE_IP=$(docker info --format "{{.Swarm.NodeAddr}}")
-#export NODE_ID=$(docker info --format "{{.Swarm.NodeID}}")
-#export NODE_NAME=$(docker info --format "{{.Name}}")
-#export NODE_IS_MANAGER=$(docker info --format "{{.Swarm.ControlAvailable}}")
-
 NODE_INFO=$(curl --unix-socket /var/run/docker.sock http://localhost/info)
-echo ${NODE_INFO}
 export NUM_OF_MGR_NODES=$(echo ${NODE_INFO} | jq -r -M '.Swarm.Managers')
 export NODE_IP=$(echo ${NODE_INFO} | jq -r -M '.Swarm.NodeAddr')
 export NODE_ID=$(echo ${NODE_INFO} | jq -r -M '.Swarm.NodeID')
@@ -43,14 +35,14 @@ if [[ -z ${CONSUL_HTTP_TOKEN} ]]; then
     echo "ERROR: cluster hasn't been bootstrapped"
     echo "ERROR: All services (Client and Server) are restricted from starup until the bootstrap process has completed"
     exec server_bootstrap.sh
-else
-    echo ">=>=>=>=>=>  Swarm/Node Details  <=<=<=<=<=<"
-    echo "Number of Manager Nodes: ${NUM_OF_MGR_NODES}"
-    echo "Node IP: ${NODE_IP}"
-    echo "Node ID: ${NODE_ID}"
-    echo "Node Name: ${NODE_NAME}"
-    echo "Node Is Manager/Server: ${NODE_IS_MANAGER}"
-
-    echo "Starting consul client with the following arguments $@"
-    exec docker-entrypoint.sh "$@"
 fi
+echo ">=>=>=>=>=>  Swarm/Node Details  <=<=<=<=<=<"
+echo "Number of Manager Nodes: ${NUM_OF_MGR_NODES}"
+echo "Node IP: ${NODE_IP}"
+echo "Node ID: ${NODE_ID}"
+echo "Node Name: ${NODE_NAME}"
+echo "Node Is Manager/Server: ${NODE_IS_MANAGER}"
+
+echo "Starting consul client with the following arguments $@"
+exec docker-entrypoint.sh "$@"
+

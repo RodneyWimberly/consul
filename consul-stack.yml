@@ -62,12 +62,6 @@ services:
           - consul.service.consul
     env_file:
       - ./scripts/consul.env
-    environment:
-      - NUM_OF_MGR_NODES
-      - NODE_IP
-      - NODE_ID
-      - NODE_NAME
-      - NODE_IS_MANAGER
     #healthcheck:
       #test: ['CMD', '/bin/sh', '-c', 'curl -sfLo /dev/null http://127.0.0.1:8500/v1/health/node/$$HOSTNAME']
     deploy:
