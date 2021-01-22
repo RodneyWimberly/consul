@@ -13,7 +13,7 @@ export PATH=$1:${PATH}
 #export NODE_NAME=$(docker info --format "{{.Name}}")
 #export NODE_IS_MANAGER=$(docker info --format "{{.Swarm.ControlAvailable}}")
 
-NODE_INFO=$(curl --unix-socket /var/run/docker.sock http://localhost/info/json)
+NODE_INFO=$(curl --unix-socket /var/run/docker.sock http://localhost/info)
 echo ${NODE_INFO}
 export NUM_OF_MGR_NODES=$(echo ${NODE_INFO} | jq -r -M '.Swarm.Managers')
 export NODE_IP=$(echo ${NODE_INFO} | jq -r -M '.Swarm.NodeAddr')
