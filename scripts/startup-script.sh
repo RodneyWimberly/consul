@@ -11,6 +11,7 @@ set +e
 rm -f "${CONSUL_CONFIG_DIR}/common.json"
 cat "${CONSUL_BOOTSTRAP_DIR}/common.json" | envsubst > "${CONSUL_CONFIG_DIR}/common.json"
 echo $(cat "${CONSUL_CONFIG_DIR}/common.json")
+
 if [ "${NODE_IS_MANAGER}" == "true" ]; then
     rm -f "${CONSUL_CONFIG_DIR}/server.json"
     cat "${CONSUL_BOOTSTRAP_DIR}/server.json" | envsubst > "${CONSUL_CONFIG_DIR}/server.json"
@@ -26,6 +27,7 @@ set -e
 if [[ -z ${CONSUL_HTTP_TOKEN} ]]; then
     echo "ERROR: cluster hasn't been bootstrapped"
     echo "ERROR: All services (Client and Server) are restricted from starup until the bootstrap process has completed"
+    exec server_bootstrap.sh
 else
     echo ">=>=>=>=>=>  Swarm/Node Details  <=<=<=<=<=<"
     echo "Number of Manager Nodes: ${NUM_OF_MGR_NODES}"

@@ -28,7 +28,7 @@ services:
     command: agent
     configs:
       - source: common_config
-        target: /consul/data/bootstrap/config.json
+        target: /consul/data/bootstrap/common.json
       - source: client_config
         target: /consul/data/bootstrap/client.json
       - source: server_config
