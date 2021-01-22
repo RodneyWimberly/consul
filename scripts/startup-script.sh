@@ -2,7 +2,7 @@
 source "${CONSUL_SCRIPT_DIR}"/consul.env
 
 apk update
-apk add bash curl jq gettext docker
+apk add bash curl jq gettext go docker
 
 # Get Container Details
 export PATH=$1:${PATH}
