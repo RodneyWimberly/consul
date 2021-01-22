@@ -50,7 +50,7 @@ services:
         target: /consul/data/certs/tls.key
     volumes:
       - data_volume:/consul/data
-      - /var/run/docker.sock:/tmp/docker.sock
+      - /var/run/docker.sock:/var/run/docker.sock
       - ./scripts:/usr/local/scripts
     ports:
       - target: 8500
