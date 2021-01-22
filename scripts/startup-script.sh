@@ -2,9 +2,15 @@
 source "${CONSUL_SCRIPT_DIR}"/consul.env
 
 apk update
-apk add bash curl jq gettext
+apk add bash curl jq gettext docker
 
+# Get Container Details
 export PATH=$1:${PATH}
+export NUM_OF_MGR_NODES=$(docker info --format "{{.Swarm.Managers}}")
+export NODE_IP=$(docker info --format "{{.Swarm.NodeAddr}}")
+export NODE_ID=$(docker info --format "{{.Swarm.NodeID}}")
+export NODE_NAME=$(docker info --format "{{.Name}}")
+export NODE_IS_MANAGER=$(docker info --format "{{.Swarm.ControlAvailable}}")
 
 # Expand Config Files
 set +e
