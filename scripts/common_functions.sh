@@ -46,10 +46,14 @@ function log_debug() {
 
 function log_json() {
   if [ ! -z "$CONSUL_DEBUG_LOG" ] && [ "$CONSUL_DEBUG_LOG" -ne "0" ] ; then
-    pretty_json=$(echo "$2" | jq)
-    log_raw "[DBG] $1": "$pretty_json"
+    echo "1 ${1}"
+    echo "2 ${2}"
+    pretty_json=$(echo "${2}" | jq)
+    echo "JSON ${pretty_json}"
+    log_raw "[DBG] $1": "${pretty_json}"
   fi
 }
+
 function log_raw() {
   echo "$(timestamp): $1"
 }
