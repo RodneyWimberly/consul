@@ -50,7 +50,7 @@ function log_json() {
     echo "2 ${2}"
     pretty_json=$(echo "${2}" | jq)
     echo "JSON ${pretty_json}"
-    log_raw "[DBG] $1": "${pretty_json}"
+    log_raw "[DBG] $1: ${pretty_json}"
   fi
 }
 
@@ -68,13 +68,13 @@ function append_generated_config() {
     generated_json=$(cat ${CONSUL_BOOTSTRAP_DIR}/generated.json)
     rm -f ${CONSUL_BOOTSTRAP_DIR}/generated.json
   fi
-  log_json "Generated" "${generated_json}"
+  log_json "Generated" $generated_json
 
   config_json=$(cat ${CONSUL_BOOTSTRAP_DIR}/${1})
-  log_json "Config" "${config_json}"
+  log_json "Config" $config_json
 
   generated_json=$(echo "${generated_json}" | jq ". + ${config_json}")
-  log_json "Generated" "${generated_json}"
+  log_json "Generated" $generated_json
 
   log_detail "Adding ${1} to generated.json"
   echo "${generated_json}" | jq ". + ${config_json}" > ${CONSUL_BOOTSTRAP_DIR}/generated.json
