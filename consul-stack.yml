@@ -80,17 +80,17 @@ services:
     deploy:
       mode: global
 
-    storage:
-      image: filebrowser/filebrowser
-      entrypoint: /usr/local/scripts/filebrowser-entrypoint.sh
-      ports:
-      - 8800:80
-      networks:
-        admin_network: {}
-      env_file:
-        - ./scripts/consul.env
-      volumes:
-      - ./volumes:/usr/local/volumes
-      - ./scripts:/usr/local/scripts
-      deploy:
-        replicas: 1
+  storage:
+    image: filebrowser/filebrowser
+    entrypoint: /usr/local/scripts/filebrowser-entrypoint.sh
+    ports:
+    - 8800:80
+    networks:
+      admin_network: {}
+    env_file:
+      - ./scripts/consul.env
+    volumes:
+    - ./volumes:/usr/local/volumes
+    - ./scripts:/usr/local/scripts
+    deploy:
+      replicas: 1
