@@ -5,7 +5,6 @@ source "${CONSUL_SCRIPT_DIR}"/common_functions.sh
 
 log "Bootstrapping the current cluster, Please Wait..."
 
-add_path "${CONSUL_SCRIPT_DIR}"/bootstrap
 
 ## ensure consul is yet not running - important due to supervisor restart
 pkill consul
@@ -27,11 +26,7 @@ fi
 
 add_path ${CONSUL_SCRIPT_DIR}
 
-# Both files means it is ok for all servers and clients to come up
-# Neither file means only 1 server should bootstrap, all other servers need to wait for both files
-#     and clients need to wait on just .bootstrapped
-# having .firstsetup and no .bootstrapped means 1 server is currently bootstrapping so wait on him to finish
-if [ -f ${CONSUL_BOOTSTRAP_DIR}/.firstsetup ] && [ -f  ${CONSUL_BOOTSTRAP_DIR}/.bootstrapped ]; then
+if [ -f  ${CONSUL_BOOTSTRAP_DIR}/.bootstrapped ]; then
   # try to converge
   current_acl_agent_token=$(cat ${CONSUL_BOOTSTRAP_DIR}/server_acl_agent_acl_token.json | jq -r -M '.acl_agent_token')
 
@@ -66,20 +61,11 @@ if [ -f ${CONSUL_BOOTSTRAP_DIR}/.firstsetup ] && [ -f  ${CONSUL_BOOTSTRAP_DIR}/.
 
     log_detail "wait for the local server (pid: ${consul_pid}) to fully shutdown - 5 seconds"
     sleep 5s
+  else
+    log_detail "Cluster has already been bootstrapped and is correctly configured."
   fi
 
 else
-  if [ ! -f ${CONSUL_BOOTSTRAP_DIR}/.bootstrapped ]; then
-      # This is the first server to start so it will drop .firstsetup to note it is running the
-      # bootstrap and the other servers need to wait just like the clients until .bootstrapped is dropped.
-      touch ${CONSUL_BOOTSTRAP_DIR}/.firstsetup
-      log_warning "The cluster hasn't been bootstrapped"
-      log "All services (Client and Server) are restricted from starup until the bootstrap process has completed"
-      log "This server will begin the bootstrap process"
-    else
-      wait_for_bootstrap_completion
-  fi
-
   ${CONSUL_SCRIPT_DIR}/server_tls.sh `hostname -f`
   ${CONSUL_SCRIPT_DIR}/server_gossip.sh
 

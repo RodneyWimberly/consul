@@ -11,23 +11,15 @@ get_node_details
 
 expand_config_file_from "common.json"
 if [ "${NODE_IS_MANAGER}" == "true" ]; then
+  agent_mode="server"
   expand_config_file_from "server.json"
 else
+  agent_mode="client"
   expand_config_file_from "client.json"
 fi
 
-if [[ -z ${CONSUL_HTTP_TOKEN} ]] || [[ ${CONSUL_HTTP_TOKEN} == 0 ]]; then
-  log_error "Cluster hasn't been bootstrapped"
-  log_error "All services (Client and Server) are restricted from starup until the bootstrap process has completed"
-  if [ "${NODE_IS_MANAGER}" == "true" ]; then
-    ${CONSUL_SCRIPT_DIR}/server_bootstrap.sh
-  else
-    log_error "Please restart this service once the cluster has been bootstrapped."
-    log_error "Process is exiting"
-    exit 1
-  fi
-fi
+wait_for_bootstrap_process
 
 show_node_details
-echo "Starting consul client with the following arguments: $@"
+log_detai "Starting Consul in ${agent_mode} mode using the following command: docker-entrypoint.sh $@"
 exec docker-entrypoint.sh "$@"

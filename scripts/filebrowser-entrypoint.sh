@@ -6,7 +6,7 @@ source "${CONSUL_SCRIPT_DIR}"/common_functions.sh
 log "Installing Samba Server and OpenRC"
 # Setup samba server
 apk add samba openrc
-mkdir /svr
+#mkdir /svr
 chmod 0777 /srv
 
 log_detail "Configuring Samba Server"

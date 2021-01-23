@@ -29,44 +29,70 @@ secrets:
   key_file:
     file: ./certs/tls.key
 
+
+x-consul:
+  &consul-base
+  image: consul:${CONSUL_VERSION:-latest}
+  entrypoint: /usr/local/scripts/consul-entrypoint.sh
+  command: agent
+  configs:
+    - source: common_config
+      target: /consul/data/bootstrap/common.json
+    - source: client_config
+      target: /consul/data/bootstrap/client.json
+    - source: server_config
+      target: /consul/data/bootstrap/server.json
+  secrets:
+    - source: ca_file
+      target: /consul/data/certs/ca.crt
+    - source: cert_file
+      target: /consul/data/certs/cert.crt
+    - source: key_file
+      target: /consul/data/certs/tls.key
+  volumes:
+    - data_volume:/consul/data
+    - /var/run/docker.sock:/var/run/docker.sock
+    - ./scripts:/usr/local/scripts
+  ports:
+    - target: 8500
+      published: 8500
+      mode: host
+  env_file:
+    - ./scripts/consul.env
+  #healthcheck:
+    #test: ['CMD', '/bin/sh', '-c', 'curl -sfLo /dev/null http://127.0.0.1:8500/v1/health/node/$$HOSTNAME']
+  deploy:
+    endpoint_mode: dnsrr
+    mode: global
+    update_config:
+      parallelism: 1
+      delay: 10s
+      order: stop-first
+
 services:
   consul:
-    image: consul:${CONSUL_VERSION:-latest}
-    entrypoint: /usr/local/scripts/consul-entrypoint.sh
-    command: agent
-    configs:
-      - source: common_config
-        target: /consul/data/bootstrap/common.json
-      - source: client_config
-        target: /consul/data/bootstrap/client.json
-      - source: server_config
-        target: /consul/data/bootstrap/server.json
-    secrets:
-      - source: ca_file
-        target: /consul/data/certs/ca.crt
-      - source: cert_file
-        target: /consul/data/certs/cert.crt
-      - source: key_file
-        target: /consul/data/certs/tls.key
-    volumes:
-      - data_volume:/consul/data
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./scripts:/usr/local/scripts
-    ports:
-      - target: 8500
-        published: 8500
-        mode: host
+    << : *consul-base
     networks:
       admin_network:
         aliases:
           - consul.service.consul
-    env_file:
-      - ./scripts/consul.env
-    #healthcheck:
-      #test: ['CMD', '/bin/sh', '-c', 'curl -sfLo /dev/null http://127.0.0.1:8500/v1/health/node/$$HOSTNAME']
+    depends_on:
+      - consul-bootstrapper
+
+  consul-bootstrapper:
+    << : *consul-base
+    entrypoint: /usr/local/scripts/consul-bootstrapper-entrypoint.sh
+    networks:
+    admin_network:
+      aliases:
+        - consul-bootstrapper.service.consul
     deploy:
-      endpoint_mode: dnsrr
-      mode: global
+      mode: replicated
+      replicas: 1
+      placement:
+        max_replicas_per_node: 1
+      restart_policy:
+        condition: none
 
   registrator:
     image: gliderlabs/registrator:master
@@ -79,18 +105,3 @@ services:
       admin_network: {}
     deploy:
       mode: global
-
-  storage:
-    image: filebrowser/filebrowser
-    entrypoint: /usr/local/scripts/filebrowser-entrypoint.sh
-    ports:
-    - 8800:80
-    networks:
-      admin_network: {}
-    env_file:
-      - ./scripts/consul.env
-    volumes:
-    - ./volumes:/usr/local/volumes
-    - ./scripts:/usr/local/scripts
-    deploy:
-      replicas: 1
