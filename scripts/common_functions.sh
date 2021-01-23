@@ -1,5 +1,7 @@
 #!/bin/sh
 
+source "${CONSUL_SCRIPT_DIR}"/consul.env
+
 function consul_cmd() (
   consul_container="$(docker stack ps -q -f name=${CONSUL_STACK_PROJECT_NAME}_consul ${CONSUL_STACK_PROJECT_NAME})"
   if [ -z CONSUL_HTTP_TOKEN ] || [ CONSUL_HTTP_TOKEN -eq "0" ]; then
@@ -15,24 +17,24 @@ function add_path() {
 }
 
 function log() {
-    echo  "$(date"+%Y-%m-%d %H:%M:%S"): $1"
+    echo "$(date +%Y-%m-%d %H:%M:%S): $1"
 }
 
 function log_detail() {
-    echo date "$(date"+%Y-%m-%d %H:%M:%S"): ====> $1"
+    echo "$(date +%Y-%m-%d %H:%M:%S): ====> $1"
 }
 
 function log_error() {
-    echo date "$(date"+%Y-%m-%d %H:%M:%S") [ERROR]: $1"
+    echo "$(date +%Y-%m-%d %H:%M:%S) [ERROR]: $1"
 }
 
 function log_warning() {
-    echo "$(date"+%Y-%m-%d %H:%M:%S") [WARN]: $1"
+    echo "$(date +%Y-%m-%d %H:%M:%S) [WARN]: $1"
 }
 
 function log_debug() {
   if [ ! -z CONSUL_DEBUG_LOG ] && [ CONSUL_DEBUG_LOG -ne "0" ]; then
-    echo "$(date"+%Y-%m-%d %H:%M:%S") [DEBUG]: $1"
+    echo "$(date +%Y-%m-%d %H:%M:%S) [DEBUG]: $1"
   fi
 }
 
@@ -101,8 +103,8 @@ function wait_for_bootstrap_process() {
       exit 1
     fi
   else
-    log_debug "CONSUL_HTTP_TOKEN: ${CONSUL_HTTP_TOKEN}"
     log_detail "The master ACL Token is present so skipping the bootstrap process."
+    log_debug "CONSUL_HTTP_TOKEN: ${CONSUL_HTTP_TOKEN}"
   fi
 }
 
