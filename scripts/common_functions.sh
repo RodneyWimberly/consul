@@ -1,6 +1,6 @@
 #!/bin/sh
 
-source "${CONSUL_SCRIPT_DIR}"/consul.env
+source consul.env
 
 function consul_cmd() (
   consul_container="$(docker stack ps -q -f name=${CONSUL_STACK_PROJECT_NAME}_consul ${CONSUL_STACK_PROJECT_NAME})"
