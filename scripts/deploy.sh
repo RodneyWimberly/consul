@@ -3,8 +3,8 @@
 #   tears down exiting container resources and builds application stacks on bare containers
 set -e
 
-source /tmp/consul/scripts/consul.env
-source /tmp/consul/scripts/common_functions.sh
+source ./consul.env
+source ./common_functions.sh
 
 log "*** >=>=>=>  Stack Deployment  <=<=<=< ***"
 
