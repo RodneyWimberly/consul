@@ -70,7 +70,8 @@ services:
 
   registrator:
     image: gliderlabs/registrator:master
-    command: -internal consul://consul.service.consul:8500    env_file:
+    command: -internal consul://consul.service.consul:8500
+    env_file:
       - ./scripts/consul.env
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock
