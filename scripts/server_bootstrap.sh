@@ -1,3 +1,8 @@
+#!/bin/sh
+
+source "${CONSUL_SCRIPT_DIR}"/consul.env
+source "${CONSUL_SCRIPT_DIR}"/common_functions.sh
+
 log "Bootstrapping the current cluster, Please Wait..."
 
 add_path "${CONSUL_SCRIPT_DIR}"/bootstrap
