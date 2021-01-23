@@ -153,6 +153,26 @@
 		"selected_items":
 		[
 			[
+				"Package Control: re",
+				"Package Control: Remove Package"
+			],
+			[
+				"Package Control: inst",
+				"Package Control: Install Package"
+			],
+			[
+				"",
+				"⌬ tabnine: Open Configuration"
+			],
+			[
+				"Snippet: ",
+				"Snippet: elif …"
+			],
+			[
+				"proje",
+				"Pretty JSON: JSON query with ./jq"
+			],
+			[
 				"Package Control: rem",
 				"Package Control: Remove Package"
 			],
@@ -199,10 +219,6 @@
 			[
 				"Package Control: a",
 				"Package Control: Advanced Install Package"
-			],
-			[
-				"Package Control: inst",
-				"Package Control: Install Package"
 			],
 			[
 				"Package Control: install",
@@ -277,26 +293,26 @@
 	},
 	"file_history":
 	[
-		"/D/Consul/soakes/consul/scripts/consul-entrypoint.sh",
-		"/D/Consul/soakes/consul/scripts/common_functions.sh",
-		"/D/Consul/soakes/consul/scripts/consul.env",
-		"/D/Consul/soakes/consul/scripts/consul-bootstrapper-entrypoint.sh",
-		"/D/Consul/soakes/consul/scripts/filebrowser-entrypoint.sh",
-		"/D/Consul/soakes/consul/scripts/admin/backup-cluster.sh",
 		"/D/Consul/soakes/consul/consul-stack.yml",
+		"/D/Consul/soakes/consul/scripts/server_tls.sh",
+		"/D/Consul/soakes/consul/scripts/server_acl.sh",
+		"/D/Consul/soakes/consul/scripts/common_functions.sh",
+		"/D/Consul/soakes/consul/scripts/consul-bootstrapper-entrypoint.sh",
+		"/D/Consul/soakes/consul/scripts/admin/backup-cluster.sh",
+		"/D/Consul/soakes/consul/scripts/admin/deploy.sh",
+		"/D/Consul/soakes/consul/scripts/admin/update-stack-manager.sh",
+		"/D/Consul/soakes/consul/scripts/admin/update-stack-worker.sh",
 		"/D/Consul/soakes/consul/scripts/admin/deploy-to-pwd.cmd",
+		"/D/Consul/soakes/consul/scripts/consul-entrypoint.sh",
+		"/D/Consul/soakes/consul/scripts/consul.env",
+		"/D/Consul/soakes/consul/scripts/filebrowser-entrypoint.sh",
 		"/D/Consul/soakes/consul/scripts/admin/pwd-remote-cmd.sh",
 		"/C/Program Files/Sublime Text 3/Data/Packages/User/TortoiseSVN.sublime-settings",
-		"/D/Consul/soakes/consul/scripts/admin/update-stack-worker.sh",
-		"/D/Consul/soakes/consul/scripts/admin/update-stack-manager.sh",
-		"/D/Consul/soakes/consul/scripts/admin/deploy.sh",
-		"/D/Consul/soakes/consul/scripts/server_acl.sh",
 		"/D/Consul/soakes/consul/config/common.json",
 		"/D/Consul/soakes/consul/scripts/server_acl_anon.sh",
 		"/D/Consul/soakes/consul/scripts/server_acl_client_general_token.sh",
 		"/D/Consul/soakes/consul/scripts/server_acl_server_agent_token.sh",
 		"/D/Consul/soakes/consul/scripts/server_gossip.sh",
-		"/D/Consul/soakes/consul/scripts/server_tls.sh",
 		"/D/Consul/soakes/consul/scripts/wait-for-it.sh",
 		"/D/Consul/soakes/consul/volumes/test.txt",
 		"/D/Consul/soakes/consul/scripts/backup/get-latest.sh",
@@ -423,6 +439,7 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"CONSUL_CERT_DIR",
 			"curl",
 			"-z",
 			"expand_config_file_from",
@@ -476,6 +493,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"CONSUL_BOOTSTRAP_DIR",
 			"expand_config_file_from",
 			"expand_config_file",
 			"CONSUL_ENABLE_TLS",
@@ -557,7 +575,7 @@
 	"pinned_build_system": "Packages/sublime-docker/Docker Compose.sublime-build",
 	"replace":
 	{
-		"height": 56.0
+		"height": 114.0
 	},
 	"save_all_on_build": false,
 	"select_file":
