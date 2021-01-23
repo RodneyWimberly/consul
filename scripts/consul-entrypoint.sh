@@ -6,7 +6,7 @@ source "${CONSUL_SCRIPT_DIR}"/common_functions.sh
 apk update
 apk add bash curl jq gettext
 
-add_path "${CONSUL_SCRIPT_DIR}:${CONSUL_SCRIPT_DIR}/bootstrap"
+add_path "${CONSUL_SCRIPT_DIR}"
 get_node_details
 
 expand_config_file_from "common.json"
@@ -20,7 +20,7 @@ if [[ -z ${CONSUL_HTTP_TOKEN} ]] || [[ ${CONSUL_HTTP_TOKEN} == 0 ]]; then
   log_error "Cluster hasn't been bootstrapped"
   log_error "All services (Client and Server) are restricted from starup until the bootstrap process has completed"
   if [ "${NODE_IS_MANAGER}" == "true" ]; then
-    ${CONSUL_SCRIPT_DIR}/bootstrap/server_bootstrap.sh
+    ${CONSUL_SCRIPT_DIR}/server_bootstrap.sh
   fi
 fi
 
