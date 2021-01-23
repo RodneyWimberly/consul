@@ -17,25 +17,37 @@ function add_path() {
 }
 
 function log() {
-    echo "$(date -u -Iseconds): $1"
+  log_raw "[INF]: $1"
 }
 
 function log_detail() {
-    echo "$(date -u -Iseconds): ====> $1"
+  log_raw "[DTL]:  ====> $1"
+  #echo "$(date -u -Iseconds): ====> $1"
 }
 
 function log_error() {
-    echo "$(date -u -Iseconds) [ERROR]: $1"
+  log_raw "[ERR]: $1"
+  #echo "$(date -u -Iseconds) [ERROR]: $1"
 }
 
 function log_warning() {
-    echo "$(date -u -Iseconds) [WARN]: $1"
+  log_raw "[WAR]: $1"
+  #echo "$(date -u -Iseconds) [WARN]: $1"
 }
 
 function log_debug() {
   if [ ! -z CONSUL_DEBUG_LOG ] && [ CONSUL_DEBUG_LOG -ne "0" ]; then
-    echo "$(date -u -Iseconds) [DEBUG]: $1"
+    timestamp "[DBG]: $1"
+    #echo "$(date -u -Iseconds) [DEBUG]: $1"
   fi
+}
+
+function log_raw() {
+  echo "$(timestamp) $1"
+}
+
+function timestamp() {
+  date +"%T"
 }
 
 function append_generated_config() {
@@ -93,7 +105,7 @@ function wait_for_bootstrap_process() {
     rest_response=$(curl -sS --connect-timeout 180 --unix-socket /var/run/docker.sock -X POST http://localhost/containers/${CONSUL_STACK_PROJECT_NAME}_consul-bootstrapper/wait)
     log_debug "REST Response: ${rest_response}"
     status_code=$(echo ${rest_response} | jq -r -M '.StatusCode')
-    if [ status_code -eq 0 ]; then
+    if [ status_corede -eq 0 ]; then
       log_detail "The consul cluster has been successfully bootstrapped."
     else
       error_msg=$(echo ${rest_response} | jq -r -M '.Error.Message')
