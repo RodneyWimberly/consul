@@ -9,14 +9,6 @@ function consul_cmd() (
   fi
 )
 
-function cd_consul() {
-  cd "${CONSUL_GIT_DIR}"
-}
-
-function consul_git_dir_available() {
-  [ -d "${CONSUL_GIT_DIR}" ]
-}
-
 function add_path() {
   export PATH=$1:${PATH}
   log "PATH has been updated to ${PATH} "
@@ -39,8 +31,15 @@ function log_warning() {
 }
 
 function append_generated_config() {
-  echo "${1}" >> ${CONSUL_BOOTSTRAP_DIR}/generated.json
-  cat ${CONSUL_BOOTSTRAP_DIR}/"${1}" >> ${CONSUL_BOOTSTRAP_DIR}/generated.json
+  if [ -f ${CONSUL_BOOTSTRAP_DIR}/generated.json ]; then
+    generated_json=$(cat ${CONSUL_BOOTSTRAP_DIR}/generated.json)
+    rm -f ${CONSUL_BOOTSTRAP_DIR}/generated.json
+  else
+    generated_json = "{}"
+  fi
+  config_json=$(cat ${CONSUL_BOOTSTRAP_DIR}/${1})
+  generated_json=$(echo "${generated_json}" | jq ". + ${config_json}")
+  echo "${generated_json}" | jq ". + ${config_json}" > ${CONSUL_BOOTSTRAP_DIR}/generated.json
   cp ${CONSUL_BOOTSTRAP_DIR}/"${1}" ${CONSUL_CONFIG_DIR}/"${1}"
 }
 
@@ -71,9 +70,10 @@ function show_node_details() {
 }
 
 function wait_for_bootstrap_process() {
-  if [ -z CONSUL_HTTP_TOKEN ] || [ CONSUL_HTTP_TOKEN -eq 0]; then
-    log_detail 'Waiting for consul cluster bootstrapping service to be complete'
+  if [ -z CONSUL_HTTP_TOKEN ] || [ CONSUL_HTTP_TOKEN -eq 0 ]; then
+    log_detail 'Waiting 60 seconds before inquiring if the Consul cluster bootstrapping service to be complete'
     sleep 60
+    log_detail "Querying Docker REST API to see if service ${CONSUL_STACK_PROJECT_NAME}_consul-bootstrapper has completed"
     rest_response=$(curl -sS --unix-socket /var/run/docker.sock -X POST http://localhost/containers/${CONSUL_STACK_PROJECT_NAME}_consul-bootstrapper/wait)
     status_code=$(echo ${rest_response} | jq -r -M '.StatusCode')
     if [ status_code -eq 0 ]; then
