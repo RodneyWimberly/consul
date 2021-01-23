@@ -20,6 +20,7 @@ if [ ! -f ${CONSUL_BOOTSTRAP_DIR}/server_acl_master_token.json ]; then
         sleep 1
         log_detail "Getting ACL bootstrap token / generating master token"
         ACL_RESPONSE=$(curl -sS -X PUT http://127.0.0.1:8500/v1/acl/bootstrap)
+        echo "${ACL_RESPONSE} "
         ACL_MASTER_TOKEN=$(echo ${ACL_RESPONSE} | jq -r -M '.ID')
         export CONSUL_HTTP_TOKEN=${ACL_MASTER_TOKEN}
     done
