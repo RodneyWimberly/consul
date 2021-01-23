@@ -15,24 +15,24 @@ function add_path() {
 }
 
 function log() {
-    echo  "$(date "+%Y-%m-%d %H:%M:%S"): $1"
+    echo  "$(date"+%Y-%m-%d %H:%M:%S"): $1"
 }
 
 function log_detail() {
-    echo date "$(date "+%Y-%m-%d %H:%M:%S"): ---> $1"
+    echo date "$(date"+%Y-%m-%d %H:%M:%S"): ====> $1"
 }
 
 function log_error() {
-    echo date "$(date "+%Y-%m-%d %H:%M:%S") [ERROR]: $1"
+    echo date "$(date"+%Y-%m-%d %H:%M:%S") [ERROR]: $1"
 }
 
 function log_warning() {
-    echo "$(date "+%Y-%m-%d %H:%M:%S") [WARN]: $1"
+    echo "$(date"+%Y-%m-%d %H:%M:%S") [WARN]: $1"
 }
 
 function log_debug() {
-  if [ CONSUL_DEBUG_LOG -eq "1" ]; then
-    echo "$(date "+%Y-%m-%d %H:%M:%S") [DEBUG]: $1"
+  if [ ! -z CONSUL_DEBUG_LOG ] && [ CONSUL_DEBUG_LOG -ne "0" ]; then
+    echo "$(date"+%Y-%m-%d %H:%M:%S") [DEBUG]: $1"
   fi
 }
 
@@ -84,7 +84,7 @@ function show_node_details() {
 }
 
 function wait_for_bootstrap_process() {
-  if [ -z CONSUL_HTTP_TOKEN ] || [ CONSUL_HTTP_TOKEN -eq 0 ]; then
+  if [ -z CONSUL_HTTP_TOKEN ] || [ CONSUL_HTTP_TOKEN -eq "0" ]; then
     log_detail 'Waiting 60 seconds before inquiring if the Consul cluster bootstrapping service to be complete'
     sleep 60
     log_detail "Querying Docker REST API to see if service ${CONSUL_STACK_PROJECT_NAME}_consul-bootstrapper has completed"
