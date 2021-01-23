@@ -1,6 +1,12 @@
 #!/bin/sh
 
-source ./consul.env
+if [[ -f ./consul.env ]]; then
+  source ./consul.env
+elif [[ -f /usr/local/scripts/consul.env ]]; then
+  source /usr/local/scripts/consul.env
+elif [[ -f /tmp/consul/scripts/consul.env ]]; then
+  source /tmp/consul/scripts/consul.env
+fi
 
 function consul_cmd() (
   consul_container="$(docker stack ps -q -f name=${CONSUL_STACK_PROJECT_NAME}_consul ${CONSUL_STACK_PROJECT_NAME})"
