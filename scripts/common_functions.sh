@@ -31,7 +31,7 @@ function log_warning() {
 }
 
 function log_debug() {
-  if [ CONSUL_DEBUG_LOG -eq 1 0; then]
+  if [ CONSUL_DEBUG_LOG -eq 1 ]; then
     echo "$(date "+%Y-%m-%d %H:%M:%S") [DEBUG]: $1"
   fi
 }
