@@ -2,7 +2,7 @@
 
 function consul_cmd() (
   consul_container="$(docker stack ps -q -f name=${CONSUL_STACK_PROJECT_NAME}_consul ${CONSUL_STACK_PROJECT_NAME})"
-  if [ -z CONSUL_HTTP_TOKEN ] || [ CONSUL_HTTP_TOKEN -eq "0" ] then;
+  if [ -z CONSUL_HTTP_TOKEN ] || [ CONSUL_HTTP_TOKEN -eq "0" ]; then
     docker exec "${consul_container}" consul "$@"
   else
     docker exec "${consul_container}" -e CONSUL_HTTP_TOKEN consul "$@"
