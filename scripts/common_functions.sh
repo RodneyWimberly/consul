@@ -30,15 +30,27 @@ function log_warning() {
     echo "$(date "+%Y-%m-%d %H:%M:%S") [WARN]: $1"
 }
 
+function log_debug() {
+  if [ CONSUL_DEBUG_LOG -eq 1 0; then]
+    echo "$(date "+%Y-%m-%d %H:%M:%S") [DEBUG]: $1"
+  fi
+}
+
 function append_generated_config() {
+  generated_json="{}"
   if [ -f ${CONSUL_BOOTSTRAP_DIR}/generated.json ]; then
     generated_json=$(cat ${CONSUL_BOOTSTRAP_DIR}/generated.json)
     rm -f ${CONSUL_BOOTSTRAP_DIR}/generated.json
-  else
-    generated_json = "{}"
   fi
+  log_debug "Generated: ${generated_json}"
+
   config_json=$(cat ${CONSUL_BOOTSTRAP_DIR}/${1})
+  log_debug "Config: ${config_json}"
+
   generated_json=$(echo "${generated_json}" | jq ". + ${config_json}")
+  log_debug "Generated: ${generated_json}"
+
+  log_detail "Adding ${1} to generated.json"
   echo "${generated_json}" | jq ". + ${config_json}" > ${CONSUL_BOOTSTRAP_DIR}/generated.json
   cp ${CONSUL_BOOTSTRAP_DIR}/"${1}" ${CONSUL_CONFIG_DIR}/"${1}"
 }
@@ -48,11 +60,13 @@ function expand_config_file_from() {
   log "Processing ${CONSUL_BOOTSTRAP_DIR}/$1 with variable expansion to ${CONSUL_CONFIG_DIR}/$1"
   rm -f "${CONSUL_CONFIG_DIR}/$1"
   cat "${CONSUL_BOOTSTRAP_DIR}/$1" | envsubst > "${CONSUL_CONFIG_DIR}/$1"
+  log_debug $(cat "${CONSUL_CONFIG_DIR}/$1")
   set -e
 }
 
 function get_node_details() {
   NODE_INFO=$(curl -sS --unix-socket /var/run/docker.sock http://localhost/info)
+  log_debug "Node Info: ${NODE_INFO}"
   export NUM_OF_MGR_NODES=$(echo ${NODE_INFO} | jq -r -M '.Swarm.Managers')
   export NODE_IP=$(echo ${NODE_INFO} | jq -r -M '.Swarm.NodeAddr')
   export NODE_ID=$(echo ${NODE_INFO} | jq -r -M '.Swarm.NodeID')
@@ -70,11 +84,13 @@ function show_node_details() {
 }
 
 function wait_for_bootstrap_process() {
+  log_debug "CONSUL_HTTP_TOKEN: ${CONSUL_HTTP_TOKEN}"
   if [ -z CONSUL_HTTP_TOKEN ] || [ CONSUL_HTTP_TOKEN -eq 0 ]; then
     log_detail 'Waiting 60 seconds before inquiring if the Consul cluster bootstrapping service to be complete'
     sleep 60
     log_detail "Querying Docker REST API to see if service ${CONSUL_STACK_PROJECT_NAME}_consul-bootstrapper has completed"
     rest_response=$(curl -sS --unix-socket /var/run/docker.sock -X POST http://localhost/containers/${CONSUL_STACK_PROJECT_NAME}_consul-bootstrapper/wait)
+    log_debug "REST Response: ${rest_response}"
     status_code=$(echo ${rest_response} | jq -r -M '.StatusCode')
     if [ status_code -eq 0 ]; then
       log_detail "The consul cluster has been successfully bootstrapped."
