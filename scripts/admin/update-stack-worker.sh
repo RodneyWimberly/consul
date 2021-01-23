@@ -10,7 +10,6 @@ git clone -b DeploymentTest \
     /tmp/consul
 cd /tmp/consul
 chmod u+x ./scripts/*.sh
-chmod u+x ./scripts/admin/*.sh
 exit
 EOL
 chmod u+x update-stack.sh
