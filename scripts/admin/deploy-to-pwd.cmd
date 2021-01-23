@@ -3,16 +3,16 @@ cls
 cd d:\consul\soakes\consul
 
 rem ==================================================
-echo " --> Adding changed items to source control"
+rem echo " --> Adding changed items to source control"
 rem git add .
 
-echo " --> Commiting changed items to source control"
+rem echo " --> Commiting changed items to source control"
 rem git commit -m "<your message here>"
 
-echo " --> Pushing changed items to source control"
+rem echo " --> Pushing changed items to source control"
 rem git push --progress --all --repo=https://rodneywimberly:b606a0781f57605d4e5b00b753a6f26c23ff8908@github.com/RodneyWimberly/consul.git
 
-echo " --> Pulling changed items from source control"
+rem echo " --> Pulling changed items from source control"
 rem git pull --force --progress https://rodneywimberly:b606a0781f57605d4e5b00b753a6f26c23ff8908@github.com/RodneyWimberly/consul.git
 
 rem ==================================================
