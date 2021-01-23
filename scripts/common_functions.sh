@@ -17,24 +17,24 @@ function add_path() {
 }
 
 function log() {
-    echo "$(date +%Y-%m-%d %H:%M:%S): $1"
+    echo "$(date -u -Iseconds): $1"
 }
 
 function log_detail() {
-    echo "$(date +%Y-%m-%d %H:%M:%S): ====> $1"
+    echo "$(date -u -Iseconds): ====> $1"
 }
 
 function log_error() {
-    echo "$(date +%Y-%m-%d %H:%M:%S) [ERROR]: $1"
+    echo "$(date -u -Iseconds) [ERROR]: $1"
 }
 
 function log_warning() {
-    echo "$(date +%Y-%m-%d %H:%M:%S) [WARN]: $1"
+    echo "$(date -u -Iseconds) [WARN]: $1"
 }
 
 function log_debug() {
   if [ ! -z CONSUL_DEBUG_LOG ] && [ CONSUL_DEBUG_LOG -ne "0" ]; then
-    echo "$(date +%Y-%m-%d %H:%M:%S) [DEBUG]: $1"
+    echo "$(date -u -Iseconds) [DEBUG]: $1"
   fi
 }
 
