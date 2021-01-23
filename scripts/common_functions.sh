@@ -23,19 +23,19 @@ function add_path() {
 }
 
 function log() {
-    echo  date "+%Y-%m-%d %H:%M:%S: $1"
+    echo  "$(date "+%Y-%m-%d %H:%M:%S"): $1"
 }
 
 function log_detail() {
-    echo date "+%Y-%m-%d %H:%M:%S: ---> $1"
+    echo date "$(date "+%Y-%m-%d %H:%M:%S"): ---> $1"
 }
 
 function log_error() {
-    echo date "+%Y-%m-%d %H:%M:%S [ERROR]: $1"
+    echo date "$(date "+%Y-%m-%d %H:%M:%S") [ERROR]: $1"
 }
 
 function log_warning() {
-    echo date "+%Y-%m-%d %H:%M:%S [WARN]: $1"
+    echo "$(date "+%Y-%m-%d %H:%M:%S") [WARN]: $1"
 }
 
 function append_generated_config() {
@@ -72,7 +72,7 @@ function show_node_details() {
 
 function wait_for_bootstrap_process() {
     log_detail 'Waiting for consul cluster bootstrapping service to be complete'
-    sleep 5
+    sleep 60
     rest_response=$(curl -sS --unix-socket /var/run/docker.sock -X POST http://localhost/containers/${CONSUL_STACK_PROJECT_NAME}_consul-bootstrapper/wait)
     status_code=$(echo ${rest_response} | jq -r -M '.StatusCode')
     if [ status_code -eq 0 ]; then
