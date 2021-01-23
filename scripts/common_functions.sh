@@ -23,24 +23,25 @@ function add_path() {
 }
 
 function log() {
-    echo "$1"
+    echo  date "+%Y-%m-%d %H:%M:%S: $1"
 }
 
 function log_detail() {
-    echo " --> $1"
+    echo date "+%Y-%m-%d %H:%M:%S: ---> $1"
 }
 
 function log_error() {
-    echo "[ERROR]: $1"
+    echo date "+%Y-%m-%d %H:%M:%S [ERROR]: $1"
 }
 
 function log_warning() {
-    echo "[WARN]: $1"
+    echo date "+%Y-%m-%d %H:%M:%S [WARN]: $1"
 }
 
 function append_generated_config() {
   echo "${1}" >> ${CONSUL_BOOTSTRAP_DIR}/generated.json
   cat ${CONSUL_BOOTSTRAP_DIR}/"${1}" >> ${CONSUL_BOOTSTRAP_DIR}/generated.json
+  cp ${CONSUL_BOOTSTRAP_DIR}/"${1}" ${CONSUL_CONFIG_DIR}/"${1}"
 }
 
 function expand_config_file_from() {
