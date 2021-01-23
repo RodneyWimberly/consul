@@ -31,7 +31,7 @@ function log_warning() {
 }
 
 function log_debug() {
-  if [ CONSUL_DEBUG_LOG -eq 1 ]; then
+  if [ CONSUL_DEBUG_LOG -eq "1" ]; then
     echo "$(date "+%Y-%m-%d %H:%M:%S") [DEBUG]: $1"
   fi
 }
@@ -84,12 +84,11 @@ function show_node_details() {
 }
 
 function wait_for_bootstrap_process() {
-  log_debug "CONSUL_HTTP_TOKEN: ${CONSUL_HTTP_TOKEN}"
   if [ -z CONSUL_HTTP_TOKEN ] || [ CONSUL_HTTP_TOKEN -eq 0 ]; then
     log_detail 'Waiting 60 seconds before inquiring if the Consul cluster bootstrapping service to be complete'
     sleep 60
     log_detail "Querying Docker REST API to see if service ${CONSUL_STACK_PROJECT_NAME}_consul-bootstrapper has completed"
-    rest_response=$(curl -sS --unix-socket /var/run/docker.sock -X POST http://localhost/containers/${CONSUL_STACK_PROJECT_NAME}_consul-bootstrapper/wait)
+    rest_response=$(curl -sS --connect-timeout 180 --unix-socket /var/run/docker.sock -X POST http://localhost/containers/${CONSUL_STACK_PROJECT_NAME}_consul-bootstrapper/wait)
     log_debug "REST Response: ${rest_response}"
     status_code=$(echo ${rest_response} | jq -r -M '.StatusCode')
     if [ status_code -eq 0 ]; then
@@ -102,6 +101,7 @@ function wait_for_bootstrap_process() {
       exit 1
     fi
   else
+    log_debug "CONSUL_HTTP_TOKEN: ${CONSUL_HTTP_TOKEN}"
     log_detail "The master ACL Token is present so skipping the bootstrap process."
   fi
 }
