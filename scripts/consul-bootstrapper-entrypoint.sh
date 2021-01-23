@@ -78,7 +78,7 @@ else
   fi
 
   log "Starting server in bootstrap mode. The ACL will be in legacy mode until a leader is elected."
-  log_detail "Server will be started in 'local only' mode to not allow node registering while bootstraping"
+  log_detail "Server will be started in 'local only' mode to not allow node registering while bootstrapping"
   docker-entrypoint.sh agent -server=true -bootstrap-expect=1 -datacenter=${CONSUL_DATACENTER} -bind=127.0.0.1 &
     consul_pid="$!"
 
@@ -88,8 +88,22 @@ else
   log_detail "waiting further 20 seconds to ensure a leader has been elected"
   sleep 20s
 
-  log_detail "continuing the cluster boostraping process"
+  log_detail "continuing the cluster bootstrapping process"
   ${CONSUL_SCRIPT_DIR}/server_acl.sh
+
+  log "Creating Consul cluster snapshot"
+  if [ ! -d "${CONSUL_BOOTSTRAP_DIR}"/backups ]; then
+    mkdir "${CONSUL_BOOTSTRAP_DIR}"/backups
+  fi
+  backup_file="${CONSUL_BOOTSTRAP_DIR}/backups/backup_$(date +%Y-%m-%d-%s).snap"
+  log_detail "snapshot will be saved as ${backup_file} "
+  consul snapshot save "${backup_file}"
+
+  log_detail "copying configuration generated during bootstrap to external mount"
+  if [[ ! -d "${CONSUL_SCRIPTS_DIR}"/bootstrap ]]; then
+    mkdir "${CONSUL_SCRIPTS_DIR}"/bootstrap
+  fi
+  cp -r "${CONSUL_BOOTSTRAP_DIR}"/bootstrap/* "${CONSUL_SCRIPTS_DIR}"/bootstrap/*
 
   log "Shutting down 'local only' server (pid: ${consul_pid}) and then starting usual server"
   kill ${consul_pid}
