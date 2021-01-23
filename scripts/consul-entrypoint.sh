@@ -6,7 +6,7 @@ source "${CONSUL_SCRIPT_DIR}"/common_functions.sh
 apk update
 apk add bash curl jq gettext
 
-add_path $CONSUL_SCRIPT_DIR
+add_path "${CONSUL_SCRIPT_DIR}:${CONSUL_SCRIPT_DIR}/bootstrap"
 get_node_details
 
 expand_config_file_from "common.json"

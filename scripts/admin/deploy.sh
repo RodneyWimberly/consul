@@ -25,8 +25,8 @@ docker stack rm "${CONSUL_STACK_PROJECT_NAME}"
 #log_detail "Removing network 'admin_network'"
 #docker network rm admin_network
 
-log_detail "Waiting 10 seconds for item deletion finalizes"
-sleep 10
+log_detail "Waiting 1 seconds for item deletion finalizes"
+sleep 1
 
 log_detail "Creating attachable overlay network 'admin_network'"
 docker network create --driver=overlay --attachable --subnet=${CONSUL_SUBNET} admin_network
