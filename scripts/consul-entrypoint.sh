@@ -21,9 +21,13 @@ if [[ -z ${CONSUL_HTTP_TOKEN} ]] || [[ ${CONSUL_HTTP_TOKEN} == 0 ]]; then
   log_error "All services (Client and Server) are restricted from starup until the bootstrap process has completed"
   if [ "${NODE_IS_MANAGER}" == "true" ]; then
     ${CONSUL_SCRIPT_DIR}/server_bootstrap.sh
+  else
+    log_error "Please restart this service once the cluster has been bootstrapped."
+    log_error "Process is exiting"
+    exit 1
   fi
 fi
 
 show_node_details
-echo "Starting consul client with the following arguments $@"
+echo "Starting consul client with the following arguments: $@"
 exec docker-entrypoint.sh "$@"
