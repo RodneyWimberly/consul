@@ -78,6 +78,9 @@ services:
   consul-bootstrapper:
     << : *consul-base
     entrypoint: /usr/local/scripts/consul-bootstrapper-entrypoint.sh
+    build:
+      labels:
+        name: consul-bootstrapper
     networks:
       admin_network:
         aliases:
