@@ -97,7 +97,7 @@ else
   fi
   backup_file="${CONSUL_BOOTSTRAP_DIR}/backups/backup_$(date +%Y-%m-%d-%s).snap"
   log_detail "snapshot will be saved as ${backup_file} "
-  consul snapshot save "${backup_file}"
+  consul snapshot save -token="${CONSUL_HTTP_TOKEN}" "${backup_file}"
 
   log_detail "copying configuration generated during bootstrap to external mount"
   if [[ ! -d "${CONSUL_SCRIPTS_DIR}"/bootstrap ]]; then
