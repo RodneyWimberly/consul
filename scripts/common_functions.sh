@@ -72,7 +72,7 @@ function show_node_details() {
 function wait_for_bootstrap_process() {
     log_detail 'Waiting for consul cluster bootstrapping service to be complete'
     sleep 5
-    rest_response=$(curl -sS --unix-socket -X POST /var/run/docker.sock http://localhost/containers/${CONSUL_STACK_PROJECT_NAME}_consul-bootstrapper/wait?condition=next-exit)
+    rest_response=$(curl -sS --unix-socket /var/run/docker.sock -X POST http://localhost/containers/${CONSUL_STACK_PROJECT_NAME}_consul-bootstrapper/wait?condition=next-exit)
     status_code=$(echo ${rest_response} | jq -r -M '.StatusCode')
     if [ status_code -eq 0 ]; then
       log_detail "The consul cluster has been successfully bootstrapped."
