@@ -44,7 +44,12 @@
     "https": 8501
   },
   "node_meta": {
-      "instance_type": "Docker container"
+    "instance_type": "Docker container",
+    "swarm_node_id": "${NODE_ID}",
+    "swarm_node_ip": "${NODE_IP}",
+    "swarm_manager_nodes": ${NUM_OF_MGR_NODES},
+    "swarm_node_is_manager": ${NODE_IS_MANAGER},
+    "swarm_node_name": "${NODE_NAME}"
   },
   "node_name": "${NODE_NAME}",
   "leave_on_terminate" : true,

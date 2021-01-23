@@ -153,20 +153,44 @@
 		"selected_items":
 		[
 			[
-				"git",
-				"Git: Commit"
+				"Package Control: up",
+				"Package Control: Upgrade/Overwrite All Packages"
+			],
+			[
+				"bar",
+				"Preferences: SideBarTools Settings"
+			],
+			[
+				"side",
+				"View: Toggle Side Bar"
+			],
+			[
+				"tor",
+				"TortoiseSVN: Log"
+			],
+			[
+				"Package Control: ins",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
 			],
 			[
 				"Package Control: in",
 				"Package Control: Install Package"
 			],
 			[
-				"build",
-				"Build: New Build System"
+				"Package Control: i",
+				"Package Control: Install Package"
 			],
 			[
-				"Package Control: ",
-				"Package Control: Upgrade/Overwrite All Packages"
+				"git",
+				"Git: Commit"
+			],
+			[
+				"build",
+				"Build: New Build System"
 			],
 			[
 				"Package Control: a",
@@ -174,10 +198,6 @@
 			],
 			[
 				"Package Control: inst",
-				"Package Control: Install Package"
-			],
-			[
-				"Package Control: ins",
 				"Package Control: Install Package"
 			],
 			[
@@ -253,23 +273,48 @@
 	},
 	"file_history":
 	[
-		"/D/Consul/soakes/consul/scripts/server_setup.sh",
-		"/D/Consul/soakes/consul/config/common.json",
-		"/D/Consul/soakes/consul/config/server.json",
-		"/D/Consul/soakes/consul/config/client.json",
-		"/D/Consul/soakes/consul/bootstrap-deployment.sh",
-		"/D/Consul/soakes/consul/deploy.sh",
-		"/D/Consul/soakes/consul/scripts/client_setup.sh",
-		"/D/Consul/soakes/consul/scripts/server_tls.sh",
-		"/D/Consul/soakes/consul/scripts/wait-for-it.sh",
-		"/D/Consul/soakes/consul/scripts/server_acl.sh",
-		"/D/Consul/soakes/consul/scripts/server_acl_anon.sh",
-		"/D/Consul/soakes/consul/scripts/server_acl_client_general_token.sh",
-		"/D/Consul/soakes/consul/scripts/server_acl_server_agent_token.sh",
-		"/D/Consul/soakes/consul/scripts/server_gossip.sh",
+		"/D/Consul/soakes/consul/scripts/backup/get-latest.sh",
+		"/D/Consul/soakes/consul/scripts/admin/backup-cluster.sh",
+		"/D/Consul/soakes/consul/scripts/admin/update-stack-manager.sh",
+		"/D/Consul/soakes/consul/scripts/admin/update-stack-worker.sh",
+		"/D/Consul/soakes/consul/scripts/consul-entrypoint.sh",
 		"/D/Consul/soakes/consul/scripts/common_functions.sh",
+		"/D/Consul/soakes/consul/scripts/backup/bootstrap-deployment.sh",
+		"/D/Consul/soakes/consul/scripts/admin/deploy.sh",
+		"/D/Consul/soakes/consul/scripts/admin/worker-update-stack.sh",
 		"/D/Consul/soakes/consul/scripts/consul.env",
 		"/D/Consul/soakes/consul/consul-stack.yml",
+		"/D/Consul/soakes/consul/scripts/admin/bootstrap-deployment.sh",
+		"/D/Consul/soakes/consul/scripts/admin/get-latest.sh",
+		"/D/Consul/soakes/consul/scripts/admin/test-acl-bootstrap.sh",
+		"/D/Consul/soakes/consul/scripts/bootstrap/server_acl.sh",
+		"/D/Consul/soakes/consul/scripts/bootstrap/server_acl_anon.sh",
+		"/D/Consul/soakes/consul/scripts/bootstrap/server_acl_client_general_token.sh",
+		"/D/Consul/soakes/consul/scripts/bootstrap/server_acl_server_agent_token.sh",
+		"/D/Consul/soakes/consul/scripts/bootstrap/server_gossip.sh",
+		"/D/Consul/soakes/consul/scripts/bootstrap/server_tls.sh",
+		"/D/Consul/soakes/consul/scripts/bootstrap/wait-for-it.sh",
+		"/D/Consul/soakes/consul/backup-cluster.sh",
+		"/D/Consul/soakes/consul/scripts/startup-script.sh",
+		"/D/Consul/soakes/consul/scripts/bootstrap/sever_bootstrap.sh",
+		"/D/Consul/soakes/consul/scripts/bootstrap/common_functions.sh",
+		"/D/Consul/soakes/consul/config/common.json",
+		"/D/Consul/soakes/consul/scripts/backup/client_setup.sh",
+		"/D/Consul/soakes/consul/bootstrap-deployment.sh",
+		"/D/Consul/soakes/consul/config/client.json",
+		"/D/Consul/soakes/consul/config/server.json",
+		"/D/Consul/soakes/consul/scripts/sever_bootstrap.sh",
+		"/D/Consul/soakes/consul/scripts/server_acl_client_general_token.sh",
+		"/D/Consul/soakes/consul/scripts/wait-for-it.sh",
+		"/D/Consul/soakes/consul/scripts/client_setup.sh",
+		"/D/Consul/soakes/consul/checkin-and-deploy.cmd",
+		"/D/Consul/soakes/consul/scripts/server_tls.sh",
+		"/D/Consul/soakes/consul/deploy.sh",
+		"/D/Consul/soakes/consul/scripts/server_acl.sh",
+		"/D/Consul/soakes/consul/scripts/server_setup.sh",
+		"/D/Consul/soakes/consul/scripts/server_gossip.sh",
+		"/D/Consul/soakes/consul/scripts/server_acl_server_agent_token.sh",
+		"/D/Consul/soakes/consul/scripts/server_acl_anon.sh",
 		"/D/Consul/soakes/consul/devops-stack.yml",
 		"/D/Consul/soakes/consul/config/server-config.json",
 		"/D/Consul/soakes/consul/config/client-config.json",
@@ -355,32 +400,7 @@
 		"/D/em/Core/Dns/dns.json",
 		"/D/em/Core/Vault/docker-entrypoint.sh",
 		"/D/em/Core/Vault/registry-agent.sh",
-		"/D/em/Core/Vault/docker-client-em-0.pem",
-		"/D/em/Core/Registry/MakeCerts.sh",
-		"/D/em/Core/hello/root/consul/config/dns.json",
-		"/D/em/Core/Dns/EventManager.csproj",
-		"/D/em/Core/Dns/em.docker-agent-ca.pem",
-		"/D/em/Core/Scripts/view-stack-logs.sh",
-		"/D/em/Core/Dns/consul-events.sh",
-		"/D/em/Core/Dns/em.docker-agent-ca-key.pem",
-		"/D/em/Core/ReverseProxy/root/etc/containerpilot.json5",
-		"/D/em/Core/world/containerpilot.json5",
-		"/D/em/Core/hello/containerpilot.json5",
-		"/D/em/Core/ReverseProxy/root/etc/nginx/mime.types",
-		"/D/em/Core/ReverseProxy/root/etc/nginx/nginx.conf",
-		"/D/em/Core/registry-leader/kube-deployment.yml",
-		"/D/em/Core/registry-leader/kube-service.yml",
-		"/D/em/Core/ReverseProxy/kube-deployment.yml",
-		"/D/em/Core/ReverseProxy/kube-service.yml",
-		"/D/em/Core/ReverseProxy/root/bin/reload-nginx.sh",
-		"/D/em/Core/ReverseProxy/root/etc/nginx/fastcgi_params",
-		"/D/em/Core/ReverseProxy/root/etc/nginx/gzip.conf",
-		"/D/em/Core/ReverseProxy/root/etc/nginx/http.conf",
-		"/D/em/Core/ReverseProxy/root/etc/containerpilot/nginx.conf.ctmpl",
-		"/D/em/Core/ReverseProxy/root/etc/nginx/proxy.conf",
-		"/D/em/Core/registry-leader/root/consul/config/server.hcl",
-		"/D/em/Core/registry-leader/root/etc/containerpilot.json5",
-		"/D/em/Core/ReverseProxy/root/etc/consul.d/client.hcl"
+		"/D/em/Core/Vault/docker-client-em-0.pem"
 	],
 	"find":
 	{
@@ -399,6 +419,10 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"curl",
+			"-z",
+			"expand_config_file_from",
+			"expand_config_file",
 			"cmdname",
 			"waiting",
 			"echoerr",
@@ -448,6 +472,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"expand_config_file_from",
 			"expand_config_file",
 			"CONSUL_ENABLE_TLS",
 			"CONSUL_ENABLE_ACL",
@@ -476,7 +501,7 @@
 	},
 	"incremental_find":
 	{
-		"height": 32.0
+		"height": 30.0
 	},
 	"input":
 	{
@@ -528,7 +553,7 @@
 	"pinned_build_system": "Packages/sublime-docker/Docker Compose.sublime-build",
 	"replace":
 	{
-		"height": 114.0
+		"height": 56.0
 	},
 	"save_all_on_build": false,
 	"select_file":
@@ -548,7 +573,7 @@
 		[
 			[
 				"",
-				"D:\\Projects\\hello-world-cp\\hello-world.sublime-project"
+				"D:\\em\\Core\\EventManager.Core.sublime-project"
 			]
 		],
 		"width": 380.0
@@ -568,8 +593,8 @@
 	"show_minimap": true,
 	"show_open_files": true,
 	"show_tabs": true,
-	"side_bar_visible": true,
-	"side_bar_width": 217.0,
+	"side_bar_visible": false,
+	"side_bar_width": 208.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

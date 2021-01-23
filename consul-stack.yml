@@ -32,7 +32,7 @@ secrets:
 services:
   consul:
     image: consul:${CONSUL_VERSION:-latest}
-    entrypoint: /usr/local/scripts/startup-script.sh
+    entrypoint: /usr/local/scripts/consul-entrypoint.sh
     command: agent
     configs:
       - source: common_config
@@ -70,8 +70,7 @@ services:
 
   registrator:
     image: gliderlabs/registrator:master
-    command: -internal consul://consul.service.consul:8500
-    env_file:
+    command: -internal consul://consul.service.consul:8500    env_file:
       - ./scripts/consul.env
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock
@@ -79,3 +78,18 @@ services:
       admin_network: {}
     deploy:
       mode: global
+
+    storage:
+      image: filebrowser/filebrowser
+      entrypoint: /usr/local/scripts/filebrowser-entrypoint.sh
+      ports:
+      - 8800:80
+      networks:
+        admin_network: {}
+      env_file:
+        - ./scripts/consul.env
+      volumes:
+      - ./volumes:/usr/local/volumes
+      - ./scripts:/usr/local/scripts
+      deploy:
+        replicas: 1
