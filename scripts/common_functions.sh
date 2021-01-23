@@ -69,13 +69,19 @@ function show_node_details() {
     log "Node Is Manager: ${NODE_IS_MANAGER}"
 }
 
-function wait_for_bootstrap_completion() {
-    if [ ! -f ${CONSUL_BOOTSTRAP_DIR}/.bootstrapped ]; then
-      log_warning "The cluster hasn't been bootstrapped"
-      log "All services (Client and Server) are restricted from starup until the bootstrap process has completed"
-      until [ -f  ${CONSUL_BOOTSTRAP_DIR}/.bootstrapped ]; do
-        sleep 1
-        log_detail 'Waiting for consul cluster bootstrapping process to be complete'
-      done
+function wait_for_bootstrap_process() {
+    log_detail 'Waiting for consul cluster bootstrapping service to be complete'
+    sleep 5
+    rest_response=$(curl -sS --unix-socket -X POST /var/run/docker.sock http://localhost/containers/${CONSUL_STACK_PROJECT_NAME}_consul-bootstrapper/wait?condition=next-exit)
+    status_code=$(echo ${rest_response} | jq -r -M '.StatusCode')
+    if [ status_code -eq 0 ]; then
+      log_detail "The consul cluster has been successfully bootstrapped."
+    else
+      error_msg=$(echo ${rest_response} | jq -r -M '.Error.Message')
+      log_errpr "The consul cluster bootstrapping service failed!"
+      log_error "Status Code: ${status_code} / Message: ${error_msg}"
+      log_error "The process will now exit"
+      exit 1
     fi
 }
+
