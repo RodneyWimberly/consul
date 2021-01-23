@@ -15,3 +15,5 @@ chmod u+x ./scripts/bootstrap/*.sh
 exit
 EOL
 chmod u+x update-stack.sh
+./update-stack.sh
+exit

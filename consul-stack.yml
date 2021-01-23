@@ -83,9 +83,9 @@ services:
     << : *consul-base
     entrypoint: /usr/local/scripts/consul-bootstrapper-entrypoint.sh
     networks:
-    admin_network:
-      aliases:
-        - consul-bootstrapper.service.consul
+      admin_network:
+        aliases:
+          - consul-bootstrapper.service.consul
     deploy:
       mode: replicated
       replicas: 1
