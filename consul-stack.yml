@@ -53,8 +53,6 @@ x-consul:
     - data_volume:/consul/data
     - /var/run/docker.sock:/var/run/docker.sock
     - ./scripts:/usr/local/scripts
-  ports:
-    - 8500:8500
   env_file:
     - ./scripts/consul.env
   #healthcheck:
@@ -80,8 +78,6 @@ services:
   consul-bootstrapper:
     << : *consul-base
     entrypoint: /usr/local/scripts/consul-bootstrapper-entrypoint.sh
-    ports:
-    - 8550:8500
     networks:
       admin_network:
         aliases:
