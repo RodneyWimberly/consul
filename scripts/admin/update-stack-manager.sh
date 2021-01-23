@@ -11,7 +11,6 @@ git clone -b DeploymentTest \
 cd /tmp/consul
 chmod u+x ./scripts/*.sh
 chmod u+x ./scripts/admin/*.sh
-chmod u+x ./scripts/bootstrap/*.sh
 ./scripts/admin/deploy.sh
 exit
 EOL
