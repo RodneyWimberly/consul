@@ -21,5 +21,5 @@ fi
 wait_for_bootstrap_process
 
 show_node_details
-log_detai "Starting Consul in ${agent_mode} mode using the following command: docker-entrypoint.sh $@"
+log_detail "Starting Consul in ${agent_mode} mode using the following command: exec docker-entrypoint.sh $@"
 exec docker-entrypoint.sh "$@"

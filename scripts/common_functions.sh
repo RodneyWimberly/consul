@@ -71,6 +71,7 @@ function show_node_details() {
 }
 
 function wait_for_bootstrap_process() {
+  if [ -z CONSUL_HTTP_TOKEN ] || [ CONSUL_HTTP_TOKEN -eq 0]; then
     log_detail 'Waiting for consul cluster bootstrapping service to be complete'
     sleep 60
     rest_response=$(curl -sS --unix-socket /var/run/docker.sock -X POST http://localhost/containers/${CONSUL_STACK_PROJECT_NAME}_consul-bootstrapper/wait)
@@ -84,5 +85,8 @@ function wait_for_bootstrap_process() {
       log_error "The process will now exit"
       exit 1
     fi
+  else
+    log_detail "The master ACL Token is present so skipping the bootstrap process."
+  fi
 }
 
