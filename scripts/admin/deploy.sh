@@ -33,12 +33,12 @@ docker network create --driver=overlay --attachable --subnet=${CONSUL_SUBNET} ad
 set -e
 
 log_detail "Deploying DevOps Stack to Swarm"
-docker stack deploy --compose-file=../../devops-stack.yml devops
+docker stack deploy --compose-file=/tmp/consul/devops-stack.yml devops
 
 #log_detail "Deploying Logging Stack to Swarm"
 #docker stack deploy --compose-file=./logging-stack.yml logging
 
 log_detail "Deploying Consul Stack to Swarm"
-docker stack deploy --compose-file=../../consul-stack.yml "${CONSUL_STACK_PROJECT_NAME}"
+docker stack deploy --compose-file=/tmp/consul/consul-stack.yml "${CONSUL_STACK_PROJECT_NAME}"
 
 exit
