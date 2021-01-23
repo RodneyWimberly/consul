@@ -16,10 +16,12 @@ else
   expand_config_file_from "client.json"
 fi
 
-if [[ -z ${CONSUL_HTTP_TOKEN} ]] || [[ ${CONSUL_HTTP_TOKEN} == 0 ]] ; then
+if [[ -z ${CONSUL_HTTP_TOKEN} ]] || [[ ${CONSUL_HTTP_TOKEN} == 0 ]]; then
   log_error "Cluster hasn't been bootstrapped"
   log_error "All services (Client and Server) are restricted from starup until the bootstrap process has completed"
-  if [ "${NODE_IS_MANAGER}" == "true" ]; then; ${CONSUL_SCRIPT_DIR}/bootstrap/server_bootstrap.sh; fi
+  if [ "${NODE_IS_MANAGER}" == "true" ]; then
+    ${CONSUL_SCRIPT_DIR}/bootstrap/server_bootstrap.sh
+  fi
 fi
 
 show_node_details
