@@ -42,7 +42,7 @@ function log_warning() {
 }
 
 function log_debug() {
-  if [ ! -z CONSUL_DEBUG_LOG ] && [ CONSUL_DEBUG_LOG -ne "0" ]; then
+  if [ ! -z "$CONSUL_DEBUG_LOG" ] && [ "$CONSUL_DEBUG_LOG" -ne "0" ] ; then
     timestamp "[DBG]: $1"
     #echo "$(date -u -Iseconds) [DEBUG]: $1"
   fi
@@ -104,7 +104,7 @@ function show_node_details() {
 }
 
 function wait_for_bootstrap_process() {
-  if [ -z CONSUL_HTTP_TOKEN ] || [ CONSUL_HTTP_TOKEN -eq "0" ]; then
+  if [ -z "$CONSUL_HTTP_TOKEN" ] || [ "$CONSUL_HTTP_TOKEN" -eq "0" ] ; then
     log_detail 'Waiting 60 seconds before inquiring if the Consul cluster bootstrapping service to be complete'
     sleep 60
     log_detail "Querying Docker REST API to see if service ${CONSUL_STACK_PROJECT_NAME}_consul-bootstrapper has completed"
