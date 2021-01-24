@@ -24,10 +24,12 @@ function add_path() {
 
 function docker_api() {
   docker_api_url="http://localhost/${1}"
-  docker_api_method=${2}
+  docker_api_method="${2}"
   if [[ -z "${docker_api_method}" ]]; then
-    docker_api_method=GET
+    docker_api_method="GET"
   fi
+  echo "${docker_api_url}"
+  echo "${docker_api_method}"
   return $(curl -sS --connect-timeout 180 --unix-socket /var/run/docker.sock -X "${docker_api_method} ${docker_api_url}")
 }
 
