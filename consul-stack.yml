@@ -81,6 +81,10 @@ services:
     build:
       labels:
         name: consul-bootstrapper
+    volumes:
+      - data_volume:/consul/data
+      - ./backups:/usr/local/backups
+      - ./scripts:/usr/local/scripts
     networks:
       admin_network:
         aliases:
