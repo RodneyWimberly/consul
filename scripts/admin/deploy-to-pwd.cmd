@@ -17,7 +17,7 @@ rem git pull --force --progress https://rodneywimberly:b606a0781f57605d4e5b00b75
 
 rem ==================================================
 echo " --> Executing update-stack.sh on Worker1"
-start "Worker1 Update" /B putty.exe -m d:\consul\soakes\consul\scripts\admin\pwd-remote-cmd.sh ip172-18-0-66-c064vqhlo55000boiqt0@direct.labs.play-with-docker.com
+start "Worker1 Update" /B putty.exe -m d:\consul\soakes\consul\scripts\admin\pwd-remote-cmd.sh %WORKER%
 
 echo " --> Executing update-stack.sh on Manager1"
-start "Manager1 Update" /B putty.exe -m  d:\consul\soakes\consul\scripts\admin\pwd-remote-cmd.sh ip172-18-0-64-c064vqhlo55000boiqt0@direct.labs.play-with-docker.com
+start "Manager1 Update" /B putty.exe -m  d:\consul\soakes\consul\scripts\admin\pwd-remote-cmd.sh %MANAGER%
