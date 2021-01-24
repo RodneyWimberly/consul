@@ -8,7 +8,7 @@ apk add bash curl jq gettext
 
 add_path "${CONSUL_SCRIPT_DIR}"
 
-get_node_details
+get_docker_details
 
 expand_config_file_from "common.json"
 if [ "${NODE_IS_MANAGER}" == "true" ]; then
@@ -21,7 +21,7 @@ fi
 
 wait_for_bootstrap_process
 
-show_node_details
+show_docker_details
 
 log_detail "Starting Consul in ${agent_mode} mode using the following command: exec docker-entrypoint.sh $@"
 exec docker-entrypoint.sh "$@"

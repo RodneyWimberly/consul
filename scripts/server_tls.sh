@@ -63,4 +63,4 @@ cat > ${CONSUL_BOOTSTRAP_DIR}/tls.json <<EOL
 	}
 }
 EOL
-append_generated_config "tls.json"
+merge_json "tls.json"

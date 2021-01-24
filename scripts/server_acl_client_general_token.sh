@@ -23,7 +23,7 @@ if [ ! -f ${CONSUL_BOOTSTRAP_DIR}/general_acl_token.json ]; then
     #sleep 1
     # echo "Agent client token: ${AGENT_CLIENT_TOKEN}"
     echo "{\"acl_token\": \"${ACL_TOKEN}\"}" > ${CONSUL_BOOTSTRAP_DIR}/general_acl_token.json
-    append_generated_config "general_acl_token.json"
+    merge_json "general_acl_token.json"
 else
     log "Skipping acl_token setup .. already configured";
 fi

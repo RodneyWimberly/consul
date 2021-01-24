@@ -31,7 +31,7 @@ if [ ! -f ${CONSUL_BOOTSTRAP_DIR}/server_acl_master_token.json ]; then
   "acl_master_token": "${ACL_MASTER_TOKEN}"
 }
 EOL
-append_generated_config "server_acl_master_token.json"
+merge_json "server_acl_master_token.json"
 fi
 
 ${CONSUL_SCRIPT_DIR}/server_acl_server_agent_token.sh

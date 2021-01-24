@@ -31,11 +31,11 @@ if [ ! -f ${CONSUL_BOOTSTRAP_DIR}/server_acl_agent_acl_token.json ] || \
     else
       log "Configuring acl agent token for the server"
       echo "{\"acl_agent_token\": \"${ACL_AGENT_TOKEN}\"}" > ${CONSUL_BOOTSTRAP_DIR}/server_acl_agent_acl_token.json
-      append_generated_config "server_acl_agent_acl_token.json"
+      merge_json "server_acl_agent_acl_token.json"
 
       log "Configuring acl token for the server"
       echo "{\"acl_token\": \"${ACL_AGENT_TOKEN}\"}" > ${CONSUL_BOOTSTRAP_DIR}/server_general_acl_token.json
-      append_generated_config "server_general_acl_token.json"
+      merge_json "server_general_acl_token.json"
     fi
 else
     log "Skipping acl_agent_token setup .. already configured";

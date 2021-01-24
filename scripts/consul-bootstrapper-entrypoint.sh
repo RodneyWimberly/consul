@@ -74,7 +74,7 @@ else
     # this needs to be done before the server starts, we cannot move that into server_acl.sh
     # locks down our consul server from leaking any data to anybody - full anon block
     echo "{ \"acl\": { \"enabled\": true, \"default_policy\": \"deny\", \"down_policy\": \"deny\" } }" > ${CONSUL_BOOTSTRAP_DIR}/server_acl.json
-    append_generated_config "server_acl.json"
+    merge_json "server_acl.json"
     cp "${CONSUL_BOOTSTRAP_DIR}/server_acl.json" "${CONSUL_CONFIG_DIR}/server_acl.json"
   fi
 
@@ -99,7 +99,8 @@ else
     log_detail "snapshot will be saved as ${backup_file} "
     set +e
 
-    curl --header "X-Consul-Token: ${ACL_MASTER_TOKEN}" http://127.0.0.1:8500/v1/snapshot?dc=docker -o ${backup_file}
+    echo "CONSUL_HTTP_TOKEN: ${CONSUL_HTTP_TOKEN}"
+    curl --header "X-Consul-Token: ${CONSUL_HTTP_TOKEN}" http://127.0.0.1:8500/v1/snapshot?dc=docker -o ${backup_file}
     #consul snapshot save -token="${CONSUL_HTTP_TOKEN}" "${backup_file}"
     set -e
 
@@ -122,9 +123,5 @@ else
   log "Informing other services that the cluster bootstrapping proces is complete and the startup restriction has been removed"
   touch ${CONSUL_BOOTSTRAP_DIR}/.bootstrapped
 
-  foo=
-  while [[ -z "${foo}" ]]; do
-    echo "Sleeping so that container will stay running and can be accessed."
-    sleep 60
-  done
+  keep_service_alive
 fi

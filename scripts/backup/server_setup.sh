@@ -15,7 +15,7 @@ expand_config_file_from server.json
 #'{{ GetInterfaceIP \"eth0\" }}'
 #'{{ GetAllInterfaces | include "network" "192.168.0.0/16" }}'
 
-show_node_details
+show_docker_details
 
 log "Starting consul server with the following arguments $@"
 exec docker-entrypoint.sh "$@"

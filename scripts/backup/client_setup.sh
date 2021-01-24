@@ -12,7 +12,7 @@ expand_config_file_from client.json
 expand_config_file_from gossip.json
 expand_config_file_from general_acl_token.json
 
-show_node_details
+show_docker_details
 
 log "Starting consul client with the following arguments $@"
 exec docker-entrypoint.sh "$@"
