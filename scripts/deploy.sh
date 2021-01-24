@@ -13,7 +13,7 @@ export NODE_IP=$(docker info --format "{{.Swarm.NodeAddr}}")
 export NODE_ID=$(docker info --format "{{.Swarm.NodeID}}")
 export NODE_NAME=$(docker info --format "{{.Name}}")
 export NODE_IS_MANAGER=$(docker info --format "{{.Swarm.ControlAvailable}}")
-show_node_details
+show_docker_details
 
 set +e
 log_detail "Removing the following stacks: logging, ${CONSUL_STACK_PROJECT_NAME}"

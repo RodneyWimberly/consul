@@ -53,6 +53,9 @@
 			]
 		]
 	},
+	"buffers":
+	[
+	],
 	"build_system": "",
 	"build_system_choices":
 	[
@@ -153,20 +156,56 @@
 		"selected_items":
 		[
 			[
-				"Package Control: re",
-				"Package Control: Remove Package"
+				"Package Control: ",
+				"Package Control: Install Package"
+			],
+			[
+				"jso",
+				"JsonTree: Show Tree"
+			],
+			[
+				"Package Control: in",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: ena",
+				"Package Control: Enable Package"
+			],
+			[
+				"Snippet: ",
+				"Snippet: while … done"
+			],
+			[
+				"json",
+				"Pretty JSON: Format (Pretty Print) JSON"
+			],
+			[
+				"Package Control: ins",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: en",
+				"Package Control: Satisfy Dependencies"
 			],
 			[
 				"Package Control: inst",
 				"Package Control: Install Package"
 			],
 			[
-				"",
-				"⌬ tabnine: Open Configuration"
+				"github: s",
+				"GitHub: Open Remote URL in Browser (permalink)"
 			],
 			[
-				"Snippet: ",
-				"Snippet: elif …"
+				"gith",
+				"GitHub: History"
+			],
+			[
+				"Package Control: re",
+				"Package Control: Remove Package"
+			],
+			[
+				"",
+				"⌬ tabnine: Open Configuration"
 			],
 			[
 				"proje",
@@ -191,18 +230,6 @@
 			[
 				"tor",
 				"TortoiseSVN: Log"
-			],
-			[
-				"Package Control: ins",
-				"Package Control: Install Package"
-			],
-			[
-				"Package Control: ",
-				"Package Control: Install Package"
-			],
-			[
-				"Package Control: in",
-				"Package Control: Install Package"
 			],
 			[
 				"Package Control: i",
@@ -276,6 +303,7 @@
 		"height": 156.0,
 		"history":
 		[
+			"ls",
 			"exit",
 			"cd",
 			"ls",
@@ -288,31 +316,50 @@
 		"show_minimap": false,
 		"show_open_files": false,
 		"show_tabs": false,
-		"side_bar_visible": false,
+		"side_bar_visible": true,
 		"status_bar_visible": false
 	},
+	"expanded_folders":
+	[
+		"/D/Consul/soakes/consul",
+		"/D/Consul/soakes/consul/backups",
+		"/D/Consul/soakes/consul/scripts",
+		"/D/Consul/soakes/consul/scripts/admin"
+	],
 	"file_history":
 	[
-		"/D/Consul/soakes/consul/consul-stack.yml",
-		"/D/Consul/soakes/consul/scripts/server_tls.sh",
-		"/D/Consul/soakes/consul/scripts/server_acl.sh",
-		"/D/Consul/soakes/consul/scripts/common_functions.sh",
-		"/D/Consul/soakes/consul/scripts/consul-bootstrapper-entrypoint.sh",
-		"/D/Consul/soakes/consul/scripts/admin/backup-cluster.sh",
-		"/D/Consul/soakes/consul/scripts/admin/deploy.sh",
-		"/D/Consul/soakes/consul/scripts/admin/update-stack-manager.sh",
-		"/D/Consul/soakes/consul/scripts/admin/update-stack-worker.sh",
 		"/D/Consul/soakes/consul/scripts/admin/deploy-to-pwd.cmd",
-		"/D/Consul/soakes/consul/scripts/consul-entrypoint.sh",
-		"/D/Consul/soakes/consul/scripts/consul.env",
-		"/D/Consul/soakes/consul/scripts/filebrowser-entrypoint.sh",
-		"/D/Consul/soakes/consul/scripts/admin/pwd-remote-cmd.sh",
-		"/C/Program Files/Sublime Text 3/Data/Packages/User/TortoiseSVN.sublime-settings",
-		"/D/Consul/soakes/consul/config/common.json",
+		"/D/Consul/soakes/consul/scripts/admin/update-stack-manager.sh",
+		"/D/Consul/soakes/consul/scripts/common_functions.sh",
+		"/C/Program Files/Sublime Text 3/Data/Packages/BetterFindBuffer/BetterFindBuffer.sublime-settings",
+		"/D/Consul/soakes/consul/scripts/consul-bootstrapper-entrypoint.sh",
+		"/D/Consul/soakes/consul/scripts/server_gossip.sh",
+		"/D/Consul/soakes/consul/scripts/server_tls.sh",
 		"/D/Consul/soakes/consul/scripts/server_acl_anon.sh",
+		"/D/Consul/soakes/consul/scripts/server_acl.sh",
 		"/D/Consul/soakes/consul/scripts/server_acl_client_general_token.sh",
 		"/D/Consul/soakes/consul/scripts/server_acl_server_agent_token.sh",
-		"/D/Consul/soakes/consul/scripts/server_gossip.sh",
+		"/D/Consul/soakes/consul/scripts/admin/update-stack-worker.sh",
+		"/C/Program Files/Sublime Text 3/Data/Packages/QuickPanelEnhanced/Default.sublime-keymap",
+		"/C/Program Files/Sublime Text 3/Data/Packages/NavPanel/NavPanel.sublime-settings",
+		"/D/Consul/soakes/consul/scripts/consul-entrypoint.sh",
+		"/D/Consul/soakes/consul/backups/placeholder",
+		"/D/Consul/soakes/consul/scripts/admin/pwd-remote-cmd.sh",
+		"/D/Consul/soakes/consul/consul-stack.yml",
+		"/D/Consul/soakes/consul/scripts/consul.env",
+		"/D/Consul/soakes/consul/devops-stack.yml",
+		"/D/Consul/soakes/consul/config/common.json",
+		"/D/Consul/soakes/consul/config/server.json",
+		"/D/Consul/soakes/consul/config/client.json",
+		"/D/Consul/soakes/consul/scripts/admin/backup-cluster.sh",
+		"/D/Consul/soakes/consul/scripts/deploy.sh",
+		"/C/Program Files/Sublime Text 3/Data/Packages/SidebarSeparator/SidebarSeparator.sublime-settings",
+		"/D/Consul/soakes/consul/scripts/filebrowser-entrypoint.sh",
+		"/C/Program Files/Sublime Text 3/Data/Packages/TabNine/TabNine.sublime-settings",
+		"/C/Program Files/Sublime Text 3/Data/Packages/User/GitHub.sublime-settings",
+		"/C/Program Files/Sublime Text 3/Data/Packages/sublime-github/GitHub.sublime-settings",
+		"/D/Consul/soakes/consul/scripts/admin/deploy.sh",
+		"/C/Program Files/Sublime Text 3/Data/Packages/User/TortoiseSVN.sublime-settings",
 		"/D/Consul/soakes/consul/scripts/wait-for-it.sh",
 		"/D/Consul/soakes/consul/volumes/test.txt",
 		"/D/Consul/soakes/consul/scripts/backup/get-latest.sh",
@@ -334,14 +381,11 @@
 		"/D/Consul/soakes/consul/scripts/bootstrap/common_functions.sh",
 		"/D/Consul/soakes/consul/scripts/backup/client_setup.sh",
 		"/D/Consul/soakes/consul/bootstrap-deployment.sh",
-		"/D/Consul/soakes/consul/config/client.json",
-		"/D/Consul/soakes/consul/config/server.json",
 		"/D/Consul/soakes/consul/scripts/sever_bootstrap.sh",
 		"/D/Consul/soakes/consul/scripts/client_setup.sh",
 		"/D/Consul/soakes/consul/checkin-and-deploy.cmd",
 		"/D/Consul/soakes/consul/deploy.sh",
 		"/D/Consul/soakes/consul/scripts/server_setup.sh",
-		"/D/Consul/soakes/consul/devops-stack.yml",
 		"/D/Consul/soakes/consul/config/server-config.json",
 		"/D/Consul/soakes/consul/config/client-config.json",
 		"/D/Consul/soakes/consul/scripts/shell_expansion.sh",
@@ -411,16 +455,7 @@
 		"/D/em/Core/Vault/docs/vault-auth-by-cidr.md",
 		"/D/em/Core/Vault/docs/vault-for-humans.md",
 		"/D/em/Core/Vault/scripts/enable-docker-approle.sh",
-		"/D/em/Core/Vault/vault.json",
-		"/D/em/Core/world/root/consul/config/world.json",
-		"/D/em/Core/Diagnostics/start-diag.sh",
-		"/D/em/Core/hello/Dockerfile",
-		"/D/em/Core/Diagnostics/diag.sh",
-		"/D/em/Core/foo",
-		"/D/em/Core/Vault/secret.txt",
-		"/D/em/Core/Portal/Dockerfile",
-		"/D/em/Core/Vault/Dockerfile",
-		"/D/em/Core/world/Dockerfile"
+		"/D/em/Core/Vault/vault.json"
 	],
 	"find":
 	{
@@ -428,7 +463,7 @@
 	},
 	"find_in_files":
 	{
-		"height": 158.0,
+		"height": 164.0,
 		"where_history":
 		[
 			"D:\\Consul\\soakes\\consul"
@@ -439,6 +474,8 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"log_json",
+			"log_debug",
 			"CONSUL_CERT_DIR",
 			"curl",
 			"-z",
@@ -521,9 +558,17 @@
 		"whole_word": false,
 		"wrap": true
 	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
 	"incremental_find":
 	{
-		"height": 30.0
+		"height": 34.0
 	},
 	"input":
 	{
@@ -572,7 +617,16 @@
 	{
 		"height": 0.0
 	},
+	"output.project_environment_log":
+	{
+		"height": 0.0
+	},
+	"output.unsaved_changes":
+	{
+		"height": 162.0
+	},
 	"pinned_build_system": "Packages/sublime-docker/Docker Compose.sublime-build",
+	"project": "Consul.sublime-project",
 	"replace":
 	{
 		"height": 114.0
@@ -609,11 +663,21 @@
 		],
 		"width": 0.0
 	},
+	"selected_group": 0,
 	"settings":
 	{
+		"last_automatic_layout":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		]
 	},
 	"show_minimap": true,
-	"show_open_files": true,
+	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
 	"side_bar_width": 231.0,

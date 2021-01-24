@@ -12,5 +12,5 @@ if [ ! -f ${CONSUL_BOOTSTRAP_DIR}/gossip.json ]; then
     log "Generating new Gossip Encryption Key"
 	GOSSIP_KEY=`consul keygen`
 	echo "{\"encrypt\": \"${GOSSIP_KEY}\"}" > ${CONSUL_BOOTSTRAP_DIR}/gossip.json
-    append_generated_config "gossip.json"
+    merge_json "gossip.json"
 fi
