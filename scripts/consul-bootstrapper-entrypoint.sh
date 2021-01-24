@@ -97,7 +97,11 @@ else
     backup_file="${CONSUL_BACKUP_DIR}/backup_$(date +%Y-%m-%d-%s).snap"
 
     log_detail "snapshot will be saved as ${backup_file} "
-    consul snapshot save -token="${CONSUL_HTTP_TOKEN}" "${backup_file}"
+    set +e
+
+    curl --header "X-Consul-Token: ${ACL_MASTER_TOKEN}" http://127.0.0.1:8500/v1/snapshot?dc=docker -o ${backup_file}
+    #consul snapshot save -token="${CONSUL_HTTP_TOKEN}" "${backup_file}"
+    set -e
 
     log_detail "all generated output is being copied to ${CONSUL_BACKUP_DIR}"
     cp -r "${CONSUL_BOOTSTRAP_DIR}"/* "${CONSUL_BACKUP_DIR}"/*
@@ -117,4 +121,10 @@ else
 
   log "Informing other services that the cluster bootstrapping proces is complete and the startup restriction has been removed"
   touch ${CONSUL_BOOTSTRAP_DIR}/.bootstrapped
+
+  foo=
+  while [[ -z "${foo}" ]]; do
+    echo "Sleeping so that container will stay running and can be accessed."
+    sleep 60
+  done
 fi

@@ -106,17 +106,17 @@ function wait_for_bootstrap_process() {
     sleep 60
     set +e
     echo "Querying all containers"
-    rest_response=$(curl -sS --connect-timeout 180 --unix-socket /var/run/docker.sock -X POST http://localhost/containers/json)
+    rest_response=$(curl -sS --connect-timeout 180 --unix-socket /var/run/docker.sock -X GET http://localhost/containers/json?all=true)
     echo "${rest_response}"
     echo ""
 
     echo "Querying containers with a filter"
-    rest_response=$(curl -sS --connect-timeout 180 --unix-socket /var/run/docker.sock -X POST http://localhost/containers/json?filters={"label": ["name=consul-bootstrapper"]})
+    rest_response=$(curl -sS --connect-timeout 180 --unix-socket /var/run/docker.sock -X GET http://localhost/containers/json?all=true&filters=%7B%22volume%22%3A+%5B%22%2Fusr%2Flocal%2Fbackups%22%5D%7D)
     echo "${rest_response}"
     echo ""
 
     log_detail "Querying Docker REST API to see if service ${CONSUL_STACK_PROJECT_NAME}_consul-bootstrapper has completed"
-    rest_response=$(curl -sS --connect-timeout 180 --unix-socket /var/run/docker.sock -X POST http://localhost/containers/${CONSUL_STACK_PROJECT_NAME}_consul-bootstrapper/wait)
+    rest_response=$(curl -sS --connect-timeout 180 --unix-socket /var/run/docker.sock -X GET http://localhost/containers/${CONSUL_STACK_PROJECT_NAME}_consul-bootstrapper/wait)
 
     #status_code=$(echo ${rest_response} | jq -r -M '.statuscode')
     error_msg=$(echo ${rest_response} | jq -r -M '.message')
@@ -127,10 +127,11 @@ function wait_for_bootstrap_process() {
       log_error "The consul cluster bootstrapping service failed!"
       log_error "Message: ${error_msg}"
       log_error "The process will now exit"
-      exit 1
-      while [[ "true" == "true" ]]; do
-        sleep 15
+      #exit 1
+      foo=
+      while [[ -z "${foo}" ]]; do
         echo "Sleeping so that container will stay running for debugging purposes"
+        sleep 15
       done
     fi
   else
