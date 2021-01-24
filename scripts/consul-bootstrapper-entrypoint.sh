@@ -92,18 +92,12 @@ else
   ${CONSUL_SCRIPT_DIR}/server_acl.sh
 
   log "Creating Consul cluster snapshot"
-  if [ ! -d "${CONSUL_BOOTSTRAP_DIR}"/backups ]; then
-    mkdir "${CONSUL_BOOTSTRAP_DIR}"/backups
+  if [ ! -d "${CONSUL_BACKUP_DIR}" ]; then
+    mkdir "${CONSUL_BACKUP_DIR}"
   fi
-  backup_file="${CONSUL_BOOTSTRAP_DIR}/backups/backup_$(date +%Y-%m-%d-%s).snap"
+  backup_file="${CONSUL_BACKUP_DIR}/backup_$(date +%Y-%m-%d-%s).snap"
   log_detail "snapshot will be saved as ${backup_file} "
   consul snapshot save -token="${CONSUL_HTTP_TOKEN}" "${backup_file}"
-
-  log_detail "copying configuration generated during bootstrap to external mount"
-  if [[ ! -d "${CONSUL_SCRIPTS_DIR}"/bootstrap ]]; then
-    mkdir "${CONSUL_SCRIPTS_DIR}"/bootstrap
-  fi
-  cp -r "${CONSUL_BOOTSTRAP_DIR}"/bootstrap/* "${CONSUL_SCRIPTS_DIR}"/bootstrap/*
 
   log "Shutting down 'local only' server (pid: ${consul_pid}) and then starting usual server"
   kill ${consul_pid}
