@@ -15,7 +15,6 @@ set -e
 mkdir -p ${CONSUL_BOOTSTRAP_DIR}
 chown consul:consul ${CONSUL_BOOTSTRAP_DIR}
 chown consul:consul ${CONSUL_SCRIPT_DIR}
-chown consul:consul ${CONSUL_BACKUPS_DIR}
 chmod u+x ${CONSUL_SCRIPT_DIR}/*.sh
 
 if [ -z "${CONSUL_ENABLE_APK}" ]; then
@@ -93,20 +92,22 @@ else
   log_detail "continuing the cluster bootstrapping process"
   ${CONSUL_SCRIPT_DIR}/server_acl.sh
 
-  if [ -d "${CONSUL_BACKUP_DIR}" ]; then
+  if [ -d "${CONSUL_BOOTSTRAP_DIR}" ]; then
     log "Creating Consul cluster backups"
-    backup_file="${CONSUL_BACKUP_DIR}/backup_$(date +%Y-%m-%d-%s).snap"
+    backup_file="${CONSUL_BOOTSTRAP_DIR}/backup_$(date +%Y-%m-%d-%s).snap"
 
     log_detail "snapshot will be saved as ${backup_file} "
     set +e
 
+    get_json_property ${CONSUL_BOOTSTRAP_DIR}/server_acl_master_token.json "acl_master_token"
+    echo "ACL_MASTER_TOKEN: ${?}"
     ACL_MASTER_TOKEN=`cat ${CONSUL_BOOTSTRAP_DIR}/server_acl_master_token.json | jq -r -M '.acl_master_token'`
     echo "ACL_MASTER_TOKEN: ${ACL_MASTER_TOKEN}"
     curl --header "X-Consul-Token: ${ACL_MASTER_TOKEN}" http://127.0.0.1:8500/v1/snapshot?dc=docker -o ${backup_file}
     #consul snapshot save -token="${CONSUL_HTTP_TOKEN}" "${backup_file}"
 
-    log_detail "all generated output is being copied to ${CONSUL_BACKUP_DIR}"
-    cp -r "${CONSUL_BOOTSTRAP_DIR}/*" "${CONSUL_BACKUP_DIR}/"
+    # log_detail "all generated output is being copied to ${CONSUL_BACKUP_DIR}"
+    # cp -r "${CONSUL_BOOTSTRAP_DIR}/*" "${CONSUL_BACKUP_DIR}/"
     set -e
   else
     log_warn "Backup folder "${CONSUL_BACKUP_DIR}" does not exist. Unable to backup cluster"
