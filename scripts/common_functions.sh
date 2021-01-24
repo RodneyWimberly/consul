@@ -33,6 +33,10 @@ function docker_api() {
   return $(curl -sS --connect-timeout 180 --unix-socket /var/run/docker.sock -X "${docker_api_method} ${docker_api_url}")
 }
 
+function get_json_property() {
+  return $(cat ${1} | jq -r -M '.${2}')
+}
+
 function keep_service_alive() {
   while [[ "${CONSUL_KEEP_SERVICE_ALIVE}" -eq "1" ]]; do
     echo "Sleeping so that container will stay running and can be accessed."
