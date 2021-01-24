@@ -75,6 +75,7 @@ else
     # locks down our consul server from leaking any data to anybody - full anon block
     echo "{ \"acl\": { \"enabled\": true, \"default_policy\": \"deny\", \"down_policy\": \"deny\" } }" > ${CONSUL_BOOTSTRAP_DIR}/server_acl.json
     append_generated_config "server_acl.json"
+    cp "${CONSUL_BOOTSTRAP_DIR}/server_acl.json" "${CONSUL_CONFIG_DIR}/server_acl.json"
   fi
 
   log "Starting server in bootstrap mode. The ACL will be in legacy mode until a leader is elected."
@@ -91,19 +92,28 @@ else
   log_detail "continuing the cluster bootstrapping process"
   ${CONSUL_SCRIPT_DIR}/server_acl.sh
 
-  log "Creating Consul cluster snapshot"
-  if [ ! -d "${CONSUL_BACKUP_DIR}" ]; then
-    mkdir "${CONSUL_BACKUP_DIR}"
+  if [ -d "${CONSUL_BACKUP_DIR}" ]; then
+    log "Creating Consul cluster backups"
+    backup_file="${CONSUL_BACKUP_DIR}/backup_$(date +%Y-%m-%d-%s).snap"
+
+    log_detail "snapshot will be saved as ${backup_file} "
+    consul snapshot save -token="${CONSUL_HTTP_TOKEN}" "${backup_file}"
+
+    log_detail "all generated output is being copied to ${CONSUL_BACKUP_DIR}"
+    cp -r "${CONSUL_BOOTSTRAP_DIR}"/* "${CONSUL_BACKUP_DIR}"/*
+  else
+    log_warn "Backup folder "${CONSUL_BACKUP_DIR}" does not exist. Unable to backup cluster"
   fi
-  backup_file="${CONSUL_BACKUP_DIR}/backup_$(date +%Y-%m-%d-%s).snap"
-  log_detail "snapshot will be saved as ${backup_file} "
-  consul snapshot save -token="${CONSUL_HTTP_TOKEN}" "${backup_file}"
 
   log "Shutting down 'local only' server (pid: ${consul_pid}) and then starting usual server"
   kill ${consul_pid}
 
   log_detail "wait for the 'local only' server to fully shutdown - 10 seconds"
   sleep 10s
+
+  log_detail "Removing 'local only' configuration and updating it with the newly generated configuration"
+  rm -f "${CONSUL_CONFIG_DIR}/server_acl.json"
+  cp "${CONSUL_BOOTSTRAP_DIR}/generated.json" "${CONSUL_CONFIG_DIR}/generated.json"
 
   log "Informing other services that the cluster bootstrapping proces is complete and the startup restriction has been removed"
   touch ${CONSUL_BOOTSTRAP_DIR}/.bootstrapped

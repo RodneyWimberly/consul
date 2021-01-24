@@ -72,7 +72,6 @@ function append_generated_config() {
   generated_json=$(echo "${generated_json}" | jq ". + ${config_json}")
   log_detail "Adding ${1} to generated.json"
   echo "${generated_json}" | jq ". + ${config_json}" > ${CONSUL_BOOTSTRAP_DIR}/generated.json
-  cp ${CONSUL_BOOTSTRAP_DIR}/"${1}" ${CONSUL_CONFIG_DIR}/"${1}"
 }
 
 function expand_config_file_from() {
@@ -106,29 +105,33 @@ function wait_for_bootstrap_process() {
     log_detail 'Waiting 60 seconds before inquiring if the Consul cluster bootstrapping service to be complete'
     sleep 60
     set +e
+    echo "Querying all containers"
     rest_response=$(curl -sS --connect-timeout 180 --unix-socket /var/run/docker.sock -X POST http://localhost/containers/json)
     echo "${rest_response}"
     echo ""
-    log_json "Container List" "${rest_response}"
 
+    echo "Querying containers with a filter"
     rest_response=$(curl -sS --connect-timeout 180 --unix-socket /var/run/docker.sock -X POST http://localhost/containers/json?filters={"label": ["name=consul-bootstrapper"]})
-    log_json "Container List Filter" "${rest_response}"
     echo "${rest_response}"
     echo ""
 
     log_detail "Querying Docker REST API to see if service ${CONSUL_STACK_PROJECT_NAME}_consul-bootstrapper has completed"
     rest_response=$(curl -sS --connect-timeout 180 --unix-socket /var/run/docker.sock -X POST http://localhost/containers/${CONSUL_STACK_PROJECT_NAME}_consul-bootstrapper/wait)
-    log_json "REST Response" "${rest_response}"
 
-    status_code=$(echo ${rest_response} | jq -r -M '.StatusCode')
-    if [ "$status_code" -eq "0" ]; then
+    #status_code=$(echo ${rest_response} | jq -r -M '.statuscode')
+    error_msg=$(echo ${rest_response} | jq -r -M '.message')
+    if [ -z "${error_msg}" ]; then
       log_detail "The consul cluster has been successfully bootstrapped."
     else
-      error_msg=$(echo ${rest_response} | jq -r -M '.Error.Message')
+
       log_error "The consul cluster bootstrapping service failed!"
-      log_error "Status Code: ${status_code} / Message: ${error_msg}"
+      log_error "Message: ${error_msg}"
       log_error "The process will now exit"
       exit 1
+      while [[ "true" == "true" ]]; do
+        sleep 15
+        echo "Sleeping so that container will stay running for debugging purposes"
+      done
     fi
   else
     log_detail "The master ACL Token is present so skipping the bootstrap process."
