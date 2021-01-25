@@ -3,13 +3,13 @@
 cls
 
 rem ==================================================
-SET SCRIPT_PATH=d:\consul\soakes\consul\scripts\admin
+SET SCRIPT_PATH=d:\projects\consul\scripts\admin
 SET DOCKER_HUB=docker.pkg.github.com
 rem SET DOCKER_REGISTRY=localhost:5000/
 rem SET DOCKER_REGISTRY=ip172-18-0-46-c074tpk34gag00brhs4g-5000.direct.labs.play-with-docker.com/
 rem SET DOCKER_REGISTRY=docker.pkg.github.com/rodneywimberly/dockerrepositories/
 SET DOCKER_REGISTRY=rodneywimberly/dockerregistry:
-SET REMOTE_CMD=d:\consul\soakes\consul\scripts\admin\pwd-remote-cmd.sh
+SET REMOTE_CMD=d:\projects\consul\scripts\admin\pwd-remote-cmd.sh
 SET PWD_URL=direct.labs.play-with-docker.com
 SET WORKER=ip172-18-0-44-c074tpk34gag00brhs4g@%PWD_URL%
 SET P1=https://labs.play-with-docker.com/p/c074tpk34gag00brhs4g#c074tpk3_c074trc34gag00brhs50
