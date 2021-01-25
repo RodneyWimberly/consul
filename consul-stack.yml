@@ -50,9 +50,9 @@ x-consul:
     - source: key_file
       target: /consul/data/certs/tls.key
   volumes:
-    - data_volume:/consul/data
+    - data_volume:/consul/data:rw
     - /var/run/docker.sock:/var/run/docker.sock
-    - ./scripts:/usr/local/scripts
+    - ./scripts:/usr/local/scripts:ro
   env_file:
     - ./scripts/consul.env
   #healthcheck:
@@ -82,9 +82,9 @@ services:
       labels:
         name: consul-bootstrapper
     volumes:
-      - data_volume:/consul/data
-      - ./backups:/usr/local/backups
-      - ./scripts:/usr/local/scripts
+      - data_volume:/consul/data:rw
+      - ./backups:/usr/local/backups:rw
+      - ./scripts:/usr/local/scripts:ro
     networks:
       admin_network:
         aliases:
