@@ -8,6 +8,15 @@ elif [[ -f /tmp/consul/scripts/consul.env ]]; then
   source /tmp/consul/scripts/consul.env
 fi
 
+function show_docker_details() {
+    log ">=>=>=>=>=>  Swarm/Node Details  <=<=<=<=<=<"
+    log "Number of Manager Nodes: ${NUM_OF_MGR_NODES}"
+    log "Node IP: ${NODE_IP}"
+    log "Node ID: ${NODE_ID}"
+    log "Node Name: ${NODE_NAME}"
+    log "Node Is Manager: ${NODE_IS_MANAGER}"
+}
+
 function add_path() {
   export PATH=$1:${PATH}
   log "PATH has been updated to ${PATH} "
