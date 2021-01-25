@@ -28,13 +28,38 @@ function docker_api() {
   if [[ -z "${docker_api_method}" ]]; then
     docker_api_method="GET"
   fi
-  echo "${docker_api_url}"
-  echo "${docker_api_method}"
-  return $(curl -sS --connect-timeout 180 --unix-socket /var/run/docker.sock -X "${docker_api_method} ${docker_api_url}")
+
+  return $(curl -sS --connect-timeout 180 --unix-socket /var/run/docker.sock -X "${docker_api_method}" "${docker_api_url}")
+}
+
+function consul_api() {
+  consul_api_url=http://127.0.0.1:8500/v1/"${1}"
+
+  consul_api_method="${2}"
+  if [[ -z "${consul_api_method}" ]]; then
+    consul_api_method="GET"
+  fi
+
+  consul_api_data=""
+  if [[ -z "${3}" ]]; then
+    consul_api_data="--data ${3}"
+  fi
+
+  current_acl_agent_token=$(cat ${CONSUL_BOOTSTRAP_DIR}/server_acl_agent_acl_token.json | jq -r -M '.acl_agent_token')
+  consul_api_token=""
+  if [[ -z "${current_acl_agent_token}" ]]; then
+    consul_api_token="--header X-Consul-Token: ${current_acl_agent_token}"
+  fi
+  return $(curl -sS -X "${consul_api_token}" "${consul_api_method}" "${consul_api_data}" "${consul_api_url}")
 }
 
 function get_json_property() {
-  return $(cat ${1} | jq -r -M '.${2}')
+  if [[ -f "{$1}" ]]; then
+    return $(cat "${1}" | jq -r -M ".${2}")
+  else
+    return $(echo "${1}" | jq -r -M ".${2}")
+  fi
+
 }
 
 function keep_service_alive() {

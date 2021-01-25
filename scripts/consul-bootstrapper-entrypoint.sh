@@ -106,8 +106,8 @@ else
     curl --header "X-Consul-Token: ${ACL_MASTER_TOKEN}" http://127.0.0.1:8500/v1/snapshot?dc=docker -o ${backup_file}
     #consul snapshot save -token="${CONSUL_HTTP_TOKEN}" "${backup_file}"
 
-    # log_detail "all generated output is being copied to ${CONSUL_BACKUP_DIR}"
-    # cp -r "${CONSUL_BOOTSTRAP_DIR}/*" "${CONSUL_BACKUP_DIR}/"
+    log_detail "all generated output is being copied to ${CONSUL_BACKUP_DIR}"
+    cp -r "${CONSUL_BOOTSTRAP_DIR}/*" "${CONSUL_BACKUP_DIR}/"
     set -e
   else
     log_warn "Backup folder "${CONSUL_BACKUP_DIR}" does not exist. Unable to backup cluster"
