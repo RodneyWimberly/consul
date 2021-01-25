@@ -4,7 +4,17 @@ source "${CONSUL_SCRIPT_DIR}"/consul.env
 source "${CONSUL_SCRIPT_DIR}"/common_functions.sh
 
 apk update
-apk add bash curl jq gettext
+apk add bash /
+  curl /
+  jq /
+  gettext \
+  iputils \
+  bind-utils \
+  nfs-utils \
+  bash \
+  iproute2
+
+mount -v -o vers=4,loud 192.168.100.4:/ /mnt
 
 add_path "${CONSUL_SCRIPT_DIR}"
 

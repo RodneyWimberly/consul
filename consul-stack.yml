@@ -2,12 +2,19 @@
 # Service Registry Stack
 # HA Service discovery, health checks, load-balancing,
 # DNS name lookup, routing intentions, KV store,
-# DNS Server, Secret Store/Vault
+# DNS Server, Secret Store/Vault vers=4,
 ###########################################################################################################
 version: "3.8"
 
 volumes:
   data_volume:
+  nfs_server_volume:
+  nfs_client_volume:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=nfs-server.service.consul,rw
+      device: ":/"
 
 networks:
   admin_network:
@@ -53,6 +60,11 @@ x-consul:
     - data_volume:/consul/data
     - /var/run/docker.sock:/var/run/docker.sock
     - ./scripts:/usr/local/scripts
+    - type: volume
+      source: nfs_client_volume
+      target: /consul/bootstrap
+      volume:
+        nocopy: true
   env_file:
     - ./scripts/consul.env
   #healthcheck:
@@ -106,3 +118,24 @@ services:
       admin_network: {}
     deploy:
       mode: global
+
+  nfs-server:
+    image: itsthenetwork/nfs-server-alpine:12
+    environment:
+      - SHARED_DIRECTORY=/data
+    volumes:
+      - nfs_server_volume:/data
+    cap_add:
+      - ALL
+    networks:
+      admin_network:
+        aliases:
+          - nfs-server.service.consul
+        ipv4_address: 192.168.100.4
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        max_replicas_per_node: 1
+      restart_policy:
+        condition: always

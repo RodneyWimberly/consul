@@ -13,7 +13,12 @@ RUN apk update && \
         curl \
         jq \
         openssl \
-        gettext && \
+        gettext \
+        iputils \
+        bind-utils \
+        nfs-utils \
+        bash \
+        iproute2 && \
     mkdir -p /etc/nginx/www && \
     mkdir -p /usr/local/scripts && \
     mkdir -p /consul/data/bootstrap && \
