@@ -90,7 +90,7 @@ services:
   consul-bootstrapper:
     << : *consul-base
     entrypoint: /usr/local/scripts/consul-bootstrapper-entrypoint.sh
-    image: ${DOCKER_REGISTRY-docker.pkg.github.com/rodneywimberly/dockerrepositories/}consul-bootstrapper:1.0
+    image: ip172-18-0-46-c074tpk34gag00brhs4g-5000.direct.labs.play-with-docker.com/consul-bootstrapper:1.0
     volumes:
       - data_volume:/consul/data
       - ./backups:/usr/share/nginx/html:rw

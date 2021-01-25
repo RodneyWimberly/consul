@@ -9,7 +9,6 @@ apk add bash /
   jq /
   gettext \
   iputils \
-  bind-utils \
   nfs-utils \
   bash \
   iproute2
