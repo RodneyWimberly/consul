@@ -2,6 +2,7 @@
 @echo off
 cls
 
+
 rem ==================================================
 SET SCRIPT_PATH=d:\projects\consul\scripts\admin
 SET DOCKER_HUB=docker.pkg.github.com
