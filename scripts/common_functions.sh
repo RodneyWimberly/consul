@@ -29,7 +29,7 @@ function docker_api() {
     docker_api_method="GET"
   fi
 
-  return "$(curl -sS --connect-timeout 180 --unix-socket /var/run/docker.sock -X "${docker_api_method}" "${docker_api_url}")"
+  curl -sS --connect-timeout 180 --unix-socket /var/run/docker.sock -X "${docker_api_method}" "${docker_api_url}"
 }
 
 function consul_api() {
@@ -50,16 +50,15 @@ function consul_api() {
   if [[ -z "${current_acl_agent_token}" ]]; then
     consul_api_token="--header X-Consul-Token: ${current_acl_agent_token}"
   fi
-  return $(curl -sS -X "${consul_api_token}" "${consul_api_method}" "${consul_api_data}" "${consul_api_url}")
+  curl -sS -X "${consul_api_token}" "${consul_api_method}" "${consul_api_data}" "${consul_api_url}"
 }
 
 function get_json_property() {
   if [[ -f "$1" ]]; then
-    return cat "$1" | jq -r -M ".${2}"
+    cat "$1" | jq -r -M ".${2}"
   else
-    return echo "$1" | jq -r -M ".${2}"
+    echo "$1" | jq -r -M ".${2}"
   fi
-
 }
 
 function keep_service_alive() {
@@ -130,9 +129,7 @@ function expand_config_file_from() {
 }
 
 function get_docker_details() {
-  #NODE_INFO=$(curl -sS --unix-socket /var/run/docker.sock http://localhost/info)
-  docker_api "info"
-  NODE_INFO=${?}
+  NODE_INFO=$(docker_api "info")
   export NUM_OF_MGR_NODES=$(echo ${NODE_INFO} | jq -r -M '.Swarm.Managers')
   export NODE_IP=$(echo ${NODE_INFO} | jq -r -M '.Swarm.NodeAddr')
   export NODE_ID=$(echo ${NODE_INFO} | jq -r -M '.Swarm.NodeID')
@@ -153,39 +150,17 @@ function wait_for_bootstrap_process() {
   if [ -z "$CONSUL_HTTP_TOKEN" ] || [ "$CONSUL_HTTP_TOKEN" -eq "0" ] ; then
     log_detail 'Waiting 60 seconds before inquiring if the Consul cluster bootstrapping service to be complete'
     sleep 60
-    set +e
-    echo "Querying all containers"
-    docker_api "containers/json?all=true"
-    #rest_response=$(curl -sS --connect-timeout 180 --unix-socket /var/run/docker.sock -X GET http://localhost/containers/json?all=true)
-    echo "$?"
-    echo ""
-
-    echo "Querying containers with a filter"
-    docker_api "containers/json?all=true&filters=%7B%22volume%22%3A+%5B%22%2Fusr%2Flocal%2Fbackups%22%5D%7D"
-    #rest_response=$(curl -sS --connect-timeout 180 --unix-socket /var/run/docker.sock -X GET http://localhost/containers/json?all=true&filters=%7B%22volume%22%3A+%5B%22%2Fusr%2Flocal%2Fbackups%22%5D%7D)
-    echo "$?"
-    echo ""
-
-    log_detail "Querying Docker REST API to see if service ${CONSUL_STACK_PROJECT_NAME}_consul-bootstrapper has completed"
-    docker_api "containers/${CONSUL_STACK_PROJECT_NAME}_consul-bootstrapper/wait" "POST"
-    #rest_response=$(curl -sS --connect-timeout 180 --unix-socket /var/run/docker.sock -X POST http://localhost/containers/${CONSUL_STACK_PROJECT_NAME}_consul-bootstrapper/wait)
-
-    status_code=$(echo $? | jq -r -M '.statuscode')
-    error_msg=$(echo $? | jq -r -M '.Error.Message')
-    if [ -z "${error_msg}" ]; then
-      log_detail "The consul cluster has been successfully bootstrapped."
-    else
-      log_error "The consul cluster bootstrapping service failed!"
-      log_error "Message: ${error_msg}"
-
-      keep_service_alive
-
-      log_error "The process will now exit"
-      exit 1
+    log "Querying the bootstrap process to see if it has completed."
+    while [[ ! curl -sS -X http://consul-bootstrapper.service.consul/cluster.bootstrapped ]]; do
+      sleep 5
+      log_detail "re-querying the bootstrap process to see if it has completed."
+    done
+    log_detail "The consul cluster has been successfully bootstrapped."
+    log "need to update config"
+    exit 1
     fi
   else
     log_detail "The master ACL Token is present so skipping the bootstrap process."
-    log_json "CONSUL_HTTP_TOKEN" "${CONSUL_HTTP_TOKEN}"
   fi
 }
 
