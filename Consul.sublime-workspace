@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"dock",
+				"docker_api_method"
+			],
+			[
 				"do",
 				"docker-compose"
 			],
@@ -55,6 +59,23 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "scripts/admin/deploy-to-pwd.cmd",
+			"settings":
+			{
+				"buffer_size": 1162,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "consul-stack.yml",
+			"settings":
+			{
+				"buffer_size": 2808,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -156,6 +177,10 @@
 		"selected_items":
 		[
 			[
+				"Snippet: ",
+				"Snippet: while … done"
+			],
+			[
 				"Package Control: ",
 				"Package Control: Install Package"
 			],
@@ -170,10 +195,6 @@
 			[
 				"Package Control: ena",
 				"Package Control: Enable Package"
-			],
-			[
-				"Snippet: ",
-				"Snippet: while … done"
 			],
 			[
 				"json",
@@ -322,37 +343,42 @@
 	"expanded_folders":
 	[
 		"/D/Consul/soakes/consul",
-		"/D/Consul/soakes/consul/backups",
-		"/D/Consul/soakes/consul/scripts",
-		"/D/Consul/soakes/consul/scripts/admin"
+		"/D/Consul/soakes/consul/bootstrapper"
 	],
 	"file_history":
 	[
-		"/D/Consul/soakes/consul/scripts/admin/deploy-to-pwd.cmd",
-		"/D/Consul/soakes/consul/scripts/admin/update-stack-manager.sh",
-		"/D/Consul/soakes/consul/scripts/common_functions.sh",
-		"/C/Program Files/Sublime Text 3/Data/Packages/BetterFindBuffer/BetterFindBuffer.sublime-settings",
+		"/D/Consul/soakes/consul/bootstrapper/Dockerfile",
 		"/D/Consul/soakes/consul/scripts/consul-bootstrapper-entrypoint.sh",
-		"/D/Consul/soakes/consul/scripts/server_gossip.sh",
-		"/D/Consul/soakes/consul/scripts/server_tls.sh",
-		"/D/Consul/soakes/consul/scripts/server_acl_anon.sh",
-		"/D/Consul/soakes/consul/scripts/server_acl.sh",
-		"/D/Consul/soakes/consul/scripts/server_acl_client_general_token.sh",
-		"/D/Consul/soakes/consul/scripts/server_acl_server_agent_token.sh",
-		"/D/Consul/soakes/consul/scripts/admin/update-stack-worker.sh",
-		"/C/Program Files/Sublime Text 3/Data/Packages/QuickPanelEnhanced/Default.sublime-keymap",
-		"/C/Program Files/Sublime Text 3/Data/Packages/NavPanel/NavPanel.sublime-settings",
-		"/D/Consul/soakes/consul/scripts/consul-entrypoint.sh",
-		"/D/Consul/soakes/consul/backups/placeholder",
-		"/D/Consul/soakes/consul/scripts/admin/pwd-remote-cmd.sh",
-		"/D/Consul/soakes/consul/consul-stack.yml",
 		"/D/Consul/soakes/consul/scripts/consul.env",
+		"/D/Consul/soakes/consul/scripts/common_functions.sh",
+		"/D/Consul/soakes/consul/consul-stack.yml",
+		"/D/Consul/soakes/consul/scripts/consul-docker-entrypoint.sh",
+		"/D/Consul/soakes/consul/scripts/server_acl.sh",
+		"/D/Consul/soakes/consul/scripts/consul-entrypoint.sh",
+		"/D/Consul/soakes/consul/scripts/admin/update-stack-worker.sh",
+		"/D/Consul/soakes/consul/scripts/admin/update-stack-manager.sh",
 		"/D/Consul/soakes/consul/devops-stack.yml",
+		"/D/Consul/soakes/consul/scripts/server_acl_anon.sh",
+		"/D/Consul/soakes/consul/scripts/deploy.sh",
+		"/D/Consul/soakes/consul/scripts/server_acl_server_agent_token.sh",
+		"/D/Consul/soakes/consul/scripts/server_acl_client_general_token.sh",
+		"/D/Consul/soakes/consul/scripts/admin/curl-tests.txt",
+		"/D/Consul/soakes/consul/scripts/admin/deploy-to-pwd.cmd",
 		"/D/Consul/soakes/consul/config/common.json",
 		"/D/Consul/soakes/consul/config/server.json",
+		"/D/Consul/soakes/consul/scripts/server_gossip.sh",
+		"/D/Consul/soakes/consul/scripts/server_tls.sh",
 		"/D/Consul/soakes/consul/config/client.json",
+		"/D/Consul/soakes/consul/scripts/backup/client_setup.sh",
+		"/D/Consul/soakes/consul/scripts/backup/server_setup.sh",
+		"/D/Consul/soakes/consul/config/bootstrap.config",
+		"/C/Program Files/Sublime Text 3/Data/Packages/WhoCalled Function Finder/WhoCalled.sublime-settings",
+		"/C/Program Files/Sublime Text 3/Data/Packages/BetterFindBuffer/BetterFindBuffer.sublime-settings",
+		"/C/Program Files/Sublime Text 3/Data/Packages/QuickPanelEnhanced/Default.sublime-keymap",
+		"/C/Program Files/Sublime Text 3/Data/Packages/NavPanel/NavPanel.sublime-settings",
+		"/D/Consul/soakes/consul/backups/placeholder",
+		"/D/Consul/soakes/consul/scripts/admin/pwd-remote-cmd.sh",
 		"/D/Consul/soakes/consul/scripts/admin/backup-cluster.sh",
-		"/D/Consul/soakes/consul/scripts/deploy.sh",
 		"/C/Program Files/Sublime Text 3/Data/Packages/SidebarSeparator/SidebarSeparator.sublime-settings",
 		"/D/Consul/soakes/consul/scripts/filebrowser-entrypoint.sh",
 		"/C/Program Files/Sublime Text 3/Data/Packages/TabNine/TabNine.sublime-settings",
@@ -379,7 +405,6 @@
 		"/D/Consul/soakes/consul/scripts/startup-script.sh",
 		"/D/Consul/soakes/consul/scripts/bootstrap/sever_bootstrap.sh",
 		"/D/Consul/soakes/consul/scripts/bootstrap/common_functions.sh",
-		"/D/Consul/soakes/consul/scripts/backup/client_setup.sh",
 		"/D/Consul/soakes/consul/bootstrap-deployment.sh",
 		"/D/Consul/soakes/consul/scripts/sever_bootstrap.sh",
 		"/D/Consul/soakes/consul/scripts/client_setup.sh",
@@ -449,13 +474,7 @@
 		"/D/em/Core/Registry/Dockerfile",
 		"/D/em/Core/Portal/root/etc/containerpilot.json5",
 		"/D/em/Core/Portal/root/etc/nginx/certs/cacerts.pem",
-		"/D/em/Core/Portal/root/etc/nginx/certs/cacerts.crt",
-		"/D/em/Core/hello/root/consul/config/hello.json",
-		"/D/em/Core/Portal/root/consul/config/portal.json",
-		"/D/em/Core/Vault/docs/vault-auth-by-cidr.md",
-		"/D/em/Core/Vault/docs/vault-for-humans.md",
-		"/D/em/Core/Vault/scripts/enable-docker-approle.sh",
-		"/D/em/Core/Vault/vault.json"
+		"/D/em/Core/Portal/root/etc/nginx/certs/cacerts.crt"
 	],
 	"find":
 	{
@@ -466,6 +485,7 @@
 		"height": 164.0,
 		"where_history":
 		[
+			"D:\\Consul\\soakes\\consul\\",
 			"D:\\Consul\\soakes\\consul"
 		]
 	},
@@ -474,6 +494,15 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			".bootstrapped",
+			"docker_api",
+			"doc",
+			"get_json_property",
+			"http://127.0.0.1:8500",
+			"show_node_details",
+			"get_node_details",
+			"merge_json",
+			"append_generated_config",
 			"log_json",
 			"log_debug",
 			"CONSUL_CERT_DIR",
@@ -530,6 +559,11 @@
 		"regex": false,
 		"replace_history":
 		[
+			"cluster.bootstrapped",
+			"show_docker_details",
+			"get_docker_details",
+			"merge_json",
+			"append_generated_config",
 			"CONSUL_BOOTSTRAP_DIR",
 			"expand_config_file_from",
 			"expand_config_file",
@@ -561,14 +595,223 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "scripts/admin/deploy-to-pwd.cmd",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1162,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1162,
+								1162
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content"
+							],
+							"function_name_status_row": 26,
+							"syntax": "Packages/Batch File/Batch File.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "consul-stack.yml",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2808,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2123,
+								2142
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content"
+							],
+							"function_name_status_row": 80,
+							"syntax": "Packages/YAML/YAML.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1527.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				}
 			]
 		}
 	],
 	"incremental_find":
 	{
-		"height": 34.0
+		"height": 70.0
 	},
 	"input":
 	{
@@ -607,7 +850,7 @@
 	},
 	"output.find_results":
 	{
-		"height": 0.0
+		"height": 168.0
 	},
 	"output.git":
 	{
@@ -619,7 +862,7 @@
 	},
 	"output.project_environment_log":
 	{
-		"height": 0.0
+		"height": 168.0
 	},
 	"output.unsaved_changes":
 	{
