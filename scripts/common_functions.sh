@@ -29,7 +29,7 @@ function docker_api() {
     docker_api_method="GET"
   fi
 
-  return $(curl -sS --connect-timeout 180 --unix-socket /var/run/docker.sock -X "${docker_api_method}" "${docker_api_url}")
+  curl -sS --connect-timeout 180 --unix-socket /var/run/docker.sock -X "${docker_api_method}" "${docker_api_url}"
 }
 
 function consul_api() {
@@ -132,7 +132,7 @@ function expand_config_file_from() {
 function get_docker_details() {
   #NODE_INFO=$(curl -sS --unix-socket /var/run/docker.sock http://localhost/info)
   docker_api "info"
-  NODE_INFO="$?"
+  NODE_INFO=$(docker_api "info")
   export NUM_OF_MGR_NODES=$(echo ${NODE_INFO} | jq -r -M '.Swarm.Managers')
   export NODE_IP=$(echo ${NODE_INFO} | jq -r -M '.Swarm.NodeAddr')
   export NODE_ID=$(echo ${NODE_INFO} | jq -r -M '.Swarm.NodeID')
