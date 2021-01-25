@@ -15,7 +15,6 @@ RUN apk update && \
         openssl \
         gettext \
         iputils \
-        bind-utils \
         nfs-utils \
         bash \
         iproute2 && \

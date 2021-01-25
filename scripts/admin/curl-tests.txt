@@ -9,3 +9,7 @@ curl -sS --connect-timeout 180 --unix-socket /var/run/docker.sock -X GET http://
 apk add iputils bind-utils nfs-utils bash iproute2
 
 mount -v -o vers=4,loud 192.168.0.4:/ /mnt
+
+
+
+docker run -d -p 5000:5000 --restart=always --name registry registry:2
