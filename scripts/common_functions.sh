@@ -29,7 +29,7 @@ function docker_api() {
     docker_api_method="GET"
   fi
 
-  curl -sS --connect-timeout 180 --unix-socket /var/run/docker.sock -X "${docker_api_method}" "${docker_api_url}"
+  return "$(curl -sS --connect-timeout 180 --unix-socket /var/run/docker.sock -X "${docker_api_method}" "${docker_api_url}")"
 }
 
 function consul_api() {
@@ -54,10 +54,10 @@ function consul_api() {
 }
 
 function get_json_property() {
-  if [[ -f "{$1}" ]]; then
-    return $(cat "${1}" | jq -r -M ".${2}")
+  if [[ -f "$1" ]]; then
+    return cat "$1" | jq -r -M ".${2}"
   else
-    return $(echo "${1}" | jq -r -M ".${2}")
+    return echo "$1" | jq -r -M ".${2}"
   fi
 
 }
@@ -132,7 +132,7 @@ function expand_config_file_from() {
 function get_docker_details() {
   #NODE_INFO=$(curl -sS --unix-socket /var/run/docker.sock http://localhost/info)
   docker_api "info"
-  NODE_INFO=$(docker_api "info")
+  NODE_INFO=${?}
   export NUM_OF_MGR_NODES=$(echo ${NODE_INFO} | jq -r -M '.Swarm.Managers')
   export NODE_IP=$(echo ${NODE_INFO} | jq -r -M '.Swarm.NodeAddr')
   export NODE_ID=$(echo ${NODE_INFO} | jq -r -M '.Swarm.NodeID')

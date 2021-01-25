@@ -99,7 +99,7 @@ else
     log_detail "snapshot will be saved as ${backup_file} "
     set +e
 
-    get_json_property ${CONSUL_BOOTSTRAP_DIR}/server_acl_master_token.json "acl_master_token"
+    ACL_MASTER_TOKEN=$(get_json_property ${CONSUL_BOOTSTRAP_DIR}/server_acl_master_token.json "acl_master_token")
     echo "ACL_MASTER_TOKEN: ${?}"
     ACL_MASTER_TOKEN=`cat ${CONSUL_BOOTSTRAP_DIR}/server_acl_master_token.json | jq -r -M '.acl_master_token'`
     echo "ACL_MASTER_TOKEN: ${ACL_MASTER_TOKEN}"
@@ -107,7 +107,7 @@ else
     #consul snapshot save -token="${CONSUL_HTTP_TOKEN}" "${backup_file}"
 
     log_detail "all generated output is being copied to ${CONSUL_BACKUP_DIR}"
-    cp -r "${CONSUL_BOOTSTRAP_DIR}/*" "${CONSUL_BACKUP_DIR}/"
+    cp -r "${CONSUL_BOOTSTRAP_DIR}/" "${CONSUL_BACKUP_DIR}/"
     set -e
   else
     log_warn "Backup folder "${CONSUL_BACKUP_DIR}" does not exist. Unable to backup cluster"
