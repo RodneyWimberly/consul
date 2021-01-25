@@ -37,12 +37,7 @@ else
     log_detail "The master ACL Token is present so skipping the bootstrap process."
 fi
 
-log ">=>=>=>=>=>  Swarm/Node Details  <=<=<=<=<=<"
-log "Number of Manager Nodes: ${NUM_OF_MGR_NODES}"
-log "Node IP: ${NODE_IP}"
-log "Node ID: ${NODE_ID}"
-log "Node Name: ${NODE_NAME}"
-log "Node Is Manager: ${NODE_IS_MANAGER}"
+show_docker_details
 
 log_detail "Starting Consul in ${agent_mode} mode using the following command: exec docker-entrypoint.sh $@"
 exec docker-entrypoint.sh "$@"

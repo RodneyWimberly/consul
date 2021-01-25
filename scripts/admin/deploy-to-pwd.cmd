@@ -6,8 +6,11 @@ SET SCRIPT_PATH=d:\consul\soakes\consul\scripts\admin
 SET DOCKER_HUB=docker.pkg.github.com
 SET DOCKER_REGISTRY=%DOCKER_HUB%/rodneywimberly/dockerrepositories/
 SET REMOTE_CMD=d:\consul\soakes\consul\scripts\admin\pwd-remote-cmd.sh
-SET WORKER=ip172-18-0-7-c0703eb6hnp000fnpnq0@direct.labs.play-with-docker.com
-SET MANAGER=ip172-18-0-38-c0703eb6hnp000fnpnq0@direct.labs.play-with-docker.com
+SET PWD_URL=direct.labs.play-with-docker.com
+SET WORKER=ip172-18-0-44-c074tpk34gag00brhs4g@%PWD_URL%
+SET P1=https://labs.play-with-docker.com/p/c074tpk34gag00brhs4g#c074tpk3_c074trc34gag00brhs50
+SET MANAGER=ip172-18-0-46-c074tpk34gag00brhs4g@%PWD_URL%
+SET M1=https://labs.play-with-docker.com/p/c074tpk34gag00brhs4g#c074tpk3_c074trc34gag00brhs5g
 cd %SCRIPT_PATH%
 
 rem ==================================================
