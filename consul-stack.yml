@@ -78,12 +78,10 @@ services:
   consul-bootstrapper:
     << : *consul-base
     entrypoint: /usr/local/scripts/consul-bootstrapper-entrypoint.sh
-    build:
-      labels:
-        name: consul-bootstrapper
+    image: ${DOCKER_REGISTRY-docker.pkg.github.com/rodneywimberly/dockerrepositories/}consul-bootstrapper:1.0
     volumes:
       - data_volume:/consul/data
-      - ./backups:/usr/local/backups:rw
+      - ./backups:/usr/share/nginx/html:rw
       - ./scripts:/usr/local/scripts
     networks:
       admin_network:
