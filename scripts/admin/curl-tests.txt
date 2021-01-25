@@ -5,3 +5,7 @@ curl -sS --connect-timeout 180 --unix-socket /var/run/docker.sock -X POST http:/
 curl -sS --connect-timeout 180 --unix-socket /var/run/docker.sock -X GET http://localhost/containers/json?all=true&filters=%7B%22volume%22%3A+%5B%22%2Fusr%2Flocal%2Fbackups%22%5D%7D
 
 curl -sS --connect-timeout 180 --unix-socket /var/run/docker.sock -X GET http://localhost/containers/json?all=true
+
+apk add iputils bind-utils nfs-utils bash iproute2
+
+mount -v -o vers=4,loud 192.168.0.4:/ /mnt
