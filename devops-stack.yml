@@ -17,6 +17,7 @@ services:
       - web_volume:/data
     networks:
       - agent_network
+      - admin_network
     deploy:
       replicas: 1
 
@@ -32,22 +33,20 @@ services:
         mode: host
     networks:
       - agent_network
+      - admin_network
     deploy:
       mode: global
       placement:
         constraints: [node.platform.os == linux]
 
-  # proxy:
-  #   image: wernight/dante
-  #   ports:
-  #     - target: 1080
-  #       published: 1080
-  #       protocol: tcp
-  #       mode: host
-  #   networks:
-  #    - admin_network
-  #   deploy:
-  #     replicas: 1
+  proxy:
+    image: wernight/dante
+    ports:
+      - 1080:1080
+    networks:
+     - admin_network
+    deploy:
+      replicas: 1
 
 volumes:
   web_volume:
