@@ -111,7 +111,7 @@ services:
     image: gliderlabs/registrator:master
     command: -internal consul://consul.service.consul:8500
     env_file:
-      - ${pwd}/scripts/consul.env
+      - /mnt/scripts/consul.env
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock
     networks:
