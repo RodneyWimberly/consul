@@ -10,7 +10,7 @@ volumes:
     driver: local
     driver_opts:
       type: nfs
-      o: addr=nfs-server.service.consul,rw
+      o: addr=nfs-server,rw
       device: ":/data"
 
 x-nfstest:
