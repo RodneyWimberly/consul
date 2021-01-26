@@ -17,7 +17,7 @@ show_docker_details
 
 set +e
 log_detail "Removing the following stacks: logging, ${CONSUL_STACK_PROJECT_NAME}"
-docker stack rm "${CONSUL_STACK_PROJECT_NAME}"
+docker stack rm "${CONSUL_STACK_PROJECT_NAME}" nfstest
 
 #log_detail "Removing the following volumes: consul_data_volume"
 #docker rm consul_data_volume
@@ -34,6 +34,9 @@ set -e
 
 log_detail "Deploying DevOps Stack to Swarm"
 docker stack deploy --compose-file=/tmp/consul/devops-stack.yml devops
+
+log_detail "Deploying NfsTest Stack to Swarm"
+docker stack deploy --compose-file=/tmp/consul/nfstest-stack.yml nfstest
 
 #log_detail "Deploying Logging Stack to Swarm"
 #docker stack deploy --compose-file=./logging-stack.yml logging
