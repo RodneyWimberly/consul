@@ -23,5 +23,5 @@ mkdir -p /mnt/backups
 mkdir -p /mnt/config
 mkdir -p /mnt/certs
 mkdir -p /mnt/scripts
-screen -q -t Manager1 -S Manager1
-./update-stack.sh
+screen -dmS update-stack
+screen -S update-stack -X ./update-stack.sh >> ./update-stack.log
