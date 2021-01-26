@@ -1,4 +1,4 @@
-version: '3.4'
+version: '3.7'
 
 networks:
   terracotta-net:
@@ -55,7 +55,6 @@ services:
         target: /data
         volume:
           nocopy: true
-         - nfs-server.service.consul
     deploy:
       mode: replicated
       replicas: 1

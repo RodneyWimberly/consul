@@ -15,7 +15,7 @@ cp -r /tmp/consul/config/* /mnt/config/
 cd /tmp/consul/scripts
 chmod u+x ./*.sh
 ./deploy.sh
-exit
+#exit
 EOL
 chmod u+x update-stack.sh
 mkdir -p /mnt/backups
