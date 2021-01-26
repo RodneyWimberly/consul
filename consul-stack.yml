@@ -90,7 +90,7 @@ services:
   consul-bootstrapper:
     << : *consul-base
     entrypoint: /usr/local/scripts/consul-bootstrapper-entrypoint.sh
-    image: ${DOCKER_REGISTRY-rodneywimberly/dockerregistry:}/consul-bootstrapper
+    image: ${DOCKER_REGISTRY-rodneywimberly/}dockerregistry:consul-bootstrapper
     volumes:
       - data_volume:/consul/data
       - /mnt/backups:/usr/share/nginx/html:rw
@@ -139,15 +139,6 @@ services:
         max_replicas_per_node: 1
       restart_policy:
         condition: any
-
-  proxy:
-    image: wernight/dante
-    ports:
-      - '1080:1080'
-    networks:
-      - admin_network
-    deploy:
-      replicas: 1
 
   jump-box:
     entrypoint: /usr/local/scripts/jump-box-entrypoint.sh
