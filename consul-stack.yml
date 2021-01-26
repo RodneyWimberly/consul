@@ -90,7 +90,7 @@ services:
   consul-bootstrapper:
     << : *consul-base
     entrypoint: /usr/local/scripts/consul-bootstrapper-entrypoint.sh
-    image: ${DOCKER_REGISTRY-rodneywimberly/}dockerregistry:consul-bootstrapper
+    image: docker.io/rodneywimberly/dockerregistry:consul-bootstrapper
     volumes:
       - data_volume:/consul/data
       - /mnt/backups:/usr/share/nginx/html:rw

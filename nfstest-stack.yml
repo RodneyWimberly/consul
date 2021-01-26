@@ -16,7 +16,7 @@ volumes:
 services:
   #####################################################
   producer:
-    image : ${DOCKER_REGISTRY-rodneywimberly/dockerregistry:}volume
+    image : docker.io/rodneywimberly/dockerregistry:volume
     command:  |
       /bin/sh -c "
         while true;
@@ -41,7 +41,7 @@ services:
 
   #####################################################
   consumer:
-    image : ${DOCKER_REGISTRY-rodneywimberly/}dockerregistry:volume
+    image : docker.io/rodneywimberly/dockerregistry:volume
     command :  |
       /bin/sh -c "
         while  true; do ls -al /data/;  sleep  1;  done
