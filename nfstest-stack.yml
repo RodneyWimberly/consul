@@ -1,17 +1,17 @@
 version: '3.7'
 
 networks:
-  terracotta-net:
-    driver: overlay
+  admin_network:
+    external: true
 
 volumes:
+  data:
   test:
     driver: local
     driver_opts:
       type: nfs
       o: addr=nfs-server.service.consul,rw
       device: ":/data"
-  data:
 
 services:
   #####################################################
@@ -34,6 +34,8 @@ services:
         target: /data
         volume:
           nocopy: true
+    networks:
+      - admin_network
     deploy:
       replicas: 1
 
@@ -50,6 +52,8 @@ services:
         target: /data
         volume:
           nocopy: true
+    networks:
+      - admin_network
     deploy:
       replicas: 1
 
