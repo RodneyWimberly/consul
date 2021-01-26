@@ -14,7 +14,7 @@ volumes:
     driver_opts:
       type: nfs
       o: addr=nfs-server.service.consul,rw
-      device: ":/"
+      device: ":/data"
 
 networks:
   admin_network:
@@ -22,19 +22,19 @@ networks:
 
 configs:
   common_config:
-    file: ./config/common.json
+    file: /mnt/config/common.json
   client_config:
-    file: ./config/client.json
+    file: /mnt/config/client.json
   server_config:
-    file: ./config/server.json
+    file: /mnt/config/server.json
 
 secrets:
   ca_file:
-    file: ./certs/ca.crt
+    file: /mnt/certs/ca.crt
   cert_file:
-    file: ./certs/cert.crt
+    file: /mnt/certs/cert.crt
   key_file:
-    file: ./certs/tls.key
+    file: /mnt/certs/tls.key
 
 
 x-consul:
@@ -59,14 +59,14 @@ x-consul:
   volumes:
     - data_volume:/consul/data
     - /var/run/docker.sock:/var/run/docker.sock
-    - ./scripts:/usr/local/scripts
+    - ${pwd}/scripts:/usr/local/scripts
     - type: volume
       source: nfs_client_volume
       target: /consul/bootstrap
       volume:
         nocopy: true
   env_file:
-    - ./scripts/consul.env
+    - /mnt/scripts/consul.env
   #healthcheck:
     #test: ['CMD', '/bin/sh', '-c', 'curl -sfLo /dev/null http://127.0.0.1:8500/v1/health/node/$$HOSTNAME']
   deploy:
@@ -90,11 +90,11 @@ services:
   consul-bootstrapper:
     << : *consul-base
     entrypoint: /usr/local/scripts/consul-bootstrapper-entrypoint.sh
-    image: ${DOCKER_REGISTRY-rodneywimberly/dockerregistry:}/consul-bootstrapper:1.0
+    image: ${DOCKER_REGISTRY-rodneywimberly/dockerregistry:}/consul-bootstrapper
     volumes:
       - data_volume:/consul/data
-      - ./backups:/usr/share/nginx/html:rw
-      - ./scripts:/usr/local/scripts
+      - /mnt/backups:/usr/share/nginx/html:rw
+      - /mnt/scripts:/usr/local/scripts
     networks:
       admin_network:
         aliases:
@@ -111,7 +111,7 @@ services:
     image: gliderlabs/registrator:master
     command: -internal consul://consul.service.consul:8500
     env_file:
-      - ./scripts/consul.env
+      - ${pwd}/scripts/consul.env
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock
     networks:
@@ -139,3 +139,24 @@ services:
         max_replicas_per_node: 1
       restart_policy:
         condition: any
+
+  proxy:
+    image: wernight/dante
+    ports:
+      - '1080:1080'
+    networks:
+      - admin_network
+    deploy:
+      replicas: 1
+
+  jump-box:
+    entrypoint: /usr/local/scripts/jump-box-entrypoint.sh
+    image: alpine
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+    - /mnt/backups:/usr/share/nginx/html:rw
+    - /mnt/scripts:/usr/local/scripts
+    networks:
+      - admin_network
+    deploy:
+      replicas: 1
