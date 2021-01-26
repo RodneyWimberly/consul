@@ -32,6 +32,9 @@ log_detail "Creating attachable overlay network 'admin_network'"
 docker network create --driver=overlay --attachable --subnet=${CONSUL_SUBNET} admin_network
 set -e
 
+log_detail "Logging into GitHub Registry"
+docker login https://docker.pkg.github.com/ --username=RodneyWimberly --password=b1b203616d5b8f247d0a0749ebc02ecdac81a7d3
+
 log_detail "Deploying DevOps Stack to Swarm"
 docker stack deploy --compose-file=/tmp/consul/devops-stack.yml devops
 

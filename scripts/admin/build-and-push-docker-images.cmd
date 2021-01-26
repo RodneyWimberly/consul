@@ -23,7 +23,6 @@ docker build -t %DOCKER_HUB%%DOCKER_REGISTRY%nfstest%DOCKER_TAG% ../../nfs/.
 echo " --> Logging in to repository %DOCKER_REmGISTRY%"
 docker login https://%DOCKER_HUB% --username=RodneyWimberly --password=b1b203616d5b8f247d0a0749ebc02ecdac81a7d3
 rem docker login --username=rodneywimberly --password=P@55w0rd!
-rem 5a45a7688ea36d4572100a47f894435fef6b2aa5
 
 echo " --> Pushing consul-bootstrapper image for consul stack"
 docker push %DOCKER_HUB%%DOCKER_REGISTRY%bootstrapper%DOCKER_TAG%
