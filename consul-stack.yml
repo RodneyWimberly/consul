@@ -77,8 +77,10 @@ services:
 
   consul-bootstrapper:
     << : *consul-base
+    build:
+      context:  ./bootstrapper
+      dockerfile: Dockerfile
     entrypoint: /usr/local/scripts/consul-bootstrapper-entrypoint.sh
-    build: bootstrapper/.
     volumes:
       - data_volume:/consul/data
       - /mnt/backups:/usr/share/nginx/html:rw

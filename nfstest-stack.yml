@@ -13,10 +13,26 @@ volumes:
       o: addr=nfs-server.service.consul,rw
       device: ":/data"
 
+x-nfstest:
+  &nfstest-base
+  build:
+    context:  ./nfstest
+    dockerfile: Dockerfile
+  volumes:
+    - type: volume
+      source: test
+      target: /data
+      volume:
+        nocopy: true
+  networks:
+    - admin_network
+  deploy:
+    replicas: 1
+
 services:
   #####################################################
   producer:
-    image : nfstest/.
+    << : *nfstest-base
     command:  |
       /bin/sh -c "
         while true;
@@ -28,34 +44,14 @@ services:
           sleep 5;
         done
       "
-    volumes:
-      - type: volume
-        source: test
-        target: /data
-        volume:
-          nocopy: true
-    networks:
-      - admin_network
-    deploy:
-      replicas: 1
 
   #####################################################
   consumer:
-    image : nfstest/.
+    << : *nfstest-base
     command :  |
       /bin/sh -c "
         while  true; do ls -al /data/;  sleep  1;  done
       "
-    volumes:
-      - type: volume
-        source: test
-        target: /data
-        volume:
-          nocopy: true
-    networks:
-      - admin_network
-    deploy:
-      replicas: 1
 
   #####################################################
   nfs-server:
