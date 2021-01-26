@@ -41,7 +41,7 @@ services:
 
   #####################################################
   consumer:
-    image : ${DOCKER_REGISTRY-rodneywimberly/dockerregistry:}volume
+    image : ${DOCKER_REGISTRY-rodneywimberly/}dockerregistry:volume
     command :  |
       /bin/sh -c "
         while  true; do ls -al /data/;  sleep  1;  done
