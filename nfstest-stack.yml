@@ -35,12 +35,7 @@ services:
         volume:
           nocopy: true
     deploy:
-      mode: replicated
       replicas: 1
-      placement:
-        max_replicas_per_node: 1
-      restart_policy:
-        condition: any
 
   #####################################################
   consumer:
@@ -56,12 +51,7 @@ services:
         volume:
           nocopy: true
     deploy:
-      mode: replicated
       replicas: 1
-      placement:
-        max_replicas_per_node: 1
-      restart_policy:
-        condition: any
 
   #####################################################
   nfs-server:
@@ -77,9 +67,4 @@ services:
         aliases:
           - nfs-server.service.consul
     deploy:
-      mode: replicated
       replicas: 1
-      placement:
-        max_replicas_per_node: 1
-      restart_policy:
-        condition: any
