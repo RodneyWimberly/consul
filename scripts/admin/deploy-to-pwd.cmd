@@ -19,20 +19,20 @@ cd %SCRIPT_PATH%
 rem ==================================================
 echo "Build and Deploy Docker Images to Docker Hub"
 echo " --> Building consul-bootstrapper image for consul stack"
-docker build -t %DOCKER_REGISTRY%dockerregistry:consul-bootstrapper ../../bootstrapper/.
+rem docker build -t %DOCKER_REGISTRY%dockerregistry:consul-bootstrapper ../../bootstrapper/.
 
 echo " --> Building volume image for nfstest stack"
-docker build -t %DOCKER_REGISTRY%dockerregistry:volume ../../nfs/.
+rem docker build -t %DOCKER_REGISTRY%dockerregistry:volume ../../nfs/.
 
 echo " --> Logging in to repository %DOCKER_REmGISTRY%"
 rem docker login https://%DOCKER_HUB% --username=RodneyWimberly --password=5a45a7688ea36d4572100a47f894435fef6b2aa5
-docker login --username=rodneywimberly --password=P@55w0rd!
+rem docker login --username=rodneywimberly --password=P@55w0rd!
 
 echo " --> Pushing consul-bootstrapper image for consul stack"
-docker push %DOCKER_REGISTRY%dockerregistry:consul-bootstrapper
+rem docker push %DOCKER_REGISTRY%dockerregistry:consul-bootstrapper
 
 echo " --> Pushing volume image for nfstest stack"
-docker push %DOCKER_REGISTRY%dockerregistry:volume
+rem docker push %DOCKER_REGISTRY%dockerregistry:volume
 
 rem ==================================================
 rem "Tell Play with Docker Lab to Get Latest and Deploy"
