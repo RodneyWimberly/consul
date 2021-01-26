@@ -10,15 +10,9 @@ apk add iputils bind-utils nfs-utils bash iproute2
 
 mount -v -o vers=4,loud 192.168.0.4:/ /mnt
 
-
-
 docker run -d -p 5000:5000 --restart=always --name registry registry:2
+docker run -d --name volumetest docker.pkg.github.com/rodneywimberly/dockerrepositories/volume:1.0
 
 
-Screen Commands
-===================================================
-"screen"                    = Start screen utility
-"<ctrl> + a", + "d"         = Detach from screen
-"screen -r"                 = Attach to last screen
-"screen -r <pid.tty.host>"  = Attach to last screen
+
 

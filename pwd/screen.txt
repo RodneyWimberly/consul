@@ -1,0 +1,71 @@
+Here is the list of important Keyboard shortcuts to manage nested sessions.
+======================================================
+Ctrl+a d - Detach from sessions
+Ctrl+a ” - List all sessions
+Ctrl+a 0 - Switch to session number 0
+Ctrl+a n - Switch to next session
+Ctrl+a p - Switch to the previous session
+Ctrl+a S - Split current region horizontally into two regions
+Ctrl+a l - Split current region vertically into two regions
+Ctrl+a Q - Close all sessions except the current one
+Ctrl+a X - Close the current session
+Ctrl+a H - Log the current session
+Ctrl+a x - Lock the current session
+Ctrl+a \ - Kill all sessions and terminate Screen
+Ctrl+a ? - Show keybindings. To quit this, press ENTER.
+
+Check if in session
+======================================================
+Ctrl+a Ctrl+t - Show Host and time
+echo $STY = session
+echo $TERM = screen
+echo "caption always \"%{= kc}Screen session on %H (system load: %l)%-28=%{= .m}%D %d.%m.%Y %0c\"" > ~/.screenrc && \
+
+Example Screen Commands
+======================================================
+"screen"                             = Start a new screen
+"screen -S <name>"                   = Start a new named screen
+"<ctrl> + a", + "d"                  = Detach from screen
+"screen -r"                          = ReAttach to last detached screen
+"screen -r <pid.[tty.host or name]>" = ReAttach to detached named screen
+"screen -d <pid.[tty.host or name]>" = De-attach an attached named screen
+
+
+Screen Command Options
+======================================================
+Use: screen [-opts] [cmd [args]]
+ or: screen -r [host.tty]
+
+Options:
+-a            Force all capabilities into each window's termcap.
+-A -[r|R]     Adapt all windows to the new display width & height.
+-c file       Read configuration file instead of '.screenrc'.
+-d (-r)       Detach the elsewhere running screen (and reattach here).
+-dmS name     Start as daemon: Screen session in detached mode.
+-D (-r)       Detach and logout remote (and reattach here).
+-D -RR        Do whatever is needed to get a screen session.
+-e xy         Change command characters.
+-f            Flow control on, -fn = off, -fa = auto.
+-h lines      Set the size of the scrollback history buffer.
+-i            Interrupt output sooner when flow control is on.
+-l            Login mode on (update /dev/null/utmp), -ln = off.
+-ls [match]   or
+-list         Do nothing, just list our SockDir [on possible matches].
+-L            Turn on output logging.
+-Logfile file Set logfile name.
+-m            ignore $STY variable, do create a new screen session.
+-O            Choose optimal output rather than exact vt100 emulation.
+-p window     Preselect the named window if it exists.
+-q            Quiet startup. Exits with non-zero return code if unsuccessful.
+-Q            Commands will send the response to the stdout of the querying process.
+-r [session]  Reattach to a detached screen process.
+-R            Reattach if possible, otherwise start a new session.
+-s shell      Shell to execute rather than $SHELL.
+-S sockname   Name this session <pid>.sockname instead of <pid>.<tty>.<host>.
+-t title      Set title. (window's name).
+-T term       Use term as $TERM for windows, rather than "screen".
+-U            Tell screen to use UTF-8 encoding.
+-v            Print "Screen version 4.08.00 (GNU) 05-Feb-20".
+-wipe [match] Do nothing, just clean up SockDir [on possible matches].
+-x            Attach to a not detached screen. (Multi display mode).
+-X            Execute <cmd> as a screen command in the specified session.
