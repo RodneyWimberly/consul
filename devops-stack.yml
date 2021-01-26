@@ -15,6 +15,7 @@ networks:
 
 volumes:
   web_volume:
+  proxy_cache:
 
 services:
   web:
@@ -64,6 +65,6 @@ services:
     networks:
      - admin_network
     volumes:
-      - /srv/docker/squid/cache:/var/spool/squid
+      - proxy_cache:/var/spool/squid
     deploy:
       replicas: 1
