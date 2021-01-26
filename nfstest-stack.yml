@@ -16,7 +16,7 @@ volumes:
 services:
   #####################################################
   producer:
-    image : docker.io/rodneywimberly/dockerregistry:volume
+    image : nfstest/.
     command:  |
       /bin/sh -c "
         while true;
@@ -41,7 +41,7 @@ services:
 
   #####################################################
   consumer:
-    image : docker.io/rodneywimberly/dockerregistry:volume
+    image : nfstest/.
     command :  |
       /bin/sh -c "
         while  true; do ls -al /data/;  sleep  1;  done
