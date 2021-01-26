@@ -8,13 +8,6 @@ version: "3.8"
 
 volumes:
   data_volume:
-  nfs_server_volume:
-  nfs_client_volume:
-    driver: local
-    driver_opts:
-      type: nfs
-      o: addr=nfs-server.service.consul,rw
-      device: ":/data"
 
 networks:
   admin_network:
@@ -59,12 +52,7 @@ x-consul:
   volumes:
     - data_volume:/consul/data
     - /var/run/docker.sock:/var/run/docker.sock
-    - ${pwd}/scripts:/usr/local/scripts
-    - type: volume
-      source: nfs_client_volume
-      target: /consul/bootstrap
-      volume:
-        nocopy: true
+    - /mnt/scripts:/usr/local/scripts
   env_file:
     - /mnt/scripts/consul.env
   #healthcheck:
@@ -90,7 +78,7 @@ services:
   consul-bootstrapper:
     << : *consul-base
     entrypoint: /usr/local/scripts/consul-bootstrapper-entrypoint.sh
-    image: docker.io/rodneywimberly/dockerregistry:consul-bootstrapper
+    build: bootstrapper/.
     volumes:
       - data_volume:/consul/data
       - /mnt/backups:/usr/share/nginx/html:rw
@@ -119,30 +107,11 @@ services:
     deploy:
       mode: global
 
-  nfs-server:
-    image: itsthenetwork/nfs-server-alpine:12
-    environment:
-      - SHARED_DIRECTORY=/data
-    volumes:
-      - nfs_server_volume:/data
-    cap_add:
-      - ALL
-    networks:
-      admin_network:
-        aliases:
-          - nfs-server.service.consul
-        ipv4_address: 192.168.100.4
-    deploy:
-      mode: replicated
-      replicas: 1
-      placement:
-        max_replicas_per_node: 1
-      restart_policy:
-        condition: any
-
   jump-box:
-    entrypoint: /usr/local/scripts/jump-box-entrypoint.sh
     image: alpine
+    entrypoint: /usr/local/scripts/jump-box-entrypoint.sh
+    env_file:
+    - /mnt/scripts/consul.env
     volumes:
     - /var/run/docker.sock:/var/run/docker.sock
     - /mnt/backups:/usr/share/nginx/html:rw
