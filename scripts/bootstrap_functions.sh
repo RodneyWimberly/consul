@@ -29,10 +29,10 @@ function configure_acl() {
 
   log_detail "snapshot will be saved as ${backup_file} "
   ACL_MASTER_TOKEN=`cat ${CONSUL_BOOTSTRAP_DIR}/server_acl_master_token.json | jq -r -M '.acl_master_token'`
-  curl --header "X-Consul-Token: ${ACL_MASTER_TOKEN}" http://127.0.0.1:8500/v1/snapshot?dc=docker -o ${backup_file}
+  curl -sS --header "X-Consul-Token: ${ACL_MASTER_TOKEN}" http://127.0.0.1:8500/v1/snapshot?dc=docker -o ${backup_file}
 
   log "Shutting down 'local only' server (pid: ${consul_pid}) and then starting usual server"
-  kill ${1}
+  kill ${consul_pid}
 
   log_detail "wait for the 'local only' server to fully shutdown - 10 seconds"
   sleep 10s
