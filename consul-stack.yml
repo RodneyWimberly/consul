@@ -78,7 +78,7 @@ services:
   consul-bootstrapper:
     << : *consul-base
     image: consul-bootstrapper
-    entrypoint: /usr/local/scripts/consul-bootstrapper-entrypoint.sh
+    entrypoint: /usr/local/scripts/bootstrapper-entrypoint.sh
     volumes:
       - data_volume:/consul/data
       - /mnt/backups:/usr/share/nginx/html:rw
