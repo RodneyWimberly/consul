@@ -15,7 +15,7 @@ volumes:
 
 x-nfstest:
   &nfstest-base
-  image: rodneywimberly/dockerrepositories:nfstest
+  image: nfstest
   volumes:
     - type: volume
       source: test

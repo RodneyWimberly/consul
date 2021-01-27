@@ -77,7 +77,7 @@ services:
 
   consul-bootstrapper:
     << : *consul-base
-    image: rodneywimberly/dockerrepositories:bootstrapper
+    image: consul-bootstrapper
     entrypoint: /usr/local/scripts/consul-bootstrapper-entrypoint.sh
     volumes:
       - data_volume:/consul/data
