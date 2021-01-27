@@ -9,7 +9,7 @@ curl -sS --connect-timeout 180 --unix-socket /var/run/docker.sock -X GET http://
 apk add iputils bind-utils nfs-utils bash iproute2
 
 mount -v -o vers=4,loud 192.168.0.4:/ /mnt
-
+useradd -rm -d /home/alpine -s /bin/bash -g root -G sudo -u 1000 test
 
 docker login https://docker.pkg.github.com/ --username=RodneyWimberly --password=b1b203616d5b8f247d0a0749ebc02ecdac81a7d3
 

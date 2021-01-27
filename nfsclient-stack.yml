@@ -63,9 +63,7 @@ services:
         /bin/sh -c "
           apk update
           apk add curl jq openssl gettext iputils nfs-utils iproute2 sudo
-          sudo mount -v -o vers=4,loud nfsserver_storage:/ /data/svc
-          sudo mount -v -o vers=4,loud 192.168.100.100:/ /data/ip
-          sudo mount -v -o vers=4,loud storage.service.consul:/ /data/fqdn
+          sudo mount -v -o vers=4,loud tasks.nfsserver_storage:/ /data
           df -h
         "
   jump-box:
