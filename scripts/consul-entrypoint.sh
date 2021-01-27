@@ -39,7 +39,7 @@ if [ -z "$CONSUL_HTTP_TOKEN" ] || [ "$CONSUL_HTTP_TOKEN" -eq "0" ] ; then
     # sleep 5
     # log_detail "Querying the bootstrap process to see if it has completed."
     # curl http://consul-bootstrapper.service.consul/${agent_mode}.json -o ${CONSUL_CONFIG_DIR}/${agent_mode}.json
-    "${CONSUL_SCRIPT_DIR}"\bootstrap_entrypoint.sh
+    "${CONSUL_SCRIPT_DIR}"/bootstrap_entrypoint.sh
 
     log_detail "The consul cluster has been successfully bootstrapped."
 else
