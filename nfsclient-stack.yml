@@ -20,20 +20,16 @@ x-nfsclient:
   deploy:
     replicas: 1
 
-x-nfsvolume:
-  &nfsvolume-template
-  - type: volume
-    source: storage_volume
-    target: /data
-    volume:
-      nocopy: true
-
 services:
   #####################################################
   producer:
     << : *nfsclient-template
     volumes:
-      << : *nfsvolume-template
+      - type: volume
+        source: storage_volume
+        target: /data
+        volume:
+          nocopy: true
     command:  |
       /bin/sh -c "
         while true;
@@ -50,7 +46,11 @@ services:
   consumer:
     << : *nfsclient-template
     volumes:
-      << : *nfsvolume-template
+      - type: volume
+        source: storage_volume
+        target: /data
+        volume:
+          nocopy: true
     command :  |
       /bin/sh -c "
         while  true; do ls -al /data/;  sleep  1;  done
