@@ -22,7 +22,6 @@ mkdir -p /mnt/config
 mkdir -p /mnt/certs
 mkdir -p /mnt/scripts
 mkdir -p /mnt/webmgr
-mkdir -p /mnt/nfssvr
 apk add screen git
 echo "caption always \"%{= kc}Screen session %STY on %H system load: %l) %-28=%{= .m}%D %d.%m.%Y %0c\"" > ~/.screenrc
 screen -q -t update-stack -S update-stack
