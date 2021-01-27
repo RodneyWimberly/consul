@@ -8,11 +8,13 @@ apk add \
   bash \
   curl \
   jq \
+  openssl \
   gettext \
   iputils \
   nfs-utils \
   bash \
-  iproute2
+  iproute2 \
+  sudo
 
 add_path "${CONSUL_SCRIPT_DIR}"
 

@@ -70,4 +70,6 @@ services:
         "
   jump-box:
     << : *nfsclient-template
-    command : nohup /bin/sh
+    volumes:
+      - /mnt/scripts:/usr/local/scripts
+    command : /usr/local/scripts/jump-box-entrypoint.sh
