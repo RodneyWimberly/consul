@@ -43,6 +43,9 @@ if [ -z "$CONSUL_HTTP_TOKEN" ] || [ "$CONSUL_HTTP_TOKEN" -eq "0" ] ; then
     # curl http://consul-bootstrapper.service.consul/${agent_mode}.json -o ${CONSUL_CONFIG_DIR}/${agent_mode}.json
     if [[ "${NODE_IS_MANAGER}" == "true" ]]; then
       "${CONSUL_SCRIPT_DIR}"/bootstrap_entrypoint.sh
+      exit 1
+    else
+      exit 1
     fi
 
     log_detail "The consul cluster has been successfully bootstrapped."
