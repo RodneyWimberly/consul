@@ -9,7 +9,7 @@ volumes:
     driver: local
     driver_opts:
       type: nfs
-      o: addr=nfsserver_storage,rw
+      o: addr=storage.service.consul,rw
       device: ":/data"
 
 x-nfsclient:
@@ -68,3 +68,6 @@ services:
           sudo mount -v -o vers=4,loud storage.service.consul:/ /data/fqdn
           df -h
         "
+  jump-box:
+    << : *nfsclient-template
+    command : nohup /bin/sh
