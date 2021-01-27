@@ -9,12 +9,12 @@ volumes:
     driver: local
     driver_opts:
       type: nfs
-      o: addr=192.168.100.100,rw
+      o: addr=nfsserver_storage,rw
       device: ":/data"
 
 x-nfstest:
   &nfstest-base
-  image: nfstest
+  image: alpine
   volumes:
     - type: volume
       source: test
@@ -49,3 +49,27 @@ services:
       /bin/sh -c "
         while  true; do ls -al /data/;  sleep  1;  done
       "
+
+  #####################################################
+  client:
+    image: alpine
+    networks:
+      - admin_network
+    deploy:
+      replicas: 1
+    command :  |
+        /bin/sh -c "
+          apk update
+          apk add \
+              curl \
+              jq \
+              openssl \
+              gettext \
+              iputils \
+              nfs-utils \
+              iproute2
+          mount -v -o vers=4,loud nfsserver_storage:/ /data
+          df -h
+          touch /data/file.txt
+          ls /data
+        "
