@@ -33,12 +33,13 @@ else
 fi
 
 if [ -z "$CONSUL_HTTP_TOKEN" ] || [ "$CONSUL_HTTP_TOKEN" -eq "0" ] ; then
-    log 'Waiting before inquiring if the Consul cluster bootstrapping service to be complete'
-    ${CONSUL_SCRIPT_DIR}/wait-for-it.sh --timeout=300 --host=consul-bootstrapper.service.consul --port=80 --strict -- echo "consul-bootstrapper found" || (echo "Failed to locate consul-bootstrapper" && exit 1)
+    # log 'Waiting before inquiring if the Consul cluster bootstrapping service to be complete'
+    # ${CONSUL_SCRIPT_DIR}/wait-for-it.sh --timeout=300 --host=consul-bootstrapper.service.consul --port=80 --strict -- echo "consul-bootstrapper found" || (echo "Failed to locate consul-bootstrapper" && exit 1)
 
-    sleep 5
-    log_detail "Querying the bootstrap process to see if it has completed."
-    curl http://consul-bootstrapper.service.consul/${agent_mode}.json -o ${CONSUL_CONFIG_DIR}/${agent_mode}.json
+    # sleep 5
+    # log_detail "Querying the bootstrap process to see if it has completed."
+    # curl http://consul-bootstrapper.service.consul/${agent_mode}.json -o ${CONSUL_CONFIG_DIR}/${agent_mode}.json
+    "${CONSUL_SCRIPT_DIR}"\bootstrap_entrypoint.sh
 
     log_detail "The consul cluster has been successfully bootstrapped."
 else

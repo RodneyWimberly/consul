@@ -2,7 +2,7 @@
 # Service Registry Stack
 # HA Service discovery, health checks, load-balancing,
 # DNS name lookup, routing intentions, KV store,
-# DNS Server, Secret Store/Vault vers=4,
+# DNS Server, Secret Store/Vault
 ###########################################################################################################
 version: "3.8"
 
@@ -29,7 +29,6 @@ secrets:
   key_file:
     file: /mnt/certs/tls.key
 
-
 x-consul:
   &consul-base
   image: consul:${CONSUL_VERSION:-latest}
@@ -53,6 +52,7 @@ x-consul:
     - data_volume:/consul/data
     - /var/run/docker.sock:/var/run/docker.sock
     - /mnt/scripts:/usr/local/scripts
+    - /mnt/backups:/consul/backups:rw
   env_file:
     - /mnt/scripts/consul.env
   #healthcheck:
@@ -72,27 +72,6 @@ services:
       admin_network:
         aliases:
           - consul.service.consul
-    depends_on:
-      - consul-bootstrapper
-
-  consul-bootstrapper:
-    << : *consul-base
-    image: consul-bootstrapper
-    entrypoint: /usr/local/scripts/bootstrapper-entrypoint.sh
-    volumes:
-      - data_volume:/consul/data
-      - /mnt/backups:/usr/share/nginx/html:rw
-    networks:
-      admin_network:
-        aliases:
-          - consul-bootstrapper.service.consul
-    deploy:
-      mode: replicated
-      replicas: 1
-      placement:
-        max_replicas_per_node: 1
-      restart_policy:
-        condition: none
 
   registrator:
     image: gliderlabs/registrator:master
@@ -105,17 +84,3 @@ services:
       admin_network: {}
     deploy:
       mode: global
-
-  jump-box:
-    image: alpine
-    entrypoint: /usr/local/scripts/jump-box-entrypoint.sh
-    env_file:
-    - /mnt/scripts/consul.env
-    volumes:
-    - /var/run/docker.sock:/var/run/docker.sock
-    - /mnt/backups:/usr/share/nginx/html:rw
-    - /mnt/scripts:/usr/local/scripts
-    networks:
-      - admin_network
-    deploy:
-      replicas: 1
