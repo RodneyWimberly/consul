@@ -19,3 +19,5 @@ docker run -d --name nfstest docker.pkg.github.com/rodneywimberly/consul/nfstest
 
 
 
+#'{{ GetInterfaceIP \"eth0\" }}'
+#'{{ GetAllInterfaces | include "network" "192.168.0.0/16" }}'

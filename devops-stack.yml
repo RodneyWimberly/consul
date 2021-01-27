@@ -2,8 +2,6 @@
 # DevOps Stack - Used to manage dev-ops stuff like Docker
 #####################################################
 # External Ports
-# 3128:ingress/tcp      = http-proxy - HTTP/HTTPS/FTP Proxy Server
-# 1080:ingress/tcp:udp  = socks-proxy - SOCKS4/SOCKS5 Proxy Server
 # 9000:ingress/tcp      = web - HTTP UI
 # 9001:host/tcp:udp     = agent - HTTP REST
 
@@ -49,22 +47,3 @@ services:
       placement:
         constraints: [node.platform.os == linux]
 
-  socks-proxy:
-    image: wernight/dante
-    ports:
-      - 1080:1080
-    networks:
-     - admin_network
-    deploy:
-      replicas: 1
-
-  http-proxy:
-    image: sameersbn/squid:3.5.27-2
-    ports:
-      - 3128:3128
-    networks:
-     - admin_network
-    volumes:
-      - proxy_cache:/var/spool/squid
-    deploy:
-      replicas: 1
