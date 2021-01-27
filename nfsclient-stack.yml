@@ -62,18 +62,9 @@ services:
     command :  |
         /bin/sh -c "
           apk update
-          apk add \
-              curl \
-              jq \
-              openssl \
-              gettext \
-              iputils \
-              nfs-utils \
-              iproute2
+          apk add curl jq openssl gettext iputils nfs-utils iproute2 su-exec
           mount -v -o vers=4,loud nfsserver_storage:/ /data/svc
           mount -v -o vers=4,loud 192.168.100.100:/ /data/ip
           mount -v -o vers=4,loud storage.service.consul:/ /data/fqdn
           df -h
-          touch /data/file.txt
-          ls /data
         "
