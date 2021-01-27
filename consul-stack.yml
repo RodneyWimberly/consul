@@ -82,7 +82,6 @@ services:
     volumes:
       - data_volume:/consul/data
       - /mnt/backups:/usr/share/nginx/html:rw
-      - /mnt/scripts:/usr/local/scripts
     networks:
       admin_network:
         aliases:
