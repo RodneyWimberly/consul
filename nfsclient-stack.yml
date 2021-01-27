@@ -9,7 +9,7 @@ volumes:
     driver: local
     driver_opts:
       type: nfs
-      o: addr=storage.service.consul,rw
+      o: addr=tasks.nfsserver_storage,rw
       device: ":/data"
 
 x-nfsclient:
