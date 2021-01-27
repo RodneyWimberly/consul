@@ -51,7 +51,7 @@ x-consul:
   volumes:
     - data_volume:/consul/data
     - /var/run/docker.sock:/var/run/docker.sock
-    - /mnt/scripts:/usr/local/scripts
+
     - /mnt/backups:/consul/backups:rw
   env_file:
     - /mnt/scripts/consul.env
