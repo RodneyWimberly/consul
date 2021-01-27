@@ -19,9 +19,6 @@ services:
     ports:
       - 2049:2049
     networks:
-      admin_network:
-        ipv4_address: 192.168.100.100
-        aliases:
-          - storage.service.consul
+      - admin_network
     deploy:
       replicas: 1
