@@ -60,38 +60,72 @@
 	"buffers":
 	[
 		{
-			"file": "scripts/admin/deploy-to-pwd.cmd",
+			"file": "scripts/deploy.sh",
 			"settings":
 			{
-				"buffer_size": 892,
+				"buffer_size": 1963,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "scripts/admin/build-and-push-docker-images.cmd",
+			"contents": "version: '3.7'\n\nnetworks:\n  admin_network:\n    external: true\n\nvolumes:\n  test:\n    driver: local\n    driver_opts:\n      type: nfs\n      o: addr=nfsserver_storage:2049,rw\n      device: \":/data\"\n\nx-nfstest:\n  &nfstest-base\n  image: alpine\n  volumes:\n    - type: volume\n      source: test\n      target: /data\n      volume:\n        nocopy: true\n  networks:\n    - admin_network\n  deploy:\n    replicas: 1\n\nservices:\n  #####################################################\n  producer:\n    << : *nfstest-base\n    command:  |\n      /bin/sh -c \"\n        while true;\n          do touch /data/hello-from-producer;\n          echo '/data/hello-from-producer written';\n          sleep 5;\n          rm /data/hello-from-producer;\n          echo '/data/hello-from-producer deleted';\n          sleep 5;\n        done\n      \"\n\n  #####################################################\n  consumer:\n    << : *nfstest-base\n    command :  |\n      /bin/sh -c \"\n        while  true; do ls -al /data/;  sleep  1;  done\n      \"\n  #####################################################\n  client:\n    image: alpine\n  networks:\n    - admin_network\n  deploy:\n    replicas: 1\n  command :  |\n      /bin/sh -c \"\n        while  true; do ls -al /data/;  sleep  1;  done\n      \"",
+			"file": "nfsclient-stack.yml",
+			"file_size": 992,
+			"file_write_time": 132561925114161106,
 			"settings":
 			{
-				"buffer_size": 1422,
+				"buffer_size": 1237,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "version: '3.7'\n\nnetworks:\n  admin_network:\n    external: true\n\nservices:\n  storage:\n    image: itsthenetwork/nfs-server-alpine\n    environment:\n      - SHARED_DIRECTORY=/data\n    volumes:\n      - /mnt/nfssvr:/data\n    cap_add:\n      - ALL\n    ports:\n      - 2049:2049\n    networks:\n      admin_network:\n        ipv4_address: 192.168.100.100\n        aliases:\n          - nfs_server.service.consul\n    deploy:\n      replicas: 1\n",
+			"file": "nfsserver-stack.yml",
+			"file_size": 410,
+			"file_write_time": 132561925114361114,
+			"settings":
+			{
+				"buffer_size": 426,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "touch ~/update-stack.sh && \\\nrm ~/update-stack.sh && \\\ntouch ~/update-stack.sh && \\\ncat > ~/update-stack.sh <<EOL\nrm -rf /tmp/consul\ngit clone -b DeploymentTest \\\n    https://rodneywimberly:b606a0781f57605d4e5b00b753a6f26c23ff8908@github.com/RodneyWimberly/consul.git \\\n    /tmp/consul\ncp -r /tmp/consul/scripts/* /mnt/scripts/\ncp -r /tmp/consul/backups/* /mnt/backups/\ncp -r /tmp/consul/certs/* /mnt/certs/\ncp -r /tmp/consul/config/* /mnt/config/\nchmod u+x /mnt/scripts/*.sh\nexit\nEOL\nchmod u+x ~/update-stack.sh\nmkdir -p /mnt/backups\nmkdir -p /mnt/config\nmkdir -p /mnt/certs\nmkdir -p /mnt/scripts\nmkdir -p /mnt/webmgr\nmkdir -p /mnt/nfssvr\napk add screen git\necho \"caption always \\\"%{= kc}Screen session $STY on %H (system load: %l)%-28=%{= .m}%D %d.%m.%Y %0c\\\"\" > ~/.screenrc\nscreen -q -t update-stack -S update-stack\n./update-stack.sh\n",
+			"file": "pwd/update-stack-worker.sh",
+			"file_size": 816,
+			"file_write_time": 132561999269534701,
+			"settings":
+			{
+				"buffer_size": 837,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "pwd/cmdline.txt",
+			"settings":
+			{
+				"buffer_size": 1081,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "consul-stack.yml",
+			"contents": "touch ~/update-stack.sh && \\\nrm ~/update-stack.sh && \\\ntouch ~/update-stack.sh && \\\ncat > ~/update-stack.sh <<EOL\nrm -rf /tmp/consul\ngit clone -b DeploymentTest \\\n    https://rodneywimberly:b606a0781f57605d4e5b00b753a6f26c23ff8908@github.com/RodneyWimberly/consul.git \\\n    /tmp/consul\ncp -r /tmp/consul/scripts/* /mnt/scripts/\ncp -r /tmp/consul/backups/* /mnt/backups/\ncp -r /tmp/consul/certs/* /mnt/certs/\ncp -r /tmp/consul/config/* /mnt/config/\nchmod u+x /mnt/scripts/*.sh\ncd /tmp/consul/scripts\nchmod u+x ./*.sh\n./deploy.sh\nexit\nEOL\nchmod u+x ~/update-stack.sh\nmkdir -p /mnt/backups\nmkdir -p /mnt/config\nmkdir -p /mnt/certs\nmkdir -p /mnt/scripts\nmkdir -p /mnt/webmgr\nmkdir -p /mnt/nfssvr\napk add screen git\necho \"caption always \\\"%{= kc}Screen session %STY on %H system load: %l) %-28=%{= .m}%D %d.%m.%Y %0c\\\"\" > ~/.screenrc\nscreen -q -t update-stack -S update-stack\n./update-stack.sh\n",
+			"file": "pwd/update-stack-manager.sh",
+			"file_size": 868,
+			"file_write_time": 132562007397443900,
 			"settings":
 			{
-				"buffer_size": 3172,
-				"encoding": "UTF-8",
+				"buffer_size": 889,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "nfstest-stack.yml",
+			"file": "devops-stack.yml",
 			"settings":
 			{
-				"buffer_size": 1411,
-				"encoding": "UTF-8",
+				"buffer_size": 1091,
 				"line_ending": "Unix"
 			}
 		}
@@ -366,23 +400,51 @@
 	"expanded_folders":
 	[
 		"/D/Projects/consul",
-		"/D/Projects/consul/scripts",
-		"/D/Projects/consul/scripts/admin"
+		"/D/Projects/consul/pwd"
 	],
 	"file_history":
 	[
+		"/D/Projects/consul/nfs-stack.yml",
+		"/D/Projects/consul/scripts/bootstrap_functions.sh",
+		"/D/Projects/consul/pwd/update-stack-worker.sh",
+		"/D/Projects/consul/pwd/update-stack-manager.sh",
+		"/D/Projects/consul/scripts/bootstrap_entrypoint.sh",
+		"/D/Projects/consul/scripts/consul-entrypoint.sh",
+		"/D/Projects/consul/devops-stack.yml",
+		"/D/Projects/consul/pwd/set-variables.cmd",
+		"/D/Projects/consul/consul-stack.yml",
+		"/D/Projects/consul/diagnostics-stack.yml",
+		"/D/Projects/consul/logging-stack.yml",
+		"/D/Projects/consul/scripts/deploy.sh",
+		"/D/Projects/consul/scripts/consul.env",
+		"/D/Projects/consul/scripts/backup/server_setup.sh",
+		"/D/Projects/consul/pwd/cmdline.txt",
+		"/D/Projects/consul/scripts/wait-for-it.sh",
+		"/D/Projects/consul/scripts/bootstrap_gossip.sh",
+		"/D/Projects/consul/scripts/bootstrap_tls.sh",
+		"/D/Projects/consul/scripts/bootstrap_acl.sh",
+		"/D/Projects/consul/scripts/bootstrap_acl_anon.sh",
+		"/D/Projects/consul/scripts/bootstrap_acl_bootstrap_agent_token.sh",
+		"/D/Projects/consul/scripts/bootstrap_acl_client_general_token.sh",
+		"/D/Projects/consul/scripts/common_functions.sh",
+		"/D/Projects/consul/scripts/bootstrapper_entrypoint.sh",
+		"/D/Projects/consul/pwd/deploy-to-pwd.cmd",
+		"/D/Projects/consul/pwd/connect-to-pwd.cmd",
+		"/D/keep-alive.sh",
+		"/D/Projects/consul/pwd/screen.txt",
+		"/D/Projects/consul/pwd/pwd-remote-cmd.sh",
+		"/D/Projects/consul/scripts/admin/build-and-push-docker-images.cmd",
+		"/D/Containers/build-and-push-consul-bootstrapper.cmd",
 		"/D/Projects/consul/nfstest-stack.yml",
+		"/D/Projects/consul/scripts/admin/deploy-to-pwd.cmd",
+		"/D/Projects/consul/scripts/admin/curl-tests.txt",
+		"/D/Projects/consul/scripts/admin/screen.txt",
+		"/D/Projects/consul/scripts/admin/update-stack-worker.sh",
+		"/D/Projects/consul/scripts/admin/update-stack-manager.sh",
 		"/D/Projects/consul/bootstrapper/consul.env",
 		"/D/Projects/consul/bootstrapper/nginx.conf",
 		"/D/Projects/consul/bootstrapper/Dockerfile",
-		"/D/Projects/consul/logging-stack.yml",
-		"/D/Projects/consul/diagnostics-stack.yml",
-		"/D/Projects/consul/devops-stack.yml",
-		"/D/Projects/consul/scripts/admin/update-stack-manager.sh",
 		"/D/Projects/EventManager/Api/Identity/docker-compose.yml",
-		"/D/Projects/consul/scripts/consul-entrypoint.sh",
-		"/D/Projects/consul/consul-stack.yml",
-		"/D/Projects/consul/scripts/admin/curl-tests.txt",
 		"/D/em/Core/tools-stack.yml",
 		"/D/em/Core/docker-compose.yml",
 		"/C/Users/Rodney/.ssh/config",
@@ -390,13 +452,9 @@
 		"/C/Program Files/Sublime Text 3/Data/Packages/HexViewer/hex_viewer.sublime-settings",
 		"/C/Program Files/Sublime Text 3/Data/Packages/SavePrompt/SavePrompt.sublime-settings",
 		"/D/Projects/consul/bootstrapper/10-listen-on-ipv6-by-default.sh",
-		"/D/Projects/consul/scripts/admin/deploy-to-pwd.cmd",
-		"/D/Projects/consul/scripts/deploy.sh",
 		"/D/Projects/consul/nfs/Dockerfile",
 		"/D/Projects/consul/nfs/empty.file",
-		"/D/Projects/consul/scripts/admin/update-stack-worker.sh",
 		"/D/Projects/consul/scripts/jump-box-entrypoint.sh",
-		"/D/Projects/consul/scripts/consul.env",
 		"/D/Projects/consul/bootstrapper/common_functions.sh",
 		"/D/Projects/consul/scripts/backup/bootstrap-deployment.sh",
 		"/C/Program Files/Sublime Text 3/Data/Packages/Goto Usage/GotoUsage.sublime-settings",
@@ -473,32 +531,7 @@
 		"/D/Consul/soakes/consul/scripts/bootstrap/server_gossip.sh",
 		"/D/Consul/soakes/consul/scripts/bootstrap/server_tls.sh",
 		"/D/Consul/soakes/consul/scripts/bootstrap/wait-for-it.sh",
-		"/D/Consul/soakes/consul/backup-cluster.sh",
-		"/D/Consul/soakes/consul/scripts/startup-script.sh",
-		"/D/Consul/soakes/consul/scripts/bootstrap/sever_bootstrap.sh",
-		"/D/Consul/soakes/consul/scripts/bootstrap/common_functions.sh",
-		"/D/Consul/soakes/consul/bootstrap-deployment.sh",
-		"/D/Consul/soakes/consul/scripts/sever_bootstrap.sh",
-		"/D/Consul/soakes/consul/scripts/client_setup.sh",
-		"/D/Consul/soakes/consul/checkin-and-deploy.cmd",
-		"/D/Consul/soakes/consul/deploy.sh",
-		"/D/Consul/soakes/consul/scripts/server_setup.sh",
-		"/D/Consul/soakes/consul/config/server-config.json",
-		"/D/Consul/soakes/consul/config/client-config.json",
-		"/D/Consul/soakes/consul/scripts/shell_expansion.sh",
-		"/C/Program Files/Sublime Text 3/Data/Packages/Git/Git.sublime-settings",
-		"/D/Consul/config/acl.hcl",
-		"/D/Consul/soakes/consul/get-latest.sh",
-		"/D/Consul/soakes/consul/config/server-base-config.json",
-		"/D/Consul/soakes/consul/config/client-base-config.json",
-		"/D/Consul/soakes/consul/stacks/diagnostics-stack.yml",
-		"/D/Consul/soakes/consul/log-stack.yml",
-		"/D/em/Core/Log-Stack.yml",
-		"/D/em/Core/DevOps/Deploy/devops-stack.yml",
-		"/D/em/Core/Diagnostics/Dockerfile",
-		"/D/em/Core/DevOps/Deploy/deploy.sh",
-		"/D/em/Core/docker-hub.sh",
-		"/C/Program Files/Sublime Text 3/Data/Packages/User/set_unix_line_endings.py"
+		"/D/Consul/soakes/consul/backup-cluster.sh"
 	],
 	"find":
 	{
@@ -509,6 +542,7 @@
 		"height": 164.0,
 		"where_history":
 		[
+			"<open folders>",
 			"D:\\Consul\\soakes\\consul\\",
 			"D:\\Consul\\soakes\\consul"
 		]
@@ -518,6 +552,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"wait_for_bootstrap_process",
 			".env",
 			"./",
 			"proxy",
@@ -625,24 +660,24 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 1,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "scripts/admin/deploy-to-pwd.cmd",
+					"file": "scripts/deploy.sh",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 892,
+						"buffer_size": 1963,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								547,
-								547
+								1398,
+								1398
 							]
 						],
 						"settings":
@@ -665,11 +700,6 @@
 							},
 							"bracket_highlighter.regions":
 							[
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
 								"bh_c_define",
 								"bh_c_define_center",
 								"bh_c_define_open",
@@ -690,26 +720,26 @@
 								"bh_double_quote_open",
 								"bh_double_quote_close",
 								"bh_double_quote_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
 								"bh_square",
 								"bh_square_center",
 								"bh_square_open",
 								"bh_square_close",
 								"bh_square_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
 								"bh_tag",
 								"bh_tag_center",
 								"bh_tag_open",
@@ -719,33 +749,38 @@
 								"bh_angle_center",
 								"bh_angle_open",
 								"bh_angle_close",
-								"bh_angle_content"
+								"bh_angle_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
 							],
-							"function_name_status_row": 11,
-							"syntax": "Packages/Batch File/Batch File.sublime-syntax"
+							"function_name_status_row": 38,
+							"syntax": "Packages/ShellScript/Bash.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 209.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "scripts/admin/build-and-push-docker-images.cmd",
+					"file": "nfsclient-stack.yml",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1422,
+						"buffer_size": 1237,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								456,
-								523
+								1142,
+								1142
 							]
 						],
 						"settings":
@@ -768,11 +803,6 @@
 							},
 							"bracket_highlighter.regions":
 							[
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
 								"bh_c_define",
 								"bh_c_define_center",
 								"bh_c_define_open",
@@ -793,130 +823,26 @@
 								"bh_double_quote_open",
 								"bh_double_quote_close",
 								"bh_double_quote_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
 								"bh_square",
 								"bh_square_center",
 								"bh_square_open",
 								"bh_square_close",
 								"bh_square_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content"
-							],
-							"function_name_status_row": 11,
-							"open_with_edit": true,
-							"syntax": "Packages/Batch File/Batch File.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "consul-stack.yml",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3172,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2090,
-								2090
-							]
-						],
-						"settings":
-						{
-							"bracket_highlighter.busy": false,
-							"bracket_highlighter.locations":
-							{
-								"close":
-								{
-								},
-								"icon":
-								{
-								},
-								"open":
-								{
-								},
-								"unmatched":
-								{
-								}
-							},
-							"bracket_highlighter.regions":
-							[
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
 								"bh_regex",
 								"bh_regex_center",
 								"bh_regex_open",
 								"bh_regex_close",
 								"bh_regex_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
 								"bh_tag",
 								"bh_tag_center",
 								"bh_tag_open",
@@ -926,35 +852,40 @@
 								"bh_angle_center",
 								"bh_angle_open",
 								"bh_angle_close",
-								"bh_angle_content"
+								"bh_angle_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
 							],
-							"function_name_status_row": -1,
+							"function_name_status_row": 58,
 							"syntax": "Packages/YAML/YAML.sublime-syntax",
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1437.0,
+						"translation.y": 655.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
-					"file": "nfstest-stack.yml",
+					"buffer": 2,
+					"file": "nfsserver-stack.yml",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1411,
+						"buffer_size": 426,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								235,
-								235
+								267,
+								263
 							]
 						],
 						"settings":
@@ -977,11 +908,6 @@
 							},
 							"bracket_highlighter.regions":
 							[
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
 								"bh_c_define",
 								"bh_c_define_center",
 								"bh_c_define_open",
@@ -1002,26 +928,26 @@
 								"bh_double_quote_open",
 								"bh_double_quote_close",
 								"bh_double_quote_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
 								"bh_square",
 								"bh_square_center",
 								"bh_square_open",
 								"bh_square_close",
 								"bh_square_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
 								"bh_tag",
 								"bh_tag_center",
 								"bh_tag_open",
@@ -1031,9 +957,14 @@
 								"bh_angle_center",
 								"bh_angle_open",
 								"bh_angle_close",
-								"bh_angle_content"
+								"bh_angle_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
 							],
-							"function_name_status_row": 17,
+							"function_name_status_row": 16,
 							"syntax": "Packages/YAML/YAML.sublime-syntax",
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
@@ -1043,6 +974,420 @@
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "pwd/update-stack-worker.sh",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 837,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								639,
+								619
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
+							],
+							"function_name_status_row": 21,
+							"syntax": "Packages/ShellScript/Bash.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "pwd/cmdline.txt",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1081,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								980,
+								980
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
+							],
+							"function_name_status_row": 23,
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "pwd/update-stack-manager.sh",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 889,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								889,
+								889
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
+							],
+							"function_name_status_row": 29,
+							"syntax": "Packages/ShellScript/Bash.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "devops-stack.yml",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1091,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								450,
+								444
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
+							],
+							"function_name_status_row": 21,
+							"syntax": "Packages/YAML/YAML.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
 					"type": "text"
 				}
 			]
@@ -1085,7 +1430,7 @@
 	},
 	"output.exec":
 	{
-		"height": 57.0
+		"height": 96.0
 	},
 	"output.find_results":
 	{
@@ -1131,7 +1476,7 @@
 		[
 			[
 				"",
-				"D:\\em\\Core\\EventManager.Core.sublime-project"
+				"D:\\Containers\\Containers.sublime-project"
 			]
 		],
 		"width": 380.0
@@ -1162,7 +1507,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 251.0,
+	"side_bar_width": 338.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
