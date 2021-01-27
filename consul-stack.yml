@@ -64,6 +64,8 @@ services:
     deploy:
       endpoint_mode: dnsrr
       mode: global
+      restart_policy:
+        condition: none
       update_config:
         parallelism: 1
         delay: 10s
@@ -80,3 +82,5 @@ services:
       admin_network: {}
     deploy:
       mode: global
+      restart_policy:
+        condition: none
