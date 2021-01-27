@@ -5,12 +5,11 @@ networks:
     external: true
 
 volumes:
-  data:
   test:
     driver: local
     driver_opts:
       type: nfs
-      o: addr=nfs-server,rw
+      o: addr=tasks.nfs_server,rw
       device: ":/data"
 
 x-nfstest:
@@ -50,19 +49,3 @@ services:
       /bin/sh -c "
         while  true; do ls -al /data/;  sleep  1;  done
       "
-
-  #####################################################
-  nfs-server:
-    image: itsthenetwork/nfs-server-alpine:12
-    environment:
-      - SHARED_DIRECTORY=/data
-    volumes:
-      - data:/data
-    cap_add:
-      - ALL
-    networks:
-      admin_network:
-        aliases:
-          - nfs-server.service.consul
-    deploy:
-      replicas: 1
