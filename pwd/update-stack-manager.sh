@@ -10,6 +10,7 @@ cp -r /tmp/consul/scripts/* /mnt/scripts/
 cp -r /tmp/consul/backups/* /mnt/backups/
 cp -r /tmp/consul/certs/* /mnt/certs/
 cp -r /tmp/consul/config/* /mnt/config/
+chmod u+x /mnt/scripts/*.sh
 cd /tmp/consul/scripts
 chmod u+x ./*.sh
 ./deploy.sh
