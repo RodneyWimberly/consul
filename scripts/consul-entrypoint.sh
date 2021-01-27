@@ -24,6 +24,22 @@ export NODE_IP=$(echo ${NODE_INFO} | jq -r -M '.Swarm.NodeAddr')
 export NODE_ID=$(echo ${NODE_INFO} | jq -r -M '.Swarm.NodeID')
 export NODE_NAME=$(echo ${NODE_INFO} | jq -r -M '.Name')
 export NODE_IS_MANAGER=$(echo ${NODE_INFO} | jq -r -M '.Swarm.ControlAvailable')
+show_docker_details
+if [ -z "$CONSUL_HTTP_TOKEN" ] || [ "$CONSUL_HTTP_TOKEN" -eq "0" ] ; then
+    if [[ "${NODE_IS_MANAGER}" == "true" ]]; then
+      log_detail "The master ACL Token is not present"
+      log_detail "Starting the bootstrap process."
+      "${CONSUL_SCRIPT_DIR}"/bootstrap_entrypoint.sh
+    else
+      log_detail "The master ACL Token is not present."
+      log_detail "Only servers can bootstrap the cluster."
+      log_detail "Exiting, please retry once the cluster is bootstrapped."
+    fi
+    exit 0
+else
+    log_detail "The master ACL Token is present"
+    log_detail "Skipping the bootstrap process."
+fi
 
 expand_config_file_from "common.json"
 if [ "${NODE_IS_MANAGER}" == "true" ]; then
@@ -33,27 +49,6 @@ else
   agent_mode="client"
   expand_config_file_from "client.json"
 fi
-
-if [ -z "$CONSUL_HTTP_TOKEN" ] || [ "$CONSUL_HTTP_TOKEN" -eq "0" ] ; then
-    # log 'Waiting before inquiring if the Consul cluster bootstrapping service to be complete'
-    # ${CONSUL_SCRIPT_DIR}/wait-for-it.sh --timeout=300 --host=consul-bootstrapper.service.consul --port=80 --strict -- echo "consul-bootstrapper found" || (echo "Failed to locate consul-bootstrapper" && exit 1)
-
-    # sleep 5
-    # log_detail "Querying the bootstrap process to see if it has completed."
-    # curl http://consul-bootstrapper.service.consul/${agent_mode}.json -o ${CONSUL_CONFIG_DIR}/${agent_mode}.json
-    if [[ "${NODE_IS_MANAGER}" == "true" ]]; then
-      "${CONSUL_SCRIPT_DIR}"/bootstrap_entrypoint.sh
-      exit 1
-    else
-      exit 1
-    fi
-
-    log_detail "The consul cluster has been successfully bootstrapped."
-else
-    log_detail "The master ACL Token is present so skipping the bootstrap process."
-fi
-
-show_docker_details
 
 log_detail "Starting Consul in ${agent_mode} mode using the following command: exec docker-entrypoint.sh $@"
 exec docker-entrypoint.sh "$@"
