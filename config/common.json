@@ -31,8 +31,8 @@
     "allow_stale": false
   },
   "encrypt": "JWMpFl50rO2oTv2Rz660mrUminAYRLDCrrw09qEVuLw=",
-  "encrypt_verify_incoming" : true,
-  "encrypt_verify_outgoing" : true,
+  "encrypt_verify_incoming" : false,
+  "encrypt_verify_outgoing" : false,
   "key_file": "/consul/data/certs/tls.key",
   "http_config": {
     "response_headers": {
@@ -64,7 +64,7 @@
   },
   "verify_incoming": false,
   "verify_incoming_https" : false,
-  "verify_incoming_rpc" : true,
-  "verify_outgoing": true,
+  "verify_incoming_rpc" : false,
+  "verify_outgoing": false,
   "verify_server_hostname": false
 }
