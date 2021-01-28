@@ -9,6 +9,7 @@ elif [[ -f /mnt/scripts/consul.env ]]; then
 fi
 source "${CONSUL_SCRIPT_DIR}"/common_functions.sh
 
+
 function configure_acl() {
   log "Starting server in 'local only' mode. The ACL will be in legacy mode until a leader is elected."
   log_detail "Server will be started in 'local only' mode to not allow node registering while bootstrapping"
@@ -34,8 +35,8 @@ function configure_acl() {
   log "Shutting down 'local only' server (pid: ${consul_pid}) and then starting usual server"
   kill ${consul_pid}
 
-  log_detail "wait for the 'local only' server to fully shutdown - 10 seconds"
-  sleep 10s
+  log_detail "wait for the 'local only' server to fully shutdown - 5 seconds"
+  sleep 5s
 
   log_detail "Removing 'local only' configuration and updating it with the newly generated configuration"
   rm -f "${CONSUL_CONFIG_DIR}/server_acl.json"
