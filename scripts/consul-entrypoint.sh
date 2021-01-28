@@ -59,16 +59,6 @@ else
     log_detail "Skipping the bootstrap process."
 fi
 
-# Merge expanded variables with configuration templates and place in the config folder
-expand_config_file_from "common.json"
-if [ "${NODE_IS_MANAGER}" == "true" ]; then
-  agent_mode="server"
-  expand_config_file_from "server.json"
-else
-  agent_mode="client"
-  expand_config_file_from "client.json"
-fi
-
 # Do we need to restore a bootstrap snapshot?
 # If order to restore a bootstrap snapshot don't forget to do the follow steps
 # after the bootstrap creation to ensure the information is provided to all nodes.
@@ -84,6 +74,16 @@ if [[ -f "${CONSUL_BOOTSTRAP_DIR}"/bootstrap.snap ]] &&
   [ "${NODE_NAME}" == "manager1" ]; then
   restore_snapshot "${CONSUL_BOOTSTRAP_DIR}"/bootstrap.snap
   touch "${CONSUL_BOOTSTRAP_DIR}"/bootstrap.restored
+fi
+
+# Merge expanded variables with configuration templates and place in the config folder
+expand_config_file_from "common.json"
+if [ "${NODE_IS_MANAGER}" == "true" ]; then
+  agent_mode="server"
+  expand_config_file_from "server.json"
+else
+  agent_mode="client"
+  expand_config_file_from "client.json"
 fi
 
 # Start Consul the same way it would have started if we didn't modify the containers Entry Point
