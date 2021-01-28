@@ -22,7 +22,7 @@ apk add \
   git \
   screen \
   iputils \
-  iproute2
+  iproute2 \
   nfs-utils
 
 # Get Docker/Node/Hosting information from the Docker API for use in configuration
@@ -81,7 +81,7 @@ fi
 #      or bootstrap folders then delete it.
 if [[ -f "${CONSUL_BOOTSTRAP_DIR}"/bootstrap.snap ]] &&
   [[ ! -f "${CONSUL_BOOTSTRAP_DIR}"/bootstrap.restored ]] &&
-  [[ "${NODE_NAME}" -eq "manager1" ]]; then
+  [ "${NODE_NAME}" == "manager1" ]; then
   restore_snapshot "${CONSUL_BOOTSTRAP_DIR}"/bootstrap.snap
   touch "${CONSUL_BOOTSTRAP_DIR}"/bootstrap.restored
 fi
