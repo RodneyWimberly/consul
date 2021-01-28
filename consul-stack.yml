@@ -23,7 +23,7 @@ configs:
   bootstrap_config:
     file: /mnt/backups/bootstrap.json
   dns_conf:
-    file: /mnt/backups/dnsmasq.conf
+    file: /mnt/config/dnsmasq.conf
 
 secrets:
   ca_file:
