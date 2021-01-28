@@ -89,12 +89,10 @@ function restore_snapshot() {
       log_detail "waiting for the server to come up"
       ${CONSUL_SCRIPT_DIR}/wait-for-it.sh --timeout=300 --host=127.0.0.1 --port=8500 --strict -- echo "consul found" || (echo "Failed to locate consul" && exit 1)
 
-      log_detail "server is responding, waiting further 10 seconds to allow initialization"
-      sleep 10s
+      log_detail "server is responding, waiting further 5 seconds to allow initialization"
+      sleep 5s
 
       log_detail "restoring snapshot '${1}'"
-      ACL_MASTER_TOKEN=$(gjv "acl_master_token" "${CONSUL_BOOTSTRAP_DIR}"/server.json)
-      echo "Master Token: ${ACL_MASTER_TOKEN}"
       ACL_MASTER_TOKEN=`cat ${CONSUL_BOOTSTRAP_DIR}/server.json | jq -r -M '.acl_master_token'`
       curl --request PUT --data-binary @"${1}" -sS --header "X-Consul-Token: ${ACL_MASTER_TOKEN}" http://127.0.0.1:8500/v1/snapshot
 
