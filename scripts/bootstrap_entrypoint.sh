@@ -41,11 +41,6 @@ else
   ${CONSUL_SCRIPT_DIR}/bootstrap_tls.sh `hostname -f`
   ${CONSUL_SCRIPT_DIR}/bootstrap_gossip.sh
 
-  log "Configuring ACL support before we start the server"
-  echo "{ \"acl\": { \"enabled\": true, \"default_policy\": \"deny\", \"down_policy\": \"deny\" } }" > ${CONSUL_BOOTSTRAP_DIR}/server_acl.json
-  merge_json "server_acl.json"
-  cp "${CONSUL_BOOTSTRAP_DIR}/server_acl.json" "${CONSUL_CONFIG_DIR}/server_acl.json"
-
   configure_acl
 
   log "Updating db that the cluster bootstrapping process is complete and the startup restriction has been removed"

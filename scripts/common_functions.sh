@@ -83,20 +83,29 @@ function restore_snapshot() {
     if [[ -f "${1}" ]]; then
       log "Restoring cluster snapshot"
       log_detail "Starting server in 'local only' mode to not allow nodes joining the cluster during snapshot restoration"
+      echo "{ \"acl\": { \"enabled\": true, \"default_policy\": \"deny\", \"down_policy\": \"deny\" } }" > ${CONSUL_BOOTSTRAP_DIR}/server_acl.json
+      merge_json "server_acl.json"
+      cp "${CONSUL_BOOTSTRAP_DIR}/server_acl.json" "${CONSUL_CONFIG_DIR}/server_acl.json"
       docker-entrypoint.sh agent -server=true -bootstrap-expect=1 -datacenter=${CONSUL_DATACENTER} -bind=127.0.0.1 &
         consul_pid="$!"
 
       log_detail "waiting for the server to come up"
-      ${CONSUL_SCRIPT_DIR}/wait-for-it.sh --timeout=300 --host=127.0.0.1 --port=8500 --strict -- echo "consul found" || (echo "Failed to locate consul" && exit 1)
+      "${CONSUL_SCRIPT_DIR}"/wait-for-it.sh --timeout=300 --host=127.0.0.1 --port=8500 --strict -- echo "consul found" || (echo "Failed to locate consul" && exit 1)
 
-      log_detail "server is responding, waiting further 5 seconds to allow initialization"
-      sleep 5s
+      log_detail "server is responding, waiting further 15 seconds to allow initialization"
+      sleep 15s
 
       log_detail "restoring snapshot '${1}'"
       curl --request PUT --data-binary @"${1}" -sS --header "X-Consul-Token: ${CONSUL_HTTP_TOKEN}" http://127.0.0.1:8500/v1/snapshot
 
       log "Shutting down 'local only' server (pid: ${consul_pid}) and then starting usual server"
       kill ${consul_pid}
+
+      log_detail "wait for the 'local only' server to fully shutdown - 5 seconds"
+      sleep 5s
+
+      log_detail "removing 'local only' configuration for normal startup"
+      rm -f "${CONSUL_CONFIG_DIR}/server_acl.json"
     else
       log_warning "snapshot '"${1}"' could be found"
     fi

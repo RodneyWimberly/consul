@@ -13,6 +13,9 @@ source "${CONSUL_SCRIPT_DIR}"/common_functions.sh
 function configure_acl() {
   log "Starting server in 'local only' mode. The ACL will be in legacy mode until a leader is elected."
   log_detail "Server will be started in 'local only' mode to not allow node registering while bootstrapping"
+  echo "{ \"acl\": { \"enabled\": true, \"default_policy\": \"deny\", \"down_policy\": \"deny\" } }" > ${CONSUL_BOOTSTRAP_DIR}/server_acl.json
+  merge_json "server_acl.json"
+  cp "${CONSUL_BOOTSTRAP_DIR}/server_acl.json" "${CONSUL_CONFIG_DIR}/server_acl.json"
   docker-entrypoint.sh agent -server=true -bootstrap-expect=1 -datacenter=${CONSUL_DATACENTER} -bind=127.0.0.1 &
     consul_pid="$!"
 
