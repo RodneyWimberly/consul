@@ -63,8 +63,6 @@ services:
       - /mnt/backups:/consul/backups:rw
     env_file:
       - /mnt/scripts/consul.env
-    ports:
-      - 8500:8500
     networks:
         admin_network:
           aliases:
