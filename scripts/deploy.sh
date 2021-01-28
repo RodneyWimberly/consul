@@ -35,8 +35,8 @@ set -e
 #log_detail "Logging into GitHub Registry"
 #docker login https://docker.pkg.github.com/ --username=RodneyWimberly --password=b1b203616d5b8f247d0a0749ebc02ecdac81a7d3
 
-log_detail "Deploying NfsServer Stack to Swarm"
-docker stack deploy --compose-file=/tmp/consul/nfsserver-stack.yml nfsserver
+# log_detail "Deploying Storage Stack to Swarm"
+# docker stack deploy --compose-file=/tmp/consul/storage-stack.yml storage
 
 log_detail "Deploying DevOps Stack to Swarm"
 docker stack deploy --compose-file=/tmp/consul/devops-stack.yml devops
@@ -50,7 +50,7 @@ docker stack deploy --compose-file=/tmp/consul/devops-stack.yml devops
 log_detail "Deploying Consul Stack to Swarm"
 docker stack deploy --compose-file=/tmp/consul/consul-stack.yml "${CONSUL_STACK_PROJECT_NAME}"
 
-log_detail "Deploying NfsClient Stack to Swarm"
-docker stack deploy --compose-file=/tmp/consul/nfsclient-stack.yml nfsclient
+# log_detail "Deploying NfsClient Stack to Swarm"
+# docker stack deploy --compose-file=/tmp/consul/nfsclient-stack.yml nfsclient
 
 exit
