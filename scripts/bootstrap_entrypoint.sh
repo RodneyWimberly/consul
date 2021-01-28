@@ -50,7 +50,4 @@ else
 
   log "Updating db that the cluster bootstrapping process is complete and the startup restriction has been removed"
   touch ${CONSUL_BOOTSTRAP_DIR}/cluster.bootstrapped
-
-  log "Starting file server so other clients can acquire the newly bootstrapped configuration"
-  docker-entrypoint.sh "$@"
 fi

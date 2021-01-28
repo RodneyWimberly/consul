@@ -84,3 +84,15 @@ services:
       mode: global
       restart_policy:
         condition: none
+
+  jump-box:
+    image: alpine
+    command : /usr/local/scripts/jump-box-entrypoint.sh
+    volumes:
+      - /mnt/scripts:/usr/local/scripts
+    networks:
+      - admin_network
+    deploy:
+      replicas: 1
+      restart_policy:
+          condition: none
