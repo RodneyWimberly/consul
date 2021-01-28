@@ -1,5 +1,7 @@
 tasks.devops_agent:9001
-6bb8c52a-83fb-ec6c-27eb-d6abd0778f03
+master dbbb90ef-152a-c306-f90b-802d4a33982c
+agent 6bb8c52a-83fb-ec6c-27eb-d6abd0778f03
+server 73fcf661-c553-e3a6-8247-4995d7e279a3
 curl -sS --connect-timeout 180 --unix-socket /var/run/docker.sock -X POST http://localhost/containers/consul_consul-bootstrapper/wait
 
 curl -sS --connect-timeout 180 --unix-socket /var/run/docker.sock -X GET http://localhost/containers/json?all=true&filters=%7B%22volume%22%3A+%5B%22%2Fusr%2Flocal%2Fbackups%22%5D%7D
