@@ -1,7 +1,7 @@
 {
   "acl_token": "6bb8c52a-83fb-ec6c-27eb-d6abd0778f03",
   "retry_join": [
-    "consul.service.consul"
+    "tasks.consul_consul"
   ],
   "retry_interval": "10s"
 }
