@@ -59,3 +59,32 @@ function expand_config_file_from() {
   cat "${CONSUL_BOOTSTRAP_DIR}/$1" | envsubst > "${CONSUL_CONFIG_DIR}/$1"
   set -e
 }
+
+function restore_snapshot() {
+  if [[ "${NODE_IS_MANAGER}" == "true" ]]; then
+    if [[ -f "${1}" ]]; then
+      log "Restoring cluster snapshot"
+      log_detail "Starting server in 'local only' mode to not allow nodes joining the cluster during snapshot restoration"
+      docker-entrypoint.sh agent -server=true -bootstrap-expect=1 -datacenter=${CONSUL_DATACENTER} -bind=127.0.0.1 &
+        consul_pid="$!"
+
+      log_detail "waiting for the server to come up"
+      ${CONSUL_SCRIPT_DIR}/wait-for-it.sh --timeout=300 --host=127.0.0.1 --port=8500 --strict -- echo "consul found" || (echo "Failed to locate consul" && exit 1)
+
+      log_detail "server is responding, waiting further 10 seconds to allow initialization"
+      sleep 10s
+
+      log_detail "restoring snapshot '${1}'"
+      ACL_MASTER_TOKEN=`cat ${CONSUL_BOOTSTRAP_DIR}/server_acl_master_token.json | jq -r -M '.acl_master_token'`
+      curl --request PUT --data-binary @"${1}" -sS --header "X-Consul-Token: ${ACL_MASTER_TOKEN}" http://127.0.0.1:8500/v1/snapshot
+
+      log "Shutting down 'local only' server (pid: ${consul_pid}) and then starting usual server"
+      kill ${consul_pid}
+    else
+      log_warning "snapshot '"${1}"' could be found"
+    fi
+  else
+    log "Snapshots can only be restored from a server/node manager."
+  fi
+}
+
