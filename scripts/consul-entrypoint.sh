@@ -25,7 +25,7 @@ export NODE_ID=$(echo ${NODE_INFO} | jq -r -M '.Swarm.NodeID')
 export NODE_NAME=$(echo ${NODE_INFO} | jq -r -M '.Name')
 export NODE_IS_MANAGER=$(echo ${NODE_INFO} | jq -r -M '.Swarm.ControlAvailable')
 show_docker_details
-if [ -z "$CONSUL_HTTP_TOKEN" ] || [ "$CONSUL_HTTP_TOKEN" -eq "0" ] ; then
+if [[ -z "$CONSUL_HTTP_TOKEN" ]] ; then
     if [[ "${NODE_IS_MANAGER}" == "true" ]]; then
       log_detail "The master ACL Token is not present"
       log_detail "Starting the bootstrap process."
@@ -51,10 +51,10 @@ else
 fi
 
 log "Starting Consul in ${agent_mode} mode using the following command: exec docker-entrypoint.sh $@"
-docker-entrypoint.sh "$@"
+exec docker-entrypoint.sh "$@"
 
-log_detail "waiting 5 seconds for server to come up before restoring any snapshots"
-sleep 5
+log_detail "waiting 1 seconds for server to come up before restoring any snapshots"
+sleep 1
 
 if [[ -f "${CONSUL_BOOTSTRAP_DIR}"/bootstrap.snap ]]; then
   log_detail "restoring cluster snapshot '${CONSUL_BOOTSTRAP_DIR}/bootstrap.snap'"
