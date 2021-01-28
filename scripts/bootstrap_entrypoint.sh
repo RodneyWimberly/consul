@@ -17,7 +17,7 @@ if [[ -f "${CONSUL_CONFIG_DIR}/server.json" ]]; then
   current_acl_agent_token=$(cat ${CONSUL_CONFIG_DIR}/server.json | jq -r -M '.acl_agent_token')
 fi
 
-if [ -z "${current_acl_agent_token}" ] || [ -f  ${CONSUL_BOOTSTRAP_DIR}/cluster.bootstrapped ]; then
+if [ -z "${current_acl_agent_token}" ] && [ -f  ${CONSUL_BOOTSTRAP_DIR}/cluster.bootstrapped ]; then
   if [ -z "$CONSUL_ENABLE_ACL" ] || [ "$CONSUL_ENABLE_ACL" -eq "0" ]; then
     if [ -f ${CONSUL_BOOTSTRAP_DIR}/.aclanonsetup ]; then
       log_warning "ACL flag is no longer present, removing the ACL configuration"

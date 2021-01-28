@@ -9,7 +9,7 @@ volumes:
     driver: local
     driver_opts:
       type: nfs
-      o: addr=ip172-18-0-38-c08tn836hnp000esrq6g-2049.direct.labs.play-with-docker.com,rw
+      o: addr=ip172-18-0-38-c08tn836hnp000esrq6g-2049.direct.labs.play-with-docker.com:80,rw
       device: ":/data"
 
 x-nfsclient:
