@@ -22,6 +22,8 @@ configs:
     file: /mnt/config/server.json
   bootstrap_config:
     file: /mnt/backups/bootstrap.json
+  dns_conf:
+    file: /mnt/backups/dnsmasq.conf
 
 secrets:
   ca_file:
@@ -71,16 +73,32 @@ services:
       endpoint_mode: dnsrr
       mode: global
 
+  dns:
+    image: storytel/dnsmasq
+    init: true
+    command: /usr/local/scripts/dns-entrypoint.sh
+    configs:
+      - source: dns_conf
+        target: /etc/dnsmasq.template
+    volumes:
+      - /mnt/scripts:/usr/local/scripts:rw
+    cap_add:
+      - NET_ADMIN
+    networks:
+      - admin_network
+    deploy:
+      replicas: 2
+
   registrator:
     image: gliderlabs/registrator:master
     depends_on:
        - consul
-    command: -cleanup=true -retry-attempts=-1 -internal consul://tasks.consul_consul:8500
+    command: -internal consul://tasks.consul_consul:8500
     env_file:
       - /mnt/scripts/consul.env
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock
     networks:
-      admin_network: {}
+      - admin_network
     deploy:
       mode: global
