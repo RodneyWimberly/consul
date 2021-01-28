@@ -63,6 +63,8 @@ services:
       - /mnt/backups:/consul/backups:rw
     env_file:
       - /mnt/scripts/consul.env
+    ports:
+      - 8500:8500
     networks:
         admin_network:
           aliases:
@@ -74,13 +76,11 @@ services:
       mode: global
       restart_policy:
         condition: none
-      update_config:
-        parallelism: 1
-        delay: 10s
-        order: stop-first
 
   registrator:
     image: gliderlabs/registrator:master
+    depends_on:
+       - consul
     command: -internal consul://consul.service.consul:8500
     env_file:
       - /mnt/scripts/consul.env
@@ -90,8 +90,6 @@ services:
       admin_network: {}
     deploy:
       mode: global
-      restart_policy:
-        condition: none
 
   jump-box:
     image: alpine
