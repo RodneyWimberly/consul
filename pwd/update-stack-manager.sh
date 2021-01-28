@@ -23,6 +23,6 @@ mkdir -p /mnt/certs
 mkdir -p /mnt/scripts
 mkdir -p /mnt/webmgr
 apk add screen git
-echo "caption always \"%{= kc}Screen session %STY on %H system load: %l) %-22=%{= .m}%D %d.%m.%Y %0c\"" > ~/.screenrc
+echo "caption always \"%{= kc}Screen %S on %H system load: %l) %-20=%{= .m}%D %d.%m.%Y %0c\"" > ~/.screenrc
 screen -q -t update-stack -S update-stack
 ./update-stack.sh
