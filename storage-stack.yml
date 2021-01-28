@@ -1,0 +1,36 @@
+version: '3.7'
+
+volumes:
+  storage_volume:
+
+networks:
+  admin_network:
+    external: true
+
+configs:
+  sftp_config:
+    file: /mnt/config/sftp.json
+
+services:
+  nfs:
+    image: itsthenetwork/nfs-server-alpine
+    environment:
+      - SHARED_DIRECTORY=/data
+    volumes:
+      - storage_volume:/data
+    cap_add:
+      - ALL
+    ports:
+      - 2049:2049
+    networks:
+      - admin_network
+    deploy:
+      replicas: 1
+
+  sftp:
+    image: "emberstack/sftp"
+    ports:
+      - "22:22"
+    configs:
+      - source: sftp_config
+        target: /app/config/sftp.json
