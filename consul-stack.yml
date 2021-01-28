@@ -33,51 +33,47 @@ secrets:
   bootstrap_snap:
     file: /mnt/backups/bootstrap.snap
 
-x-consul:
-  &consul-template
-  image: consul:${CONSUL_VERSION:-latest}
-  entrypoint: /usr/local/scripts/consul-entrypoint.sh
-  command: agent
-  configs:
-    - source: common_config
-      target: /consul/data/bootstrap/common.json
-    - source: client_config
-      target: /consul/data/bootstrap/client.json
-    - source: server_config
-      target: /consul/data/bootstrap/server.json
-    - source: bootstrap_config
-      target: /consul/data/bootstrap/bootstrap.json
-  secrets:
-    - source: ca_file
-      target: /consul/data/certs/ca.crt
-    - source: cert_file
-      target: /consul/data/certs/cert.crt
-    - source: key_file
-      target: /consul/data/certs/tls.key
-    - source: bootstrap_snap
-      target: /consul/data/bootstrap/bootstrap.snap
-  volumes:
-    - data_volume:/consul/data
-    - /var/run/docker.sock:/var/run/docker.sock
-    - /mnt/scripts:/usr/local/scripts:rw
-    - /mnt/backups:/consul/backups:rw
-  env_file:
-    - /mnt/scripts/consul.env
-  networks:
-      admin_network:
-        aliases:
-          - consul.service.consul
-  #healthcheck:
-    #test: ['CMD', '/bin/sh', '-c', 'curl -sfLo /dev/null http://127.0.0.1:8500/v1/health/node/$$HOSTNAME']
-  deploy:
-    endpoint_mode: dnsrr
-    mode: global
-    restart_policy:
-      condition: none
-
 services:
   consul:
-  << : *consul-template
+    image: consul:${CONSUL_VERSION:-latest}
+    entrypoint: /usr/local/scripts/consul-entrypoint.sh
+    command: agent
+    configs:
+      - source: common_config
+        target: /consul/data/bootstrap/common.json
+      - source: client_config
+        target: /consul/data/bootstrap/client.json
+      - source: server_config
+        target: /consul/data/bootstrap/server.json
+      - source: bootstrap_config
+        target: /consul/data/bootstrap/bootstrap.json
+    secrets:
+      - source: ca_file
+        target: /consul/data/certs/ca.crt
+      - source: cert_file
+        target: /consul/data/certs/cert.crt
+      - source: key_file
+        target: /consul/data/certs/tls.key
+      - source: bootstrap_snap
+        target: /consul/data/bootstrap/bootstrap.snap
+    volumes:
+      - data_volume:/consul/data
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /mnt/scripts:/usr/local/scripts:rw
+      - /mnt/backups:/consul/backups:rw
+    env_file:
+      - /mnt/scripts/consul.env
+    networks:
+        admin_network:
+          aliases:
+            - consul.service.consul
+    #healthcheck:
+      #test: ['CMD', '/bin/sh', '-c', 'curl -sfLo /dev/null http://127.0.0.1:8500/v1/health/node/$$HOSTNAME']
+    deploy:
+      endpoint_mode: dnsrr
+      mode: global
+      restart_policy:
+        condition: none
 
   registrator:
     image: gliderlabs/registrator:master
