@@ -1,9 +1,9 @@
 #!/bin/sh
 
 # Make our stuff available
-source "${CONSUL_SCRIPT_DIR}"/consul.env
-source "${CONSUL_SCRIPT_DIR}"/common_functions.sh
-add_path "${CONSUL_SCRIPT_DIR}"
+source /usr/local/scripts/consul.env
+source /usr/local/scripts/common_functions.sh
+add_path /usr/local/scripts/
 
 # Update existing packages
 apk update
