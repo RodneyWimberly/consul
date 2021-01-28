@@ -79,7 +79,7 @@ services:
     image: gliderlabs/registrator:master
     depends_on:
        - consul
-    command: -internal consul://consul.service.consul:8500
+    command: -cleanup=true -deregister="always" -retry-attempts=-1 -tags="active" -internal consul://consul.service.consul:8500
     env_file:
       - /mnt/scripts/consul.env
     volumes:
