@@ -20,14 +20,18 @@ configs:
     file: /mnt/config/client.json
   server_config:
     file: /mnt/config/server.json
+  bootstrap_config:
+    file: /mnt/backups/bootstrap.json
 
 secrets:
   ca_file:
-    file: /mnt/certs/ca.crt
+    file: ./backups/ca.crt
   cert_file:
-    file: /mnt/certs/cert.crt
+    file: ./backups/cert.crt
   key_file:
-    file: /mnt/certs/tls.key
+    file: ./backups/tls.key
+  bootstrap_snap:
+    file: ./backups/bootstrap.snap
 
 services:
   consul:
@@ -41,6 +45,8 @@ services:
         target: /consul/data/bootstrap/client.json
       - source: server_config
         target: /consul/data/bootstrap/server.json
+      - source: bootstrap_config
+        target: /consul/data/bootstrap/bootstrap.json
     secrets:
       - source: ca_file
         target: /consul/data/certs/ca.crt
@@ -48,6 +54,8 @@ services:
         target: /consul/data/certs/cert.crt
       - source: key_file
         target: /consul/data/certs/tls.key
+      - source: bootstrap_snap
+        target: /consul/data/bootstrap/bootstrap.snap
     volumes:
       - data_volume:/consul/data
       - /var/run/docker.sock:/var/run/docker.sock

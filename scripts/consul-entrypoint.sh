@@ -50,5 +50,13 @@ else
   expand_config_file_from "client.json"
 fi
 
-log_detail "Starting Consul in ${agent_mode} mode using the following command: exec docker-entrypoint.sh $@"
-exec docker-entrypoint.sh "$@"
+log "Starting Consul in ${agent_mode} mode using the following command: exec docker-entrypoint.sh $@"
+docker-entrypoint.sh "$@"
+
+log_detail "waiting 5 seconds for server to come up before restoring any snapshots"
+sleep 5
+
+if [[ -f "${CONSUL_BOOTSTRAP_DIR}"/bootstrap.snap ]]; then
+  log_detail "restoring cluster snapshot '${CONSUL_BOOTSTRAP_DIR}/bootstrap.snap'"
+  curl --request PUT --data-binary @"${CONSUL_BOOTSTRAP_DIR}"/bootstrap.snap -sS --header "X-Consul-Token: ${CONSUL_HTTP_TOKEN}" http://127.0.0.1:8500/v1/snapshot
+fi

@@ -39,7 +39,7 @@ function configure_acl() {
 
   log_detail "Removing 'local only' configuration and updating it with the newly generated configuration"
   rm -f "${CONSUL_CONFIG_DIR}/server_acl.json"
-  cp "${CONSUL_BOOTSTRAP_DIR}/generated.json" "${CONSUL_CONFIG_DIR}/generated.json"
+  cp "${CONSUL_BOOTSTRAP_DIR}/bootstrap.json" "${CONSUL_CONFIG_DIR}/bootstrap.json"
 
   log_detail "all generated output is being copied to ${CONSUL_BACKUP_DIR}"
   cp -r "${CONSUL_BOOTSTRAP_DIR}/" "${CONSUL_BACKUP_DIR}/"
@@ -92,12 +92,12 @@ function keep_service_alive() {
 
 function merge_json() {
   generated_json="{}"
-  if [ -f ${CONSUL_BOOTSTRAP_DIR}/generated.json ]; then
-    generated_json=$(cat ${CONSUL_BOOTSTRAP_DIR}/generated.json)
-    rm -f ${CONSUL_BOOTSTRAP_DIR}/generated.json
+  if [ -f ${CONSUL_BOOTSTRAP_DIR}/bootstrap.json ]; then
+    generated_json=$(cat ${CONSUL_BOOTSTRAP_DIR}/bootstrap.json)
+    rm -f ${CONSUL_BOOTSTRAP_DIR}/bootstrap.json
   fi
   config_json=$(cat ${CONSUL_BOOTSTRAP_DIR}/${1})
   generated_json=$(echo "${generated_json}" | jq ". + ${config_json}")
-  log_detail "Adding ${1} to generated.json"
-  echo "${generated_json}" | jq ". + ${config_json}" > ${CONSUL_BOOTSTRAP_DIR}/generated.json
+  log_detail "Adding ${1} to bootstrap.json"
+  echo "${generated_json}" | jq ". + ${config_json}" > ${CONSUL_BOOTSTRAP_DIR}/bootstrap.json
 }

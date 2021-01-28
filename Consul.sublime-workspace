@@ -60,36 +60,28 @@
 	"buffers":
 	[
 		{
-			"file": "nfsclient-stack.yml",
+			"file": "pwd/set-pwd-variables.ps1",
 			"settings":
 			{
-				"buffer_size": 1710,
+				"buffer_size": 268,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "scripts/bootstrap_entrypoint.sh",
+			"file": "pwd/connect-to-pwd.ps1",
 			"settings":
 			{
-				"buffer_size": 2135,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "scripts/consul-entrypoint.sh",
-			"settings":
-			{
-				"buffer_size": 1796,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "pwd/pwd-remote-cmd.sh",
-			"settings":
-			{
-				"buffer_size": 10,
+				"buffer_size": 331,
 				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "pwd/deploy-to-pwd.ps1",
+			"settings":
+			{
+				"buffer_size": 388,
 				"line_ending": "Unix"
 			}
 		}
@@ -194,12 +186,12 @@
 		"selected_items":
 		[
 			[
-				"Package Control: re",
-				"Package Control: Remove Package"
-			],
-			[
 				"Package Control: ",
 				"Package Control: Install Package"
+			],
+			[
+				"Package Control: re",
+				"Package Control: Remove Package"
 			],
 			[
 				"Package Control: in",
@@ -364,43 +356,56 @@
 	"expanded_folders":
 	[
 		"/D/Projects/consul",
+		"/D/Projects/consul/backups",
+		"/D/Projects/consul/bootstrapper",
+		"/D/Projects/consul/certs",
+		"/D/Projects/consul/config",
 		"/D/Projects/consul/pwd",
-		"/D/Projects/consul/scripts",
-		"/D/Projects/consul/scripts/admin"
+		"/D/Projects/consul/scripts"
 	],
 	"file_history":
 	[
+		"/D/Projects/consul/storage-stack.yml",
 		"/D/Projects/consul/scripts/deploy.sh",
 		"/D/Projects/consul/nfsclient-stack.yml",
-		"/D/Projects/consul/nfsserver-stack.yml",
-		"/D/Projects/consul/logging-stack.yml",
-		"/D/Projects/consul/pwd/update-stack-worker.sh",
-		"/D/Projects/consul/pwd/cmdline.txt",
-		"/D/Projects/consul/pwd/update-stack-manager.sh",
-		"/D/Projects/consul/devops-stack.yml",
-		"/D/Projects/consul/nfs-stack.yml",
+		"/D/Projects/consul/consul-stack.yml",
+		"/D/Projects/consul/bootstrapper/common_functions.sh",
 		"/D/Projects/consul/scripts/bootstrap_functions.sh",
 		"/D/Projects/consul/scripts/bootstrap_entrypoint.sh",
 		"/D/Projects/consul/scripts/consul-entrypoint.sh",
-		"/D/Projects/consul/pwd/set-variables.cmd",
-		"/D/Projects/consul/consul-stack.yml",
-		"/D/Projects/consul/diagnostics-stack.yml",
+		"/D/Projects/consul/pwd/connect-to-pwd.cmd",
+		"/D/Projects/consul/config/server-backup.json",
+		"/D/Projects/consul/config/client-backup.json",
+		"/D/Projects/consul/config/client.json",
+		"/D/Projects/consul/config/server.json",
 		"/D/Projects/consul/scripts/consul.env",
+		"/D/Projects/consul/config/sftp.json",
+		"/D/Projects/consul/pwd/set-variables.cmd",
+		"/D/Projects/consul/pwd/update-stack-manager.sh",
+		"/D/Projects/consul/pwd/update-stack-worker.sh",
+		"/D/Projects/consul/pwd/cmdline.txt",
+		"/D/Projects/consul/scripts/jump-box-entrypoint.sh",
+		"/D/Projects/consul/scripts/bootstrap_acl.sh",
+		"/D/Projects/consul/nfsserver-stack.yml",
+		"/D/Projects/consul/config/common.json",
+		"/D/Projects/consul/scripts/common_functions.sh",
+		"/D/Projects/consul/pwd/pwd-remote-cmd.sh",
+		"/D/Projects/consul/config/bootstrap.config",
+		"/D/Projects/consul/logging-stack.yml",
+		"/D/Projects/consul/devops-stack.yml",
+		"/D/Projects/consul/nfs-stack.yml",
+		"/D/Projects/consul/diagnostics-stack.yml",
 		"/D/Projects/consul/scripts/backup/server_setup.sh",
 		"/D/Projects/consul/scripts/wait-for-it.sh",
 		"/D/Projects/consul/scripts/bootstrap_gossip.sh",
 		"/D/Projects/consul/scripts/bootstrap_tls.sh",
-		"/D/Projects/consul/scripts/bootstrap_acl.sh",
 		"/D/Projects/consul/scripts/bootstrap_acl_anon.sh",
 		"/D/Projects/consul/scripts/bootstrap_acl_bootstrap_agent_token.sh",
 		"/D/Projects/consul/scripts/bootstrap_acl_client_general_token.sh",
-		"/D/Projects/consul/scripts/common_functions.sh",
 		"/D/Projects/consul/scripts/bootstrapper_entrypoint.sh",
 		"/D/Projects/consul/pwd/deploy-to-pwd.cmd",
-		"/D/Projects/consul/pwd/connect-to-pwd.cmd",
 		"/D/keep-alive.sh",
 		"/D/Projects/consul/pwd/screen.txt",
-		"/D/Projects/consul/pwd/pwd-remote-cmd.sh",
 		"/D/Projects/consul/scripts/admin/build-and-push-docker-images.cmd",
 		"/D/Containers/build-and-push-consul-bootstrapper.cmd",
 		"/D/Projects/consul/nfstest-stack.yml",
@@ -422,8 +427,6 @@
 		"/D/Projects/consul/bootstrapper/10-listen-on-ipv6-by-default.sh",
 		"/D/Projects/consul/nfs/Dockerfile",
 		"/D/Projects/consul/nfs/empty.file",
-		"/D/Projects/consul/scripts/jump-box-entrypoint.sh",
-		"/D/Projects/consul/bootstrapper/common_functions.sh",
 		"/D/Projects/consul/scripts/backup/bootstrap-deployment.sh",
 		"/C/Program Files/Sublime Text 3/Data/Packages/Goto Usage/GotoUsage.sublime-settings",
 		"/C/Program Files/Sublime Text 3/Data/Packages/BetterFindBuffer/BetterFindBuffer.sublime-settings",
@@ -489,15 +492,7 @@
 		"/D/Consul/soakes/consul/scripts/backup/get-latest.sh",
 		"/D/Consul/soakes/consul/scripts/backup/bootstrap-deployment.sh",
 		"/D/Consul/soakes/consul/scripts/admin/worker-update-stack.sh",
-		"/D/Consul/soakes/consul/scripts/admin/bootstrap-deployment.sh",
-		"/D/Consul/soakes/consul/scripts/admin/get-latest.sh",
-		"/D/Consul/soakes/consul/scripts/admin/test-acl-bootstrap.sh",
-		"/D/Consul/soakes/consul/scripts/bootstrap/server_acl.sh",
-		"/D/Consul/soakes/consul/scripts/bootstrap/server_acl_anon.sh",
-		"/D/Consul/soakes/consul/scripts/bootstrap/server_acl_client_general_token.sh",
-		"/D/Consul/soakes/consul/scripts/bootstrap/server_acl_server_agent_token.sh",
-		"/D/Consul/soakes/consul/scripts/bootstrap/server_gossip.sh",
-		"/D/Consul/soakes/consul/scripts/bootstrap/server_tls.sh"
+		"/D/Consul/soakes/consul/scripts/admin/bootstrap-deployment.sh"
 	],
 	"find":
 	{
@@ -508,6 +503,7 @@
 		"height": 164.0,
 		"where_history":
 		[
+			"D:\\Projects\\consul",
 			"<open folders>",
 			"D:\\Consul\\soakes\\consul\\",
 			"D:\\Consul\\soakes\\consul"
@@ -518,6 +514,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"generated.json",
+			"bootstrap.json",
 			"test",
 			"nfsclient-base",
 			"nfstest",
@@ -593,6 +591,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"bootstrap.json",
 			"storage_volume",
 			"nfsclient-template",
 			"nfsclient",
@@ -632,24 +631,24 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 1,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "nfsclient-stack.yml",
+					"file": "pwd/set-pwd-variables.ps1",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1710,
+						"buffer_size": 268,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								180,
-								180
+								150,
+								161
 							]
 						],
 						"settings":
@@ -728,13 +727,11 @@
 								"bh_unmatched_close",
 								"bh_unmatched_content"
 							],
-							"function_name_status_row": 11,
-							"syntax": "Packages/YAML/YAML.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
+							"function_name_status_row": 3,
+							"syntax": "Packages/PowerShell/Support/PowershellSyntax.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 327.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
@@ -742,19 +739,19 @@
 				},
 				{
 					"buffer": 1,
-					"file": "scripts/bootstrap_entrypoint.sh",
+					"file": "pwd/connect-to-pwd.ps1",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2135,
+						"buffer_size": 331,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								20,
+								20
 							]
 						],
 						"settings":
@@ -833,138 +830,31 @@
 								"bh_unmatched_close",
 								"bh_unmatched_content"
 							],
-							"function_name_status_row": 0,
-							"syntax": "Packages/ShellScript/Bash.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
+							"function_name_status_row": 1,
+							"syntax": "Packages/PowerShell/Support/PowershellSyntax.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "scripts/consul-entrypoint.sh",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1796,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"bracket_highlighter.busy": false,
-							"bracket_highlighter.locations":
-							{
-								"close":
-								{
-								},
-								"icon":
-								{
-								},
-								"open":
-								{
-								},
-								"unmatched":
-								{
-								}
-							},
-							"bracket_highlighter.regions":
-							[
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content"
-							],
-							"function_name_status_row": 0,
-							"syntax": "Packages/ShellScript/Bash.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 21.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
-					"file": "pwd/pwd-remote-cmd.sh",
+					"buffer": 2,
+					"file": "pwd/deploy-to-pwd.ps1",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 10,
+						"buffer_size": 388,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								9,
-								9
+								22,
+								22
 							]
 						],
 						"settings":
@@ -1043,14 +933,14 @@
 								"bh_unmatched_close",
 								"bh_unmatched_content"
 							],
-							"function_name_status_row": 0,
-							"syntax": "Packages/ShellScript/Bash.sublime-syntax"
+							"function_name_status_row": 2,
+							"syntax": "Packages/PowerShell/Support/PowershellSyntax.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 1,
 					"type": "text"
 				}
 			]
@@ -1170,7 +1060,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 338.0,
+	"side_bar_width": 441.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
