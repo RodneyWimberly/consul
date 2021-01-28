@@ -93,8 +93,7 @@ function restore_snapshot() {
       sleep 5s
 
       log_detail "restoring snapshot '${1}'"
-      ACL_MASTER_TOKEN=`cat ${CONSUL_BOOTSTRAP_DIR}/server.json | jq -r -M '.acl_master_token'`
-      curl --request PUT --data-binary @"${1}" -sS --header "X-Consul-Token: ${ACL_MASTER_TOKEN}" http://127.0.0.1:8500/v1/snapshot
+      curl --request PUT --data-binary @"${1}" -sS --header "X-Consul-Token: ${CONSUL_HTTP_TOKEN}" http://127.0.0.1:8500/v1/snapshot
 
       log "Shutting down 'local only' server (pid: ${consul_pid}) and then starting usual server"
       kill ${consul_pid}
