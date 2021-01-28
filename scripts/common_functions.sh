@@ -17,6 +17,24 @@ function show_docker_details() {
     log "Node Is Manager: ${NODE_IS_MANAGER}"
 }
 
+# G.et J.SON V.alue
+function gjv() {
+  if [[ -f "${2}" ]]; then
+    cat "${2}" | jq -r -M '."${1}"'
+  else
+    echo "${2}" | jq -r -M '."${1}"'
+  fi
+}
+
+# S.et J.SON V.alue
+function sjv() {
+  if [[ -f "${3}" ]]; then
+    cat "${3}" | jq ". + { \"${1}\": \"${2}\" }" > "${3}"
+  else
+    echo "${3}" | jq ". + { \"${1}\": \"${2}\" }" > "${3}"
+  fi
+}
+
 function add_path() {
   export PATH=$1:${PATH}
   log "PATH has been updated to ${PATH} "
@@ -75,7 +93,9 @@ function restore_snapshot() {
       sleep 10s
 
       log_detail "restoring snapshot '${1}'"
-      ACL_MASTER_TOKEN=`cat ${CONSUL_BOOTSTRAP_DIR}/server_acl_master_token.json | jq -r -M '.acl_master_token'`
+      ACL_MASTER_TOKEN=$(gjv "acl_master_token" "${CONSUL_BOOTSTRAP_DIR}"/server.json)
+      echo "Master Token: ${ACL_MASTER_TOKEN}"
+      ACL_MASTER_TOKEN=`cat ${CONSUL_BOOTSTRAP_DIR}/server.json | jq -r -M '.acl_master_token'`
       curl --request PUT --data-binary @"${1}" -sS --header "X-Consul-Token: ${ACL_MASTER_TOKEN}" http://127.0.0.1:8500/v1/snapshot
 
       log "Shutting down 'local only' server (pid: ${consul_pid}) and then starting usual server"
