@@ -76,13 +76,6 @@ function consul_api() {
   curl -sS -X "${consul_api_token}" "${consul_api_method}" "${consul_api_data}" "${consul_api_url}"
 }
 
-function get_json_property() {
-  if [[ -f "$1" ]]; then
-    cat "$1" | jq -r -M ".${2}"
-  else
-    echo "$1" | jq -r -M ".${2}"
-  fi
-}
 
 function keep_service_alive() {
   while [[ "${CONSUL_KEEP_SERVICE_ALIVE}" -eq "1" ]]; do
