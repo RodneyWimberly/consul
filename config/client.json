@@ -1,5 +1,5 @@
 {
-  "acl_token": "dbbb90ef-152a-c306-f90b-802d4a33982c",
+  "acl_token": "6bb8c52a-83fb-ec6c-27eb-d6abd0778f03",
   "retry_join": [
     "consul.service.consul"
   ],

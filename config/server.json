@@ -1,6 +1,6 @@
 {
-  "acl_agent_token": "dbbb90ef-152a-c306-f90b-802d4a33982c",
+  "acl_agent_token": "6bb8c52a-83fb-ec6c-27eb-d6abd0778f03",
   "acl_master_token": "dbbb90ef-152a-c306-f90b-802d4a33982c",
-  "acl_token": "dbbb90ef-152a-c306-f90b-802d4a33982c",
+  "acl_token": "73fcf661-c553-e3a6-8247-4995d7e279a3",
   "bootstrap_expect": ${NUM_OF_MGR_NODES}
 }
