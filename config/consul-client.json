@@ -1,0 +1,4 @@
+{
+  "key_file": "${CONSUL_CERT_DIR}/docker-client-consul-0-key.pem",
+  "cert_file": "${CONSUL_CERT_DIR}/docker-client-consul-0.pem"
+}
