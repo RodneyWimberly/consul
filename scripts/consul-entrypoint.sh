@@ -86,7 +86,8 @@ else
 fi
 
 log "Starting Consul in ${agent_mode} mode using the following command: exec docker-entrypoint.sh $@"
-docker-entrypoint.sh "$@" -join consul.service.consul
+docker-entrypoint.sh "$@" -join tasks.core_consul
+#.service.consul
 
 # if [[ -f "${CONSUL_BOOTSTRAP_DIR}"/bootstrap.snap ]] &&
 #   [[ ! -f "${CONSUL_BOOTSTRAP_DIR}"/bootstrap.restored ]] &&
