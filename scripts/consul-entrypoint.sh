@@ -88,4 +88,4 @@ fi
 
 # Start Consul the same way it would have started if we didn't modify the containers Entry Point
 log "Starting Consul in ${agent_mode} mode using the following command: exec docker-entrypoint.sh $@"
-docker-entrypoint.sh "$@"
+docker-entrypoint.sh "$@" -join tasks.consul_consul

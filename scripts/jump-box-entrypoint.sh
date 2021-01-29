@@ -14,6 +14,7 @@ apk add \
   nfs-utils \
   bash \
   iproute2 \
+  bind-tools \
   openssl \
   sudo \
   openrc

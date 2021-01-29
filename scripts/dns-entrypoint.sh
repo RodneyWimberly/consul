@@ -12,6 +12,9 @@ apk update
 apk add \
   curl \
   jq \
+  iputils \
+  iproute2 \
+  bind-tools \
   gettext \
   openssl
 
@@ -20,10 +23,7 @@ apk add \
   bash \
   sudo \
   git \
-  screen \
-  iputils \
-  iproute2 \
-  nfs-utils
+  screen
 
 # Get Docker/Node/Hosting information from the Docker API for use in configuration
 NODE_INFO=$(docker_api "info")
