@@ -6,13 +6,16 @@
 ###########################################################################################################
 version: "3.8"
 
+###########################################################################################################
 volumes:
   consul_data:
 
+###########################################################################################################
 networks:
   admin_network:
     external: true
 
+###########################################################################################################
 configs:
   consul_common:
     file: /mnt/config/common.json
@@ -25,6 +28,7 @@ configs:
   dns:
     file: /mnt/config/dnsmasq.conf
 
+###########################################################################################################
 secrets:
   consul_ca:
     file: /mnt/certs/consul-agent-ca.pem
@@ -39,6 +43,7 @@ secrets:
   consul_bootstrap_snap:
     file: /mnt/backups/bootstrap.snap
 
+###########################################################################################################
 services:
   consul:
     image: consul:${CONSUL_VERSION:-latest}
@@ -83,6 +88,7 @@ services:
       endpoint_mode: dnsrr
       mode: global
 
+###########################################################################################################
   dns:
     image: storytel/dnsmasq
     init: true
@@ -107,10 +113,13 @@ services:
         delay: 1s
         order: stop-first
 
+###########################################################################################################
   registrator:
     image: gliderlabs/registrator:master
+    init: true
     depends_on:
        - consul
+       - dns
     command: -cleanup -internal consul://consul.service.consul:8500
     env_file:
       - /mnt/scripts/core.env
@@ -120,5 +129,18 @@ services:
       - admin_network
     deploy:
       mode: global
+    dns:
+      - dns.service.consul
+
+###########################################################################################################
+  socks:
+    image: serjs/go-socks5-proxy
+    init: true
+    depends_on:
+      - dns
+    ports:
+      - 1080:1080
+    networks:
+      - admin_network
     dns:
       - dns.service.consul
