@@ -36,18 +36,16 @@ show_docker_details
 log "Looking up the IP address for Consul to set as Consul domain owner"
 CONSUL_IP=
 while [ -z "${CONSUL_IP}" ]; do
-  log_detail "waiting 10 seconds for Consul to come up and respond on the IP layer"
-  sleep 10
+  log_detail "waiting 2 seconds for Consul to come up and respond on the IP layer"
+  sleep 2
 
   log_detail "querying for service tasks.${CORE_STACK_NAME}_consul"
   set +e
   CONSUL_IP="`dig +short tasks."${CORE_STACK_NAME}"_consul | tail -n1`"
   set -e
-
-  echo "Consul IP: ${CONSUL_IP}"
 done
 log_detail "merging expanded variables with configuration templates and placing in the config folder"
 cat /etc/dnsmasq.template | envsubst > /etc/dnsmasq/dnsmasq.conf
 
-log_detail "Starting DnsMasq"
-dnsmasq --no-daemon --log-queries --server=/consul/"$${CONSUL_IP}"#8600
+log_detail "Starting DnsMasq with Consul IP: ${CONSUL_IP}"
+dnsmasq --no-daemon --log-queries --server=/consul/"${CONSUL_IP}"#8600
