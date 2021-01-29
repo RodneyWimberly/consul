@@ -1,8 +1,8 @@
 #!/bin/sh
 
 set -e
-source "${CONSUL_SCRIPT_DIR}"/bootstrap_functions.sh
-source "${CONSUL_SCRIPT_DIR}"/common_functions.sh
+source "${CORE_SCRIPT_DIR}"/bootstrap_functions.sh
+source "${CORE_SCRIPT_DIR}"/common_functions.sh
 
 # locks down our consul server from leaking any data to anybody - full anon block
 if [ ! -f ${CONSUL_BOOTSTRAP_DIR}/.aclanonsetup ]; then

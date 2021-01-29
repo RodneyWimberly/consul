@@ -1,9 +1,8 @@
 #!/bin/sh
 
 # Make our stuff available
-source "${CONSUL_SCRIPT_DIR}"/consul.env
-source "${CONSUL_SCRIPT_DIR}"/common_functions.sh
-add_path "${CONSUL_SCRIPT_DIR}"
+source "${CORE_SCRIPT_DIR}"/common_functions.sh
+add_path "${CORE_SCRIPT_DIR}"
 
 # Update existing packages
 apk update
@@ -47,7 +46,7 @@ if [[ -z "$CONSUL_HTTP_TOKEN" ]] ; then
     if [[ "${NODE_IS_MANAGER}" == "true" ]]; then
       log_detail "The master ACL Token is not present"
       log_detail "Starting the bootstrap process."
-      "${CONSUL_SCRIPT_DIR}"/bootstrap_entrypoint.sh
+      "${CORE_SCRIPT_DIR}"/bootstrap_entrypoint.sh
     else
       log_detail "The master ACL Token is not present."
       log_detail "Only servers can bootstrap the cluster."
@@ -63,7 +62,7 @@ fi
 # If order to restore a bootstrap snapshot don't forget to do the follow steps
 # after the bootstrap creation to ensure the information is provided to all nodes.
 # This necessary to bring up a new cluster (Great for dev/test/stage environments)
-#   1. Update consul.env, server.config, & client.config in the
+#   1. Update core.env, server.config, & client.config in the
 #      source config folder with ACL token values in bootstrap.json
 #   2. Make sure new certs (ca.crt, cert.crt. and tls.key) and
 #      bootstrap.snap are in the source backups folder
@@ -88,4 +87,4 @@ fi
 
 # Start Consul the same way it would have started if we didn't modify the containers Entry Point
 log "Starting Consul in ${agent_mode} mode using the following command: exec docker-entrypoint.sh $@"
-docker-entrypoint.sh "$@" -join tasks.consul_consul
+docker-entrypoint.sh "$@" -join tasks:"${CORE_STACK_NAME}"_consul

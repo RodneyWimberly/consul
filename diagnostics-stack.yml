@@ -39,7 +39,7 @@ services:
     image: alpine
     entrypoint: /usr/local/scripts/jump-box-entrypoint.sh
     env_file:
-    - /mnt/scripts/consul.env
+    - /mnt/scripts/core.env
     volumes:
     - /var/run/docker.sock:/var/run/docker.sock
     - /mnt/backups:/usr/share/nginx/html:rw

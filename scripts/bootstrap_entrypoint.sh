@@ -1,8 +1,8 @@
 #!/bin/sh
 
-source "${CONSUL_SCRIPT_DIR}"/consul.env
-source "${CONSUL_SCRIPT_DIR}"/bootstrap_functions.sh
-source "${CONSUL_SCRIPT_DIR}"/common_functions.sh
+source "${CORE_SCRIPT_DIR}"/core.env
+source "${CORE_SCRIPT_DIR}"/bootstrap_functions.sh
+source "${CORE_SCRIPT_DIR}"/common_functions.sh
 
 log "Bootstrapping the current cluster, Please Wait..."
 
@@ -10,7 +10,7 @@ pkill consul
 
 set -e
 
-add_path ${CONSUL_SCRIPT_DIR}
+add_path ${CORE_SCRIPT_DIR}
 
 current_acl_agent_token=
 if [[ -f "${CONSUL_CONFIG_DIR}/server.json" ]]; then
@@ -38,8 +38,8 @@ if [ -z "${current_acl_agent_token}" ] && [ -f  ${CONSUL_BOOTSTRAP_DIR}/cluster.
     log_detail "Cluster has already been bootstrapped and is correctly configured."
   fi
 else
-  ${CONSUL_SCRIPT_DIR}/bootstrap_tls.sh `hostname -f`
-  ${CONSUL_SCRIPT_DIR}/bootstrap_gossip.sh
+  ${CORE_SCRIPT_DIR}/bootstrap_tls.sh `hostname -f`
+  ${CORE_SCRIPT_DIR}/bootstrap_gossip.sh
 
   configure_acl
 

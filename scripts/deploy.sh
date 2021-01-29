@@ -3,7 +3,7 @@
 #   tears down exiting container resources and builds application stacks on bare containers
 set -e
 
-source ./consul.env
+source ./core.env
 source ./common_functions.sh
 
 log "*** >=>=>=>  Stack Deployment  <=<=<=< ***"
@@ -16,8 +16,8 @@ export NODE_IS_MANAGER=$(docker info --format "{{.Swarm.ControlAvailable}}")
 show_docker_details
 
 set +e
-log_detail "Removing the following stacks: logging, ${CONSUL_STACK_PROJECT_NAME}"
-docker stack rm "${CONSUL_STACK_PROJECT_NAME}" nfstest
+log_detail "Removing the following stacks: ${CORE_STACK_NAME}"
+docker stack rm "${CORE_STACK_NAME}"
 
 #log_detail "Removing the following volumes: consul_data_volume"
 #docker rm consul_data_volume
@@ -29,7 +29,7 @@ log_detail "Waiting 1 seconds for item deletion finalizes"
 sleep 1
 
 log_detail "Creating attachable overlay network 'admin_network'"
-docker network create --driver=overlay --attachable --subnet=${CONSUL_SUBNET} admin_network
+docker network create --driver=overlay --attachable --subnet=${CORE_SUBNET} admin_network
 set -e
 
 #log_detail "Logging into GitHub Registry"
@@ -47,8 +47,9 @@ docker stack deploy --compose-file=/tmp/consul/devops-stack.yml devops
 #log_detail "Deploying Logging Stack to Swarm"
 #docker stack deploy --compose-file=./logging-stack.yml logging
 
-log_detail "Deploying Consul Stack to Swarm"
-docker stack deploy --compose-file=/tmp/consul/consul-stack.yml "${CONSUL_STACK_PROJECT_NAME}"
+log_detail "Deploying ${CORE_STACK_NAME} stack to swarm"
+cat ./"${CORE_STACK_NAME}"-stack.yml | envsubst > ./deploy.yml
+docker stack deploy --compose-file=./deploy.yml "${CORE_STACK_NAME}"
 
 # log_detail "Deploying NfsClient Stack to Swarm"
 # docker stack deploy --compose-file=/tmp/consul/nfsclient-stack.yml nfsclient

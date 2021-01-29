@@ -1,8 +1,8 @@
 #!/bin/sh
 
 set -e
-source "${CONSUL_SCRIPT_DIR}"/bootstrap_functions.sh
-source "${CONSUL_SCRIPT_DIR}"/common_functions.sh
+source "${CORE_SCRIPT_DIR}"/bootstrap_functions.sh
+source "${CORE_SCRIPT_DIR}"/common_functions.sh
 
 # generates an acl_token with all usual ops a agent client need to fully utilize the consul server
 # stores it on a share volume so it can be consumed by out consul agent clients

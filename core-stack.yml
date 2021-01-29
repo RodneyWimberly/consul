@@ -1,0 +1,113 @@
+###########################################################################################################
+# Service Registry Stack
+# HA Service discovery, health checks, load-balancing,
+# DNS name lookup, routing intentions, KV store,
+# DNS Server, Secret Store/Vault
+###########################################################################################################
+version: "3.8"
+
+####################################################
+volumes:
+  data_volume:
+
+####################################################
+networks:
+  admin_network:
+    external: true
+
+####################################################
+configs:
+  common_config:
+    file: "${NODE_ROOT_DIR}"/config/common.json
+  client_config:
+    file: "${NODE_ROOT_DIR}"/config/client.json
+  server_config:
+    file: "${NODE_ROOT_DIR}"/config/server.json
+  bootstrap_config:
+    file: "${NODE_ROOT_DIR}"/backups/bootstrap.json
+  dns_conf:
+    file: "${NODE_ROOT_DIR}"/config/dnsmasq.conf
+
+####################################################
+secrets:
+  ca_file:
+    file: "${NODE_ROOT_DIR}"/backups/ca.crt
+  cert_file:
+    file: "${NODE_ROOT_DIR}"/backups/cert.crt
+  key_file:
+    file: "${NODE_ROOT_DIR}"/backups/tls.key
+  bootstrap_snap:
+    file: "${NODE_ROOT_DIR}"/backups/bootstrap.snap
+
+####################################################
+services:
+  consul:
+    image: consul:${CONSUL_VERSION}
+    entrypoint: "${CORE_SCRIPT_DIR}"/consul-entrypoint.sh
+    command: agent
+    configs:
+      - source: common_config
+        target: "${CONSUL_BOOTSTRAP_DIR}"/common.json
+      - source: client_config
+        target: "${CONSUL_BOOTSTRAP_DIR}"/client.json
+      - source: server_config
+        target: "${CONSUL_BOOTSTRAP_DIR}"/server.json
+      - source: bootstrap_config
+        target: "${CONSUL_BOOTSTRAP_DIR}"/bootstrap.json
+    secrets:
+      - source: ca_file
+        target: "${CONSUL_CERT_DIR}"/ca.crt
+      - source: cert_file
+        target: "${CONSUL_CERT_DIR}"/cert.crt
+      - source: key_file
+        target: "${CONSUL_CERT_DIR}"/tls.key
+      - source: bootstrap_snap
+        target: "${CONSUL_BOOTSTRAP_DIR}"/bootstrap.snap
+    volumes:
+      - data_volume:/consul/data
+      - /var/run/docker.sock:/var/run/docker.sock
+      - "${NODE_ROOT_DIR}"/scripts:"${CORE_SCRIPT_DIR}":rw
+      - "${NODE_ROOT_DIR}"/backups:/consul/backups:rw
+    env_file:
+      - "${NODE_ROOT_DIR}"/scripts/"${CORE_STACK_NAME}".env
+    networks:
+        - admin_network
+    healthcheck:
+      test: ['CMD', '/bin/sh', '-c', 'curl -sfLo /dev/null --header "X-Consul-Token: ${CONSUL_HTTP_TOKEN}" http://127.0.0.1:8500/v1/health/node/$$HOSTNAME']
+    deploy:
+      endpoint_mode: dnsrr
+      mode: global
+
+  ####################################################
+  dns:
+    image: storytel/dnsmasq
+    init: true
+    command: "${CORE_SCRIPT_DIR}"/dns-entrypoint.sh
+    configs:
+      - source: dns_conf
+        target: /etc/dnsmasq.template
+    volumes:
+      - "${NODE_ROOT_DIR}"/scripts:"${CORE_SCRIPT_DIR}":rw
+    cap_add:
+      - NET_ADMIN
+    env_file:
+      - "${NODE_ROOT_DIR}"/scripts/"${CORE_STACK_NAME}".env
+    networks:
+      - admin_network
+    deploy:
+      replicas: 2
+
+  ####################################################
+  registrator:
+    image: gliderlabs/registrator:master
+    depends_on:
+       - consul
+    command: -internal consul://tasks:"${CORE_STACK_NAME}"_consul:8500
+    env_file:
+      - "${NODE_ROOT_DIR}"/scripts/"${CORE_STACK_NAME}".env
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock
+    networks:
+      - admin_network
+    deploy:
+      mode: global

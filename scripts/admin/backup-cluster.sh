@@ -1,6 +1,6 @@
 #!/bin/sh
 
-source ../consul.env
+source ../core.env
 source ../common_functions.sh
 
 set -ex
