@@ -120,7 +120,7 @@ services:
     depends_on:
        - consul
        - dns
-    command: -cleanup -internal consul://tasks.core_consul:8500
+    command: -cleanup -internal consul://core_consul:8500
     env_file:
       - /mnt/scripts/core.env
     volumes:
