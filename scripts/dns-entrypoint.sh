@@ -39,9 +39,9 @@ while [ -z "${CONSUL_IP}" ]; do
   log_detail "waiting 10 seconds for Consul to come up and respond on the IP layer"
   sleep 10
 
-  log_detail "querying for service tasks:core_consul"
+  log_detail "querying for service tasks.${CORE_STACK_NAME}_consul"
   set +e
-  CONSUL_IP="`dig +short tasks:core_consul | tail -n1`"
+  CONSUL_IP="`dig +short tasks."${CORE_STACK_NAME}"_consul | tail -n1`"
   set -e
 
   echo "Consul IP: ${CONSUL_IP}"
