@@ -7,32 +7,32 @@
 version: "3.8"
 
 volumes:
-  data_volume:
+  consul_data:
 
 networks:
   admin_network:
     external: true
 
 configs:
-  common_config:
+  consul_common_config:
     file: /mnt/config/common.json
-  client_config:
+  consul_client_config:
     file: /mnt/config/client.json
-  server_config:
+  consul_server_config:
     file: /mnt/config/server.json
-  bootstrap_config:
+  consul_bootstrap_config:
     file: /mnt/backups/bootstrap.json
-  dns_conf:
+  dns_dnsmasq_conf:
     file: /mnt/config/dnsmasq.conf
 
 secrets:
-  ca_file:
+  consul_ca_file:
     file: /mnt/backups/ca.crt
-  cert_file:
+  consul_cert_file:
     file: /mnt/backups/cert.crt
-  key_file:
+  consul_key_file:
     file: /mnt/backups/tls.key
-  bootstrap_snap:
+  consul_bootstrap_snap:
     file: /mnt/backups/bootstrap.snap
 
 services:
@@ -41,25 +41,25 @@ services:
     entrypoint: /usr/local/scripts/consul-entrypoint.sh
     command: agent
     configs:
-      - source: common_config
+      - source: consul_common_config
         target: /consul/data/bootstrap/common.json
-      - source: client_config
+      - source: consul_client_config
         target: /consul/data/bootstrap/client.json
-      - source: server_config
+      - source: consul_server_config
         target: /consul/data/bootstrap/server.json
-      - source: bootstrap_config
+      - source: consul_bootstrap_config
         target: /consul/data/bootstrap/bootstrap.json
     secrets:
-      - source: ca_file
+      - source: consul_ca_file
         target: /consul/data/certs/ca.crt
-      - source: cert_file
+      - source: consul_cert_file
         target: /consul/data/certs/cert.crt
-      - source: key_file
+      - source: consul_key_file
         target: /consul/data/certs/tls.key
-      - source: bootstrap_snap
+      - source: consul_bootstrap_snap
         target: /consul/data/bootstrap/bootstrap.snap
     volumes:
-      - data_volume:/consul/data
+      - consul_data:/consul/data
       - /var/run/docker.sock:/var/run/docker.sock
       - /mnt/scripts:/usr/local/scripts:rw
       - /mnt/backups:/consul/backups:rw
@@ -78,7 +78,7 @@ services:
     init: true
     command: /usr/local/scripts/dns-entrypoint.sh
     configs:
-      - source: dns_conf
+      - source: dns_dnsmasq_conf
         target: /etc/dnsmasq.template
     env_file:
       - /mnt/scripts/core.env
