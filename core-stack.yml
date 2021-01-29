@@ -82,8 +82,8 @@ services:
         admin_network:
           aliases:
             - consul.service.consul
-    #healthcheck:
-     # test: ['CMD', '/bin/sh', '-c', 'curl --header "X-Consul-Token: $$CONSUL_HTTP_TOKEN" -sfLo /dev/null http://127.0.0.1:8500/v1/health/node/$$HOSTNAME']
+    healthcheck:
+      test: ['CMD', '/bin/sh', '-c', 'curl -sfLo /dev/null http://127.0.0.1:8500/v1/health/node/$$HOSTNAME']
     deploy:
       endpoint_mode: dnsrr
       mode: global
@@ -133,14 +133,3 @@ services:
       - dns.service.consul
 
 ###########################################################################################################
-  socks:
-    image: serjs/go-socks5-proxy
-    init: true
-    depends_on:
-      - dns
-    ports:
-      - 1080:1080
-    networks:
-      - admin_network
-    dns:
-      - dns.service.consul
