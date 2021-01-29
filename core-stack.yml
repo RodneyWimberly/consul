@@ -111,6 +111,6 @@ services:
     networks:
       - admin_network
     deploy:
-      replicas: 1
+      mode: global
     dns:
       - dns.service.consul
