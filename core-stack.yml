@@ -67,8 +67,8 @@ services:
       - /mnt/scripts/core.env
     networks:
         - admin_network
-    #healthcheck:
-      #test: ['CMD', '/bin/sh', '-c', 'curl --header "X-Consul-Token: $$CONSUL_HTTP_TOKEN" -sfLo /dev/null http://127.0.0.1:8500/v1/health/node/$$HOSTNAME']
+    healthcheck:
+      test: ['CMD', '/bin/sh', '-c', 'curl --header "X-Consul-Token: $$CONSUL_HTTP_TOKEN" -sfLo /dev/null http://127.0.0.1:8500/v1/health/node/$$HOSTNAME']
     deploy:
       endpoint_mode: dnsrr
       mode: global
@@ -90,12 +90,16 @@ services:
       - admin_network
     deploy:
       replicas: 2
+      update_config:
+        parallelism: 1
+        delay: 20s
+        order: stop-first
 
   registrator:
     image: gliderlabs/registrator:master
     depends_on:
        - consul
-    command: -internal consul://tasks.core_consul:8500
+    command: -cleanup -internal consul://tasks.core_consul:8500
     env_file:
       - /mnt/scripts/core.env
     volumes:
@@ -103,4 +107,4 @@ services:
     networks:
       - admin_network
     deploy:
-      mode: global
+      replicas: 1
