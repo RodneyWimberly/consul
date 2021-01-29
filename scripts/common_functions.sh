@@ -78,6 +78,22 @@ function expand_config_file_from() {
   set -e
 }
 
+function restore_bootstrap() {
+    log "Restoring cluster snapshot"
+
+    log_detail "Starting Consul Server"
+    docker-entrypoint.sh agent
+
+    log_detail "waiting for the server to come up"
+    "${CORE_SCRIPT_DIR}"/wait-for-it.sh --timeout=300 --host=127.0.0.1 --port=8500 --strict -- echo "consul found" || (echo "Failed to locate consul" && exit 1)
+
+    log_detail "server is responding, waiting further 15 seconds to allow initialization"
+    sleep 15s
+
+    log_detail "restoring snapshot '${CONSUL_BOOTSTRAP_DIR}/bootstrap.snap'"
+    curl --request PUT --data-binary @"${CONSUL_BOOTSTRAP_DIR}"/bootstrap.snap -sS --header "X-Consul-Token: ${CONSUL_HTTP_TOKEN}" http://127.0.0.1:8500/v1/snapshot
+}
+
 function restore_snapshot() {
   if [[ "${NODE_IS_MANAGER}" == "true" ]]; then
     if [[ -f "${1}" ]]; then
@@ -97,7 +113,7 @@ function restore_snapshot() {
 
       log_detail "restoring snapshot '${1}'"
       ACL_MASTER_TOKEN=`cat ${CONSUL_BOOTSTRAP_DIR}/server.json | jq -r -M '.acl_master_token'`
-      curl --request PUT --data-binary @"${1}" -sS --header "X-Consul-Token: ${ACL_MASTER_TOKEN}" http://127.0.0.1:8500/v1/snapshot
+      curl --request PUT --data-binary @"${1}" -sS --header "X-Consul-Token: ${CONSUL_HTTP_TOKEN}" http://127.0.0.1:8500/v1/snapshot
 
       log "Shutting down 'local only' server (pid: ${consul_pid}) and then starting usual server"
       kill ${consul_pid}

@@ -68,12 +68,12 @@ fi
 #      bootstrap.snap are in the source backups folder
 #   3. If a file named 'bootstrap.restored' exists in the backup
 #      or bootstrap folders then delete it.
-if [[ -f "${CONSUL_BOOTSTRAP_DIR}"/bootstrap.snap ]] &&
-  [[ ! -f "${CONSUL_BOOTSTRAP_DIR}"/bootstrap.restored ]] &&
-  [ "${NODE_NAME}" == "manager1" ]; then
-  restore_snapshot "${CONSUL_BOOTSTRAP_DIR}"/bootstrap.snap
-  touch "${CONSUL_BOOTSTRAP_DIR}"/bootstrap.restored
-fi
+# if [[ -f "${CONSUL_BOOTSTRAP_DIR}"/bootstrap.snap ]] &&
+#   [[ ! -f "${CONSUL_BOOTSTRAP_DIR}"/bootstrap.restored ]] &&
+#   [ "${NODE_NAME}" == "manager1" ]; then
+#   restore_snapshot "${CONSUL_BOOTSTRAP_DIR}"/bootstrap.snap
+#   touch "${CONSUL_BOOTSTRAP_DIR}"/bootstrap.restored
+# fi
 
 # Merge expanded variables with configuration templates and place in the config folder
 expand_config_file_from "common.json"
@@ -85,7 +85,15 @@ else
   expand_config_file_from "client.json"
 fi
 
-# Start Consul the same way it would have started if we didn't modify the containers Entry Point
-log "Starting Consul in ${agent_mode} mode using the following command: exec docker-entrypoint.sh $@"
-docker-entrypoint.sh "$@" -join consul.service.consul
-# tasks."${CORE_STACK_NAME}"_consul
+
+if [[ -f "${CONSUL_BOOTSTRAP_DIR}"/bootstrap.snap ]] &&
+  [[ ! -f "${CONSUL_BOOTSTRAP_DIR}"/bootstrap.restored ]] &&
+  [ "${NODE_NAME}" == "manager1" ]; then
+  restore_bootstrap
+  touch "${CONSUL_BOOTSTRAP_DIR}"/bootstrap.restored
+else
+  # Start Consul the same way it would have started if we didn't modify the containers Entry Point
+  log "Starting Consul in ${agent_mode} mode using the following command: exec docker-entrypoint.sh $@"
+  docker-entrypoint.sh "$@" -join consul.service.consul
+  # tasks."${CORE_STACK_NAME}"_consul
+fi
