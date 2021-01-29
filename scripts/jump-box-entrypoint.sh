@@ -1,8 +1,7 @@
 #!/bin/sh
 
 set +e
-source /usr/local/scripts/consul.env
-source /usr/local/scripts/common_functions.sh
+source "${CORE_SCRIPT_DIR}"/common_functions.sh
 
 apk update
 apk add \

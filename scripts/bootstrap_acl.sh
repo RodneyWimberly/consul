@@ -1,8 +1,8 @@
 #!/bin/sh
 
 set -e
-source "${CONSUL_SCRIPT_DIR}"/bootstrap_functions.sh
-source "${CONSUL_SCRIPT_DIR}"/common_functions.sh
+source "${CORE_SCRIPT_DIR}"/bootstrap_functions.sh
+source "${CORE_SCRIPT_DIR}"/common_functions.sh
 
 if [ -z "$CONSUL_ENABLE_ACL" ] || [ "$CONSUL_ENABLE_ACL" -eq "0" ] ; then
     log_warning "ACLs is disabled, skipping configuration"
@@ -36,6 +36,6 @@ EOL
 merge_json "server_acl_master_token.json"
 fi
 
-${CONSUL_SCRIPT_DIR}/bootstrap_acl_server_agent_token.sh
-${CONSUL_SCRIPT_DIR}/bootstrap_acl_anon.sh
-${CONSUL_SCRIPT_DIR}/bootstrap_acl_client_general_token.sh
+${CORE_SCRIPT_DIR}/bootstrap_acl_server_agent_token.sh
+${CORE_SCRIPT_DIR}/bootstrap_acl_anon.sh
+${CORE_SCRIPT_DIR}/bootstrap_acl_client_general_token.sh

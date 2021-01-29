@@ -1,13 +1,13 @@
 #!/bin/sh
 
-if [[ -f ./consul.env ]]; then
-  source ./consul.env
-elif [[ -f /usr/local/scripts/consul.env ]]; then
-  source /usr/local/scripts/consul.env
-elif [[ -f /mnt/scripts/consul.env ]]; then
-  source /mnt/scripts/consul.env
+if [[ -f ./core.env ]]; then
+  source ./core.env
+elif [[ -f /usr/local/scripts/core.env ]]; then
+  source /usr/local/scripts/core.env
+elif [[ -f /mnt/scripts/core.env ]]; then
+  source /mnt/scripts/core.env
 fi
-source "${CONSUL_SCRIPT_DIR}"/common_functions.sh
+source "${CORE_SCRIPT_DIR}"/common_functions.sh
 
 
 function configure_acl() {
@@ -20,13 +20,13 @@ function configure_acl() {
     consul_pid="$!"
 
   log_detail "waiting for the server to come up"
-  ${CONSUL_SCRIPT_DIR}/wait-for-it.sh --timeout=300 --host=127.0.0.1 --port=8500 --strict -- echo "consul found" || (echo "Failed to locate consul" && exit 1)
+  ${CORE_SCRIPT_DIR}/wait-for-it.sh --timeout=300 --host=127.0.0.1 --port=8500 --strict -- echo "consul found" || (echo "Failed to locate consul" && exit 1)
 
   log_detail "waiting further 15 seconds to ensure a leader has been elected"
   sleep 15s
 
   log_detail "continuing the cluster bootstrapping process"
-  ${CONSUL_SCRIPT_DIR}/bootstrap_acl.sh
+  ${CORE_SCRIPT_DIR}/bootstrap_acl.sh
 
   log "Creating Consul cluster backups"
   backup_file="${CONSUL_BOOTSTRAP_DIR}/backup_$(date +%Y-%m-%d-%s).snap"
@@ -50,7 +50,7 @@ function configure_acl() {
 }
 
 function consul_cmd() (
-  consul_container="$(docker stack ps -q -f name=${CONSUL_STACK_PROJECT_NAME}_consul ${CONSUL_STACK_PROJECT_NAME})"
+  consul_container="$(docker stack ps -q -f name=${CORE_STACK_NAME}_consul ${CORE_STACK_NAME})"
   if [ -z CONSUL_HTTP_TOKEN ] || [ CONSUL_HTTP_TOKEN -eq "0" ]; then
     docker exec "${consul_container}" consul "$@"
   else

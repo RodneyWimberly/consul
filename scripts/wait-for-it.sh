@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 #   Use this script to test if a given TCP host/port are available
 
-source "${CONSUL_SCRIPT_DIR}"/bootstrap_functions.sh
-source "${CONSUL_SCRIPT_DIR}"/common_functions.sh
+source "${CORE_SCRIPT_DIR}"/bootstrap_functions.sh
+source "${CORE_SCRIPT_DIR}"/common_functions.sh
 
 cmdname=$(basename $0)
 

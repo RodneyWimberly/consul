@@ -1,11 +1,11 @@
 #!/bin/sh
 
-if [[ -f ./consul.env ]]; then
-  source ./consul.env
-elif [[ -f /usr/local/scripts/consul.env ]]; then
-  source /usr/local/scripts/consul.env
-elif [[ -f /tmp/consul/scripts/consul.env ]]; then
-  source /tmp/consul/scripts/consul.env
+if [[ -f ./core.env ]]; then
+  source ./core.env
+elif [[ -f /usr/local/scripts/core.env ]]; then
+  source /usr/local/scripts/core.env
+elif [[ -f /tmp/consul/scripts/core.env ]]; then
+  source /tmp/consul/scripts/core.env
 fi
 
 function show_docker_details() {
@@ -90,7 +90,7 @@ function restore_snapshot() {
         consul_pid="$!"
 
       log_detail "waiting for the server to come up"
-      "${CONSUL_SCRIPT_DIR}"/wait-for-it.sh --timeout=300 --host=127.0.0.1 --port=8500 --strict -- echo "consul found" || (echo "Failed to locate consul" && exit 1)
+      "${CORE_SCRIPT_DIR}"/wait-for-it.sh --timeout=300 --host=127.0.0.1 --port=8500 --strict -- echo "consul found" || (echo "Failed to locate consul" && exit 1)
 
       log_detail "server is responding, waiting further 15 seconds to allow initialization"
       sleep 15s

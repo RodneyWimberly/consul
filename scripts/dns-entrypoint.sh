@@ -1,9 +1,8 @@
 #!/bin/sh
 
 # Make our stuff available
-source /usr/local/scripts/consul.env
-source /usr/local/scripts/common_functions.sh
-add_path /usr/local/scripts/
+source "${CORE_SCRIPT_DIR}"/common_functions.sh
+add_path "${CORE_SCRIPT_DIR}"
 
 # Update existing packages
 apk update
@@ -34,18 +33,21 @@ export NODE_NAME=$(echo ${NODE_INFO} | jq -r -M '.Name')
 export NODE_IS_MANAGER=$(echo ${NODE_INFO} | jq -r -M '.Swarm.ControlAvailable')
 show_docker_details
 
-set +e
 log "Looking up the IP address for Consul to set as Consul domain owner"
-while true; do
+CONSUL_IP=
+while [ -z "${CONSUL_IP}" ]; do
   log_detail "waiting 10 seconds for Consul to come up and respond on the IP layer"
   sleep 10
 
-  log_detail "querying for service tasks.consul_consul"
-  CONSUL_IP="`dig +short tasks.consul_consul | tail -n1`"
+  log_detail "querying for service tasks:core_consul"
+  set +e
+  CONSUL_IP="`dig +short tasks:core_consul | tail -n1`"
+  set -e
 
-  log_detail "merging expanded variables with configuration templates and placeing in the config folder"
-  cat /etc/dnsmasq.template | envsubst > /etc/dnsmasq/dnsmasq.conf
-
-  log_detail "Starting DnsMasq"
-  dnsmasq --no-daemon --log-queries --server=/consul/"$${CONSUL_IP}"#8600
+  echo "Consul IP: ${CONSUL_IP}"
 done
+log_detail "merging expanded variables with configuration templates and placing in the config folder"
+cat /etc/dnsmasq.template | envsubst > /etc/dnsmasq/dnsmasq.conf
+
+log_detail "Starting DnsMasq"
+dnsmasq --no-daemon --log-queries --server=/consul/"$${CONSUL_IP}"#8600
