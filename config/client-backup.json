@@ -1,7 +1,0 @@
-{
-  "acl_token": "7507ed04-bf11-8f15-7a06-d965c7660f3c",
-  "retry_join": [
-    "consul.service.consul"
-  ],
-  "retry_interval": "10s"
-}
