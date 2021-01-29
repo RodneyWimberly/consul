@@ -39,9 +39,9 @@ while [ -z "${CONSUL_IP}" ]; do
   log_detail "waiting 2 seconds for Consul to come up and respond on the IP layer"
   sleep 2
 
-  log_detail "querying for service tasks.${CORE_STACK_NAME}_consul"
+  log_detail "querying for service consul.service.consul"
   set +e
-  export CONSUL_IP="`dig +short tasks."${CORE_STACK_NAME}"_consul | tail -n1`"
+  export CONSUL_IP="`dig +short consul.service.consul | tail -n1`"
   set -e
 done
 log_detail "merging expanded variables with configuration templates and placing in the config folder"
