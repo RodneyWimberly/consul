@@ -14,24 +14,28 @@ networks:
     external: true
 
 configs:
-  consul_common_config:
+  consul_common:
     file: /mnt/config/common.json
-  consul_client_config:
+  consul_client:
     file: /mnt/config/client.json
-  consul_server_config:
+  consul_server:
     file: /mnt/config/server.json
-  consul_bootstrap_config:
+  consul_bootstrap:
     file: /mnt/backups/bootstrap.json
-  dns_dnsmasq_conf:
+  dns:
     file: /mnt/config/dnsmasq.conf
 
 secrets:
-  consul_ca_file:
-    file: /mnt/backups/ca.crt
-  consul_cert_file:
-    file: /mnt/backups/cert.crt
-  consul_key_file:
-    file: /mnt/backups/tls.key
+  consul_ca:
+    file: /mnt/certs/consul-agent-ca.pem
+  consul_server_cert:
+    file: /mnt/certs/docker-server-consul-0.pem
+  consul_server_key:
+    file: /mnt/certs/docker-server-consul-0-key.pem
+  consul_client_cert:
+    file: /mnt/certs/docker-client-consul-0.pem
+  consul_client_key:
+    file: /mnt/certs/docker-client-consul-0-key.pem
   consul_bootstrap_snap:
     file: /mnt/backups/bootstrap.snap
 
@@ -41,21 +45,25 @@ services:
     entrypoint: /usr/local/scripts/consul-entrypoint.sh
     command: agent
     configs:
-      - source: consul_common_config
+      - source: consul_common
         target: /consul/data/bootstrap/common.json
-      - source: consul_client_config
+      - source: consul_client
         target: /consul/data/bootstrap/client.json
-      - source: consul_server_config
+      - source: consul_server
         target: /consul/data/bootstrap/server.json
-      - source: consul_bootstrap_config
+      - source: consul_bootstrap
         target: /consul/data/bootstrap/bootstrap.json
     secrets:
-      - source: consul_ca_file
-        target: /consul/data/certs/ca.crt
-      - source: consul_cert_file
-        target: /consul/data/certs/cert.crt
-      - source: consul_key_file
-        target: /consul/data/certs/tls.key
+      - source: consul_ca
+        target: /consul/data/certs/consul-agent-ca.pem
+      - source: consul_server_cert
+        target: /consul/data/certs/docker-server-consul-0.pem
+      - source: consul_server_key
+        target: /consul/data/certs/docker-server-consul-0-key.pem
+      - source: consul_client_cert
+        target: /consul/data/certs/docker-client-consul-0.pem
+      - source: consul_client_key
+        target: /consul/data/certs/docker-client-consul-0-key.pem
       - source: consul_bootstrap_snap
         target: /consul/data/bootstrap/bootstrap.snap
     volumes:
@@ -80,7 +88,7 @@ services:
     init: true
     command: /usr/local/scripts/dns-entrypoint.sh
     configs:
-      - source: dns_dnsmasq_conf
+      - source: dns
         target: /etc/dnsmasq.template
     env_file:
       - /mnt/scripts/core.env

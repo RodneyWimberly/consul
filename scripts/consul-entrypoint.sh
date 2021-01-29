@@ -42,21 +42,21 @@ show_docker_details
 #   4. Setup TLS
 #   5. Certificate creation
 #   6. Take a snapshot
-if [[ -z "$CONSUL_HTTP_TOKEN" ]] ; then
-    if [[ "${NODE_IS_MANAGER}" == "true" ]]; then
-      log_detail "The master ACL Token is not present"
-      log_detail "Starting the bootstrap process."
-      "${CORE_SCRIPT_DIR}"/bootstrap_entrypoint.sh
-    else
-      log_detail "The master ACL Token is not present."
-      log_detail "Only servers can bootstrap the cluster."
-      log_detail "Exiting, please retry once the cluster is bootstrapped."
-    fi
-    exit 0
-else
-    log_detail "The master ACL Token is present"
-    log_detail "Skipping the bootstrap process."
-fi
+# if [[ -z "$CONSUL_HTTP_TOKEN" ]] ; then
+#     if [[ "${NODE_IS_MANAGER}" == "true" ]]; then
+#       log_detail "The master ACL Token is not present"
+#       log_detail "Starting the bootstrap process."
+#       "${CORE_SCRIPT_DIR}"/bootstrap_entrypoint.sh
+#     else
+#       log_detail "The master ACL Token is not present."
+#       log_detail "Only servers can bootstrap the cluster."
+#       log_detail "Exiting, please retry once the cluster is bootstrapped."
+#     fi
+#     exit 0
+# else
+#     log_detail "The master ACL Token is present"
+#     log_detail "Skipping the bootstrap process."
+# fi
 
 # Do we need to restore a bootstrap snapshot?
 # If order to restore a bootstrap snapshot don't forget to do the follow steps
@@ -85,15 +85,17 @@ else
   expand_config_file_from "client.json"
 fi
 
+log "Starting Consul in ${agent_mode} mode using the following command: exec docker-entrypoint.sh $@"
+docker-entrypoint.sh "$@" -join consul.service.consul
 
-if [[ -f "${CONSUL_BOOTSTRAP_DIR}"/bootstrap.snap ]] &&
-  [[ ! -f "${CONSUL_BOOTSTRAP_DIR}"/bootstrap.restored ]] &&
-  [ "${NODE_NAME}" == "manager1" ]; then
-  restore_bootstrap
-  touch "${CONSUL_BOOTSTRAP_DIR}"/bootstrap.restored
-else
-  # Start Consul the same way it would have started if we didn't modify the containers Entry Point
-  log "Starting Consul in ${agent_mode} mode using the following command: exec docker-entrypoint.sh $@"
-  docker-entrypoint.sh "$@" -join consul.service.consul
-  # tasks."${CORE_STACK_NAME}"_consul
-fi
+# if [[ -f "${CONSUL_BOOTSTRAP_DIR}"/bootstrap.snap ]] &&
+#   [[ ! -f "${CONSUL_BOOTSTRAP_DIR}"/bootstrap.restored ]] &&
+#   [ "${NODE_NAME}" == "manager1" ]; then
+#   restore_bootstrap
+#   touch "${CONSUL_BOOTSTRAP_DIR}"/bootstrap.restored
+# else
+#   # Start Consul the same way it would have started if we didn't modify the containers Entry Point
+#   log "Starting Consul in ${agent_mode} mode using the following command: exec docker-entrypoint.sh $@"
+#   docker-entrypoint.sh "$@" -join consul.service.consul
+#   # tasks."${CORE_STACK_NAME}"_consul
+# fi

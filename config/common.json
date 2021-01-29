@@ -1,26 +1,16 @@
 {
-  "acl": {
-    "default_policy": "deny",
-    "down_policy": "deny",
-    "enabled": true,
-    "enable_token_persistence": true
-  },
   "addresses": {
     "http": "0.0.0.0",
     "https": "0.0.0.0"
   },
   "advertise_addr": "{{ GetInterfaceIP \"eth0\" }}",
   "bind_addr": "{{ GetInterfaceIP \"eth0\" }}",
-  "connect": {
-    "enabled": true
-  },
-  "ca_file": "/consul/data/certs/ca.crt",
-  "ca_path": "/consul/data/certs",
-  "cert_file": "/consul/data/certs/cert.crt",
+  "ca_file": "${CONSUL_CERT_DIR}/consul-agent-ca.pem",
+  "ca_path": "${CONSUL_CERT_DIR}",
   "check_update_interval": "0s",
   "client_addr": "0.0.0.0",
   "connect": {
-    "enabled": false
+    "enabled": true
   },
   "data_dir": "${CONSUL_DATA_DIR}",
   "datacenter": "${CONSUL_DATACENTER}",
@@ -30,10 +20,9 @@
   "dns_config": {
     "allow_stale": false
   },
-  "encrypt": "JWMpFl50rO2oTv2Rz660mrUminAYRLDCrrw09qEVuLw=",
+  "encrypt": "jgtdlbpgSBj8YoJGkuf4jw+Aa7it9dQeWm4yyBqHIVU=",
   "encrypt_verify_incoming" : false,
   "encrypt_verify_outgoing" : false,
-  "key_file": "/consul/data/certs/tls.key",
   "http_config": {
     "response_headers": {
       "Access-Control-Allow-Origin": "*"

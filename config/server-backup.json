@@ -2,5 +2,11 @@
   "acl_agent_token": "4431f978-35f5-081d-139d-895ec8d96a39",
   "acl_master_token": "f05be05b-678f-1800-74bd-8323da2b19fc",
   "acl_token": "4431f978-35f5-081d-139d-895ec8d96a39",
-  "bootstrap_expect": ${NUM_OF_MGR_NODES}
+  "bootstrap_expect": ${NUM_OF_MGR_NODES},
+  "acl": {
+    "default_policy": "deny",
+    "down_policy": "deny",
+    "enabled": true,
+    "enable_token_persistence": true
+  }
 }
