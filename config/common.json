@@ -1,7 +1,7 @@
 {
   "acl": {
-    "default_policy": "allow",
-    "down_policy": "allow",
+    "default_policy": "deny",
+    "down_policy": "deny",
     "enabled": true,
     "enable_token_persistence": true
   },
