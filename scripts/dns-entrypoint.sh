@@ -41,7 +41,7 @@ while [ -z "${CONSUL_IP}" ]; do
 
   log_detail "querying for service tasks.${CORE_STACK_NAME}_consul"
   set +e
-  CONSUL_IP="`dig +short tasks."${CORE_STACK_NAME}"_consul | tail -n1`"
+  export CONSUL_IP="`dig +short tasks."${CORE_STACK_NAME}"_consul | tail -n1`"
   set -e
 done
 log_detail "merging expanded variables with configuration templates and placing in the config folder"
