@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"snap",
+				"snapshot"
+			],
+			[
 				"dock",
 				"docker_api_method"
 			],
@@ -60,11 +64,24 @@
 	"buffers":
 	[
 		{
-			"file": "pwd/set-pwd-variables.ps1",
+			"contents": "{\n  \"acl_token\": \"6bb8c52a-83fb-ec6c-27eb-d6abd0778f03\"\n}\n",
+			"file": "config/client.json",
+			"file_size": 183,
+			"file_write_time": 132563794330096732,
 			"settings":
 			{
-				"buffer_size": 250,
-				"encoding": "UTF-8",
+				"buffer_size": 58,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "{\n  \"acl_agent_token\": \"73fcf661-c553-e3a6-8247-4995d7e279a3\",\n  \"acl_master_token\": \"dbbb90ef-152a-c306-f90b-802d4a33982c\",\n  \"acl_token\": \"73fcf661-c553-e3a6-8247-4995d7e279a3\",\n  \"bootstrap_expect\": ${NUM_OF_MGR_NODES}\n}\n",
+			"file": "config/server.json",
+			"file_size": 224,
+			"file_write_time": 132563776733058730,
+			"settings":
+			{
+				"buffer_size": 224,
 				"line_ending": "Unix"
 			}
 		}
@@ -168,6 +185,14 @@
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"clos",
+				"File: Close All"
+			],
+			[
+				"save",
+				"File: Save All"
+			],
 			[
 				"Package Control: ",
 				"Package Control: Install Package"
@@ -339,55 +364,62 @@
 	"expanded_folders":
 	[
 		"/D/Projects/consul",
-		"/D/Projects/consul/backups",
-		"/D/Projects/consul/bootstrapper",
-		"/D/Projects/consul/certs",
 		"/D/Projects/consul/config",
-		"/D/Projects/consul/pwd",
-		"/D/Projects/consul/scripts"
+		"/D/Projects/consul/scripts",
+		"/D/Projects/consul/scripts/admin"
 	],
 	"file_history":
 	[
+		"/D/Projects/consul/scripts/core.env",
+		"/D/Projects/consul/core-stack.yml",
+		"/D/Projects/consul/config/client.json",
+		"/D/Projects/consul/scripts/common_functions.sh",
+		"/D/Projects/consul/scripts/consul-entrypoint.sh",
+		"/D/Projects/consul/config/common.json",
+		"/D/Projects/consul/config/server.json",
+		"/D/Projects/consul/scripts/dns-entrypoint.sh",
+		"/D/Projects/consul/pwd/cmdline.txt",
+		"/D/Projects/consul/scripts/bootstrap_acl_server_agent_token.sh",
+		"/D/Projects/consul/scripts/bootstrap_acl_client_general_token.sh",
+		"/D/Projects/consul/config/dnsmasq.conf",
+		"/D/Projects/consul/scripts/deploy.sh",
+		"/D/Projects/consul/pwd/manager.cmd",
+		"/D/Projects/consul/pwd/worker.cmd",
+		"/D/Projects/consul/pwd/update-stack-worker.sh",
+		"/D/Projects/consul/pwd/update-stack-manager.sh",
+		"/D/Projects/consul/scripts/bootstrap_acl.sh",
+		"/D/Projects/consul/scripts/bootstrap_acl_anon.sh",
+		"/D/Projects/consul/scripts/bootstrap_entrypoint.sh",
+		"/D/Projects/consul/scripts/bootstrap_functions.sh",
+		"/D/Projects/consul/scripts/bootstrap_gossip.sh",
+		"/D/Projects/consul/scripts/bootstrap_tls.sh",
+		"/D/Projects/consul/scripts/jump-box-entrypoint.sh",
+		"/D/Projects/consul/scripts/wait-for-it.sh",
+		"/D/Projects/consul/diagnostics-stack.yml",
+		"/D/Projects/consul/scripts/admin/backup-cluster.sh",
+		"/D/Projects/consul/bootstrapper/bootstrapper-entrypoint.sh",
+		"/D/Projects/consul/bootstrapper/common_functions.sh",
+		"/D/Projects/consul/bootstrapper/Dockerfile",
+		"/D/Projects/consul/consul-stack.yml",
+		"/D/Projects/consul/scripts/consul.env",
+		"/D/Projects/consul/storage-stack.yml",
+		"/D/Projects/consul/nfsclient-stack.yml",
+		"/D/Projects/consul/pwd/set-pwd-variables.ps1",
 		"/D/Projects/consul/pwd/connect-to-pwd.ps1",
 		"/D/Projects/consul/pwd/deploy-to-pwd.ps1",
-		"/D/Projects/consul/pwd/set-pwd-variables.ps1",
-		"/D/Projects/consul/storage-stack.yml",
-		"/D/Projects/consul/scripts/deploy.sh",
-		"/D/Projects/consul/nfsclient-stack.yml",
-		"/D/Projects/consul/consul-stack.yml",
-		"/D/Projects/consul/bootstrapper/common_functions.sh",
-		"/D/Projects/consul/scripts/bootstrap_functions.sh",
-		"/D/Projects/consul/scripts/bootstrap_entrypoint.sh",
-		"/D/Projects/consul/scripts/consul-entrypoint.sh",
 		"/D/Projects/consul/pwd/connect-to-pwd.cmd",
 		"/D/Projects/consul/config/server-backup.json",
 		"/D/Projects/consul/config/client-backup.json",
-		"/D/Projects/consul/config/client.json",
-		"/D/Projects/consul/config/server.json",
-		"/D/Projects/consul/scripts/consul.env",
 		"/D/Projects/consul/config/sftp.json",
 		"/D/Projects/consul/pwd/set-variables.cmd",
-		"/D/Projects/consul/pwd/update-stack-manager.sh",
-		"/D/Projects/consul/pwd/update-stack-worker.sh",
-		"/D/Projects/consul/pwd/cmdline.txt",
-		"/D/Projects/consul/scripts/jump-box-entrypoint.sh",
-		"/D/Projects/consul/scripts/bootstrap_acl.sh",
 		"/D/Projects/consul/nfsserver-stack.yml",
-		"/D/Projects/consul/config/common.json",
-		"/D/Projects/consul/scripts/common_functions.sh",
 		"/D/Projects/consul/pwd/pwd-remote-cmd.sh",
 		"/D/Projects/consul/config/bootstrap.config",
 		"/D/Projects/consul/logging-stack.yml",
 		"/D/Projects/consul/devops-stack.yml",
 		"/D/Projects/consul/nfs-stack.yml",
-		"/D/Projects/consul/diagnostics-stack.yml",
 		"/D/Projects/consul/scripts/backup/server_setup.sh",
-		"/D/Projects/consul/scripts/wait-for-it.sh",
-		"/D/Projects/consul/scripts/bootstrap_gossip.sh",
-		"/D/Projects/consul/scripts/bootstrap_tls.sh",
-		"/D/Projects/consul/scripts/bootstrap_acl_anon.sh",
 		"/D/Projects/consul/scripts/bootstrap_acl_bootstrap_agent_token.sh",
-		"/D/Projects/consul/scripts/bootstrap_acl_client_general_token.sh",
 		"/D/Projects/consul/scripts/bootstrapper_entrypoint.sh",
 		"/D/Projects/consul/pwd/deploy-to-pwd.cmd",
 		"/D/keep-alive.sh",
@@ -402,7 +434,6 @@
 		"/D/Projects/consul/scripts/admin/update-stack-manager.sh",
 		"/D/Projects/consul/bootstrapper/consul.env",
 		"/D/Projects/consul/bootstrapper/nginx.conf",
-		"/D/Projects/consul/bootstrapper/Dockerfile",
 		"/D/Projects/EventManager/Api/Identity/docker-compose.yml",
 		"/D/em/Core/tools-stack.yml",
 		"/D/em/Core/docker-compose.yml",
@@ -426,7 +457,6 @@
 		"/C/Program Files/Sublime Text 3/Data/Packages/SidebarSeparator/SidebarSeparator.sublime-settings",
 		"/C/Program Files/Sublime Text 3/Data/Packages/SideBarEnhancements/Side Bar.sublime-settings",
 		"/C/Program Files/Sublime Text 3/Data/Packages/User/Side Bar.sublime-settings",
-		"/D/Projects/consul/scripts/admin/backup-cluster.sh",
 		"/D/Consul/soakes/consul/scripts/admin/update-stack-manager.sh",
 		"/D/Consul/soakes/consul/bootstrapper/consul.env",
 		"/D/Consul/soakes/consul/scripts/admin/deploy-to-pwd.cmd",
@@ -467,25 +497,24 @@
 		"/C/Program Files/Sublime Text 3/Data/Packages/WhoCalled Function Finder/WhoCalled.sublime-settings",
 		"/D/Consul/soakes/consul/backups/placeholder",
 		"/D/Consul/soakes/consul/scripts/admin/pwd-remote-cmd.sh",
-		"/D/Consul/soakes/consul/scripts/admin/backup-cluster.sh",
-		"/D/Consul/soakes/consul/scripts/filebrowser-entrypoint.sh",
-		"/C/Program Files/Sublime Text 3/Data/Packages/TabNine/TabNine.sublime-settings",
-		"/C/Program Files/Sublime Text 3/Data/Packages/User/GitHub.sublime-settings",
-		"/D/Consul/soakes/consul/scripts/admin/deploy.sh",
-		"/C/Program Files/Sublime Text 3/Data/Packages/User/TortoiseSVN.sublime-settings",
-		"/D/Consul/soakes/consul/scripts/wait-for-it.sh",
-		"/D/Consul/soakes/consul/volumes/test.txt",
-		"/D/Consul/soakes/consul/scripts/backup/get-latest.sh"
+		"/D/Consul/soakes/consul/scripts/admin/backup-cluster.sh"
 	],
 	"find":
 	{
-		"height": 30.0
+		"height": 43.0
 	},
 	"find_in_files":
 	{
 		"height": 164.0,
 		"where_history":
 		[
+			"D:\\Projects\\consul,<open folders>",
+			"D:\\Projects\\consul",
+			"D:\\Projects\\consul\\",
+			"D:\\Projects\\consul",
+			"<open folders>",
+			"D:\\Projects\\consul",
+			"D:\\Projects",
 			"<current file>",
 			"D:\\Projects\\consul",
 			"<open folders>",
@@ -498,6 +527,33 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"bootstrap_snap",
+			"key_file",
+			"cert_file",
+			"ca_file",
+			"dns_conf",
+			"bootstrap_config",
+			"server_config",
+			"client_config",
+			"common_config",
+			"data_volume",
+			"tasks:\"${CORE_STACK_NAME}\"_consul",
+			"consul_consul",
+			"consul.env",
+			"/mnt",
+			"LOCAL_SCRIPT_DIR",
+			"CONSUL_STACK_PROJECT_NAME",
+			"CONSUL_SUBNET",
+			"CONSUL_SCRIPT_DIR",
+			"/consul/data/certs",
+			"/consul/data/bootstrap",
+			"/usr/local/scripts",
+			"consul.env",
+			"tasks.consul_consul",
+			"tasks:consul_consul",
+			"\"${CONSUL_IP}\"",
+			"gliderlabs/registrator",
+			"image",
 			"User",
 			"generated.json",
 			"bootstrap.json",
@@ -576,6 +632,31 @@
 		"regex": false,
 		"replace_history":
 		[
+			"consul_bootstrap_snap",
+			"consul_key_file",
+			"consul_cert_file",
+			"consul_ca_file",
+			"dns_dnsmasq_conf",
+			"consul_bootstrap_config",
+			"consul_server_config",
+			"consul_client_config",
+			"consul_common_config",
+			"consul_data",
+			"core_consultasks.\"${CORE_STACK_NAME}\"_consul",
+			"core_consul",
+			"core.env",
+			"\"${NODE_ROOT_DIR}\"",
+			"CORE_SCRIPT_DIR",
+			"CORE_STACK_NAME",
+			"CORE_SUBNET",
+			"LOCAL_SCRIPT_DIR",
+			"\"${CONSUL_CERT_DIR}\"",
+			"\"${CONSUL_BOOTSTRAP_DIR}\"",
+			"\"${CONSUL_SCRIPT_DIR}\"",
+			"core.env",
+			"tasks:core_consul",
+			"\"${CONSUL_IP}\"",
+			"tasks:consul_consul",
 			"Node",
 			"bootstrap.json",
 			"storage_volume",
@@ -617,24 +698,142 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "pwd/set-pwd-variables.ps1",
+					"file": "config/client.json",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 250,
+						"buffer_size": 58,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								249,
-								249
+								54,
+								54
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+									"1":
+									[
+										54,
+										55
+									]
+								},
+								"icon":
+								{
+									"1":
+									[
+										"Packages/BracketHighlighter/icons/double_quote.png",
+										"region.greenish"
+									]
+								},
+								"open":
+								{
+									"1":
+									[
+										17,
+										18
+									]
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content"
+							],
+							"function_name_status_row": 1,
+							"syntax": "Packages/JavaScript/JSON.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "config/server.json",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 224,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								224,
+								224
 							]
 						],
 						"settings":
@@ -657,36 +856,36 @@
 							},
 							"bracket_highlighter.regions":
 							[
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
 								"bh_angle",
 								"bh_angle_center",
 								"bh_angle_open",
 								"bh_angle_close",
 								"bh_angle_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
 								"bh_tag",
 								"bh_tag_center",
 								"bh_tag_open",
 								"bh_tag_close",
 								"bh_tag_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
 								"bh_regex",
 								"bh_regex_center",
 								"bh_regex_open",
@@ -697,24 +896,24 @@
 								"bh_square_open",
 								"bh_square_close",
 								"bh_square_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content"
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content"
 							],
-							"function_name_status_row": 5,
-							"syntax": "Packages/PowerShell/Support/PowershellSyntax.tmLanguage"
+							"function_name_status_row": 6,
+							"syntax": "Packages/JavaScript/JSON.sublime-syntax"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -789,7 +988,7 @@
 	"project": "Consul.sublime-project",
 	"replace":
 	{
-		"height": 56.0
+		"height": 77.0
 	},
 	"save_all_on_build": false,
 	"select_file":
@@ -809,7 +1008,7 @@
 		[
 			[
 				"",
-				"D:\\Containers\\Containers.sublime-project"
+				"D:\\Projects\\consul-docker-stability-tests-master\\acls\\consul-bootstrap-acl.sublime-workspace"
 			]
 		],
 		"width": 380.0
@@ -840,7 +1039,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 404.0,
+	"side_bar_width": 305.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
