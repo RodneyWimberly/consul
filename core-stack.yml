@@ -107,18 +107,18 @@ services:
         delay: 1s
         order: stop-first
 
-  # registrator:
-  #   image: gliderlabs/registrator:master
-  #   depends_on:
-  #      - consul
-  #   command: -cleanup -internal consul://consul.service.consul:8500
-  #   env_file:
-  #     - /mnt/scripts/core.env
-  #   volumes:
-  #     - /var/run/docker.sock:/tmp/docker.sock
-  #   networks:
-  #     - admin_network
-  #   deploy:
-  #     mode: global
-  #   dns:
-  #     - dns.service.consul
+  registrator:
+    image: gliderlabs/registrator:master
+    depends_on:
+       - consul
+    command: -cleanup -internal consul://consul.service.consul:8500
+    env_file:
+      - /mnt/scripts/core.env
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock
+    networks:
+      - admin_network
+    deploy:
+      mode: global
+    dns:
+      - dns.service.consul
