@@ -82,8 +82,8 @@ services:
         admin_network:
           aliases:
             - consul.service.consul
-    #healthcheck:
-    #  test: ['CMD', '/bin/sh', '-c', 'curl -sfLo /dev/null http://127.0.0.1:8500/v1/health/node/$$HOSTNAME']
+    healthcheck:
+      test: ['CMD', '/bin/sh', '-c', 'curl -sfLo /dev/null http://127.0.0.1:8500/v1/health/node/consul']
     deploy:
       endpoint_mode: dnsrr
       mode: global
