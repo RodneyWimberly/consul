@@ -48,8 +48,8 @@ docker stack deploy --compose-file=/tmp/consul/devops-stack.yml devops
 #docker stack deploy --compose-file=./logging-stack.yml logging
 
 log_detail "Deploying ${CORE_STACK_NAME} stack to swarm"
-cat /tmp/consul/"${CORE_STACK_NAME}"-stack.yml | envsubst > /tmp/consul/deploy.yml
-docker stack deploy --compose-file=/tmp/consul/deploy.yml "${CORE_STACK_NAME}"
+#cat /tmp/consul/"${CORE_STACK_NAME}"-stack.yml | envsubst > /tmp/consul/deploy.yml
+docker stack deploy --compose-file=/tmp/consul/"${CORE_STACK_NAME}"-stack.yml "${CORE_STACK_NAME}"
 
 # log_detail "Deploying NfsClient Stack to Swarm"
 # docker stack deploy --compose-file=/tmp/consul/nfsclient-stack.yml nfsclient
