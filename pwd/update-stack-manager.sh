@@ -8,7 +8,6 @@ git clone -b DeploymentTest \
     /tmp/consul
 cp -r /tmp/consul/scripts/* /mnt/scripts/
 cp -r /tmp/consul/backups/* /mnt/backups/
-cp -r /tmp/consul/certs/* /mnt/certs/
 cp -r /tmp/consul/config/* /mnt/config/
 chmod u+x /mnt/scripts/*.sh
 cd /tmp/consul/scripts
@@ -19,7 +18,6 @@ EOL
 chmod u+x ~/update-stack.sh
 mkdir -p /mnt/backups
 mkdir -p /mnt/config
-mkdir -p /mnt/certs
 mkdir -p /mnt/scripts
 mkdir -p /mnt/webmgr
 apk add screen git gettext curl jq
