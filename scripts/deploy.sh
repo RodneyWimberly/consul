@@ -13,6 +13,7 @@ export CONTAINER_IP=$(docker info --format "{{.Swarm.NodeAddr}}")
 export CONTAINER_ID=$(docker info --format "{{.Swarm.NodeID}}")
 export NODE_NAME=$(docker info --format "{{.Name}}")
 export NODE_IS_MANAGER=$(docker info --format "{{.Swarm.ControlAvailable}}")
+export CONTAINER_NAME=$(hostname)
 export DEFAULT_ROUTE_IP=$(ip -o ro get $(ip ro | awk '$1 == "default" { print $3 }') | awk '{print $5}')
 show_hosting_details
 
@@ -34,7 +35,7 @@ log_detail "Creating attachable overlay network 'admin_network'"
 docker network create --driver=overlay --attachable admin_network
 
 log_detail "Creating attachable overlay network 'api_network'"
-docker network create --driver=overlay --attachable
+docker network create --driver=overlay --attachable api_network
 
 log_detail "Creating attachable overlay network 'log_network'"
 docker network create --driver=overlay --attachable log_network
