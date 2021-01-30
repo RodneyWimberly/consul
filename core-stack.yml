@@ -89,14 +89,13 @@ services:
     depends_on:
      - consul
     init: true
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
     configs:
       - source: dns
         target: /etc/dnsmasq.template
     env_file:
       - /mnt/scripts/core.env
     volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
       - /mnt/scripts:/usr/local/scripts:rw
     cap_add:
       - NET_ADMIN
@@ -137,6 +136,7 @@ services:
     entrypoint: /usr/local/scripts/vault-entrypoint.sh
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - /mnt/scripts:/usr/local/scripts:rw
     configs:
       - source: vault
         target: /vault/config/vault.json
