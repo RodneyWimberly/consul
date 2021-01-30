@@ -22,12 +22,11 @@ log "Looking up the IP address for Consul to set as Consul domain owner"
 CONSUL_IP=
 while [ -z "${CONSUL_IP}" ]; do
   log_detail "waiting 2 seconds for Consul to come up and respond on the IP layer"
-  sleep 5
+  sleep 2
 
   log_detail "querying for service consul.service.consul"
   set +e
-  export CONSUL_IP="$(dig +short consul.service.consul | tail -n1)"
-  log "Consul IP: ${CONSUL_IP}"
+  export CONSUL_IP=$(host_ip "consul.service.consul")
   set -e
 done
 

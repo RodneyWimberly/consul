@@ -67,8 +67,8 @@ services:
       - source: consul_client_key
         target: /consul/data/certs/docker-client-consul-0-key.pem
     volumes:
-      - consul_data:/consul/data
       - /var/run/docker.sock:/var/run/docker.sock
+      - consul_data:/consul/data
       - /mnt/scripts:/usr/local/scripts:rw
       - /mnt/backups:/consul/backups:rw
     env_file:
@@ -89,6 +89,8 @@ services:
     depends_on:
      - consul
     init: true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
     configs:
       - source: dns
         target: /etc/dnsmasq.template
@@ -133,7 +135,8 @@ services:
     image: 'vault'
     init: true
     entrypoint: /usr/local/scripts/vault-entrypoint.sh
-
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
     configs:
       - source: vault
         target: /vault/config/vault.json
