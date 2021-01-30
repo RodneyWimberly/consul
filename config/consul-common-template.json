@@ -14,7 +14,7 @@
   },
   "data_dir": "${CONSUL_DATA_DIR}",
   "datacenter": "${CONSUL_DATACENTER}",
-  "disable_host_node_id": true,
+  "disable_host_CONTAINER_ID": true,
   "disable_remote_exec": true,
   "disable_update_check": true,
   "dns_config": {
@@ -34,8 +34,8 @@
   },
   "node_meta": {
     "instance_type": "Docker container",
-    "swarm_node_id": "${NODE_ID}",
-    "swarm_node_ip": "${NODE_IP}",
+    "swarm_CONTAINER_ID": "${CONTAINER_ID}",
+    "swarm_CONTAINER_IP": "${CONTAINER_IP}",
     "swarm_manager_nodes": "${NUM_OF_MGR_NODES}",
     "swarm_node_is_manager": "${NODE_IS_MANAGER}",
     "swarm_node_name": "${NODE_NAME}"

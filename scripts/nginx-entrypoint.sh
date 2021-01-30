@@ -1,5 +1,22 @@
 #!/bin/sh
 
+# Make our stuff available
+source "${CORE_SCRIPT_DIR}"/common_functions.sh
+add_path "${CORE_SCRIPT_DIR}"
+
+# Update existing packages
+apk update
+
+# Add required packages
+apk add \
+  curl \
+  jq \
+  iputils \
+  iproute2 \
+  bind-tools \
+  gettext \
+  openssl
+
 # this command will automatically register the portal app as a consul service
 set -ex
 type curl || (
@@ -11,4 +28,8 @@ curl -fLo ~/.vimrc https://raw.githubusercontent.com/samrocketman/home/master/do
 consul-agent.sh --service '{"service": {"name": "portal", "tags": [], "port": 80}}' \
   --consul-template-file-cmd /nginx.conf nginx.tpl /etc/nginx/conf.d/default.conf "consul lock -name service/portal -shell=false reload nginx -s reload" \
   --consul-template-file /index.html index.html.tpl /usr/share/nginx/html/index.html
+
+# Get Docker/Node/Hosting information from the Docker API for use in configuration
+docker_details
+
 exec nginx -g 'daemon off;'
