@@ -31,5 +31,5 @@ else
   expand_config_file_from "client.json"
 fi
 
-log "Starting Consul in ${agent_mode} mode using the following command: exec docker-entrypoint.sh $@  -join consul.service.consul"
-docker-entrypoint.sh "$@" -join consul.service.consul
+log "Starting Consul in ${agent_mode} mode using the following command: exec docker-entrypoint.sh $@"
+docker-entrypoint.sh "$@"

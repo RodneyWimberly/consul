@@ -47,7 +47,7 @@ services:
     image: consul:${CONSUL_VERSION:-latest}
     init: true
     entrypoint: /usr/local/scripts/consul-entrypoint.sh
-    command: agent
+    command: agent -join consul.service.consul
     configs:
       - source: consul_common
         target: /consul/data/bootstrap/common.json
@@ -134,6 +134,7 @@ services:
     image: 'vault'
     init: true
     entrypoint: /usr/local/scripts/vault-entrypoint.sh
+    command: server -config=/vault/config
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /mnt/scripts:/usr/local/scripts:rw
