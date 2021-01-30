@@ -2,6 +2,7 @@
 set -ex
 
 # Make our stuff available
+chmod u+x "${CORE_SCRIPT_DIR}"/common-functions.sh
 source "${CORE_SCRIPT_DIR}"/common-functions.sh
 add_path "${CORE_SCRIPT_DIR}"
 

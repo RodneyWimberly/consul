@@ -3,12 +3,13 @@
 # Make our stuff available
 source "${CORE_SCRIPT_DIR}"/common-functions.sh
 add_path "${CORE_SCRIPT_DIR}"
-set -e
+set +e
 # Update existing packages
-su -c "apk update"
+#su -c "apk update"
 
 # Add required packages
-su -c "apk add --no-cache gettext curl jq"
+apk add --no-cache gettext
+# curl jq
 
 # Get Docker/Node/Hosting information from the Docker API for use in configuration
 hosting_details
