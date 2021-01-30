@@ -3,14 +3,14 @@
   "backend": {
     "consul": {
       "address": "consul.service.consul:8500",
-      "path": "vault",
+      "path": "vault/",
       "scheme": "http"
     }
   },
   "default_lease_ttl": "168h",
   "listener": {
     "tcp": {
-      "address": "0.0.0.0:8200",
+      "address": "${VAULT_IP}:8200",
       "tls_disable": "1"
     }
   },
