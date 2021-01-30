@@ -31,7 +31,7 @@ while [ -z "${CONSUL_IP}" ]; do
 done
 
 log_detail "merging expanded variables with configuration templates and placing in the config folder"
-cat /etc/dnsmasq.template | envsubst > /etc/dnsmasq/dnsmasq.conf
+cat /etc/templates/dnsmasq.conf | envsubst > /etc/dnsmasq/dnsmasq.conf
 
 # Get Docker/Node/Hosting information from the Docker API for use in configuration
 hosting_details

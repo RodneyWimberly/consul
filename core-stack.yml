@@ -91,7 +91,7 @@ services:
     init: true
     configs:
       - source: dns
-        target: /etc/dnsmasq.template
+        target: /etc/templates/dnsmasq.conf
     env_file:
       - /mnt/scripts/core.env
     volumes:
@@ -139,7 +139,7 @@ services:
       - /mnt/scripts:/usr/local/scripts:rw
     configs:
       - source: vault
-        target: /vault/config/vault.json
+        target: /vault/templates/vault.json
     env_file:
       - /mnt/scripts/core.env
     cap_add:
