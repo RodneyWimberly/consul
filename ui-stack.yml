@@ -21,7 +21,7 @@ services:
   portal:
     image: nginx
     init: true
-    entrypoint:  /usr/local/scripts/ngnix-entrypoint.sh
+    entrypoint: /usr/local/scripts/nginx-entrypoint.sh
     configs:
       - source: portal_nginx
         target: /etc/templates/nginx.conf
@@ -32,4 +32,5 @@ services:
     dns:
       - dns.service.consul
     volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
       - /mnt/scripts:/usr/local/scripts:rw

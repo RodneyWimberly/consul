@@ -1,4 +1,4 @@
-tasks.devops_agent:9001
+
 master dbbb90ef-152a-c306-f90b-802d4a33982c
 agent 6bb8c52a-83fb-ec6c-27eb-d6abd0778f03
 server 73fcf661-c553-e3a6-8247-4995d7e279a3
