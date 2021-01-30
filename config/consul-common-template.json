@@ -14,7 +14,7 @@
   },
   "data_dir": "${CONSUL_DATA_DIR}",
   "datacenter": "${CONSUL_DATACENTER}",
-  "disable_host_CONTAINER_ID": true,
+  "disable_host_node_id": true,
   "disable_remote_exec": true,
   "disable_update_check": true,
   "dns_config": {
@@ -33,12 +33,14 @@
     "https": 8501
   },
   "node_meta": {
-    "instance_type": "Docker container",
-    "swarm_CONTAINER_ID": "${CONTAINER_ID}",
-    "swarm_CONTAINER_IP": "${CONTAINER_IP}",
-    "swarm_manager_nodes": "${NUM_OF_MGR_NODES}",
-    "swarm_node_is_manager": "${NODE_IS_MANAGER}",
-    "swarm_node_name": "${NODE_NAME}"
+    "instance_type": "Docker Swarm",
+    "container_id": "${CONTAINER_ID}",
+    "container_name": "${CONTAINER_NAME}",
+    "container_ip": "${CONTAINER_IP}",
+    "manager_nodes_count": "${NUM_OF_MGR_NODES}",
+    "manager_node": "${NODE_IS_MANAGER}",
+    "node_name": "${NODE_NAME}",
+    "node_ip": "${DEFAULT_ROUTE_IP}"
   },
   "node_name": "${NODE_NAME}",
   "leave_on_terminate" : true,

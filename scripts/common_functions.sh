@@ -29,7 +29,7 @@ function show_hosting_details() {
 
 function get_hosting_details() {
   NODE_INFO=$(docker_api "info")
-  export NUM_OF_MGR_NODES=$(echo ${NODE_INFO} | jq -r -M '.Swarm.Managers')
+  export NUM_OF_MGR_NODES=$(gjv "Swarm.Managers"  ${NODE_INFO})
   export CONTAINER_IP=$(echo ${NODE_INFO} | jq -r -M '.Swarm.NodeAddr')
   export CONTAINER_ID=$(echo ${NODE_INFO} | jq -r -M '.Swarm.NodeID')
   export CONTAINER_NAME=$(hostname)
