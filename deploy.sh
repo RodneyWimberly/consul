@@ -10,7 +10,7 @@ log "*** >=>=>=>  Stack Deployment  <=<=<=< ***"
 
 export NUM_OF_MGR_NODES=$(docker info --format "{{.Swarm.Managers}}")
 export NODE_IP=$(docker info --format "{{.Swarm.NodeAddr}}")
-export CONTAINER_ID=$(docker info --format "{{.Swarm.NodeID}}")
+export NODE_ID=$(docker info --format "{{.Swarm.NodeID}}")
 export NODE_NAME=$(docker info --format "{{.Name}}")
 export NODE_IS_MANAGER=$(docker info --format "{{.Swarm.ControlAvailable}}")
 export CONTAINER_IP=$(ip -o ro get $(ip ro | awk '$1 == "default" { print $3 }') | awk '{print $5}')

@@ -8,7 +8,7 @@ set +e
 apk update
 
 # Add required packages
-apk add --no-cache gettext
+apk add --no-cache gettext curl jq
 #   curl \
 #   jq \
 #   iputils \
