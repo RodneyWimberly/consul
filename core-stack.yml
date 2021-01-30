@@ -40,8 +40,6 @@ secrets:
     file: /mnt/certs/docker-client-consul-0.pem
   consul_client_key:
     file: /mnt/certs/docker-client-consul-0-key.pem
-  consul_bootstrap_snap:
-    file: /mnt/backups/bootstrap.snap
 
 ###########################################################################################################
 services:
@@ -57,8 +55,6 @@ services:
         target: /consul/data/bootstrap/client.json
       - source: consul_server
         target: /consul/data/bootstrap/server.json
-      - source: consul_bootstrap
-        target: /consul/data/bootstrap/bootstrap.json
     secrets:
       - source: consul_ca
         target: /consul/data/certs/consul-agent-ca.pem
@@ -70,8 +66,6 @@ services:
         target: /consul/data/certs/docker-client-consul-0.pem
       - source: consul_client_key
         target: /consul/data/certs/docker-client-consul-0-key.pem
-      - source: consul_bootstrap_snap
-        target: /consul/data/bootstrap/bootstrap.snap
     volumes:
       - consul_data:/consul/data
       - /var/run/docker.sock:/var/run/docker.sock
