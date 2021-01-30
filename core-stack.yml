@@ -86,6 +86,8 @@ services:
     image: storytel/dnsmasq
     init: true
     command: /usr/local/scripts/dns-entrypoint.sh
+    depends_on:
+     - consul
     init: true
     configs:
       - source: dns
