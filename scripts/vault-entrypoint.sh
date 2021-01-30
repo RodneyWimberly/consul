@@ -4,8 +4,26 @@
 source "${CORE_SCRIPT_DIR}"/common_functions.sh
 add_path "${CORE_SCRIPT_DIR}"
 
+# Update existing packages
+apk update
+
+# Add required packages
+apk add \
+  curl \
+  jq \
+  iputils \
+  iproute2 \
+  bind-tools \
+  gettext \
+  openssl
+
+
+# Get Docker/Node/Hosting information from the Docker API for use in configuration
+docker_details
+
 set -ex
-#IP is the IP address of the default networking route
-export IP=$(ip -o ro get $(ip ro | awk '$1 == "default" { print $3 }') | awk '{print $5}')
-export VAULT_API_ADDR="http://${IP}:8200" VAULT_CLUSTER_ADDR="https://${IP}:8201"
+export VAULT_API_ADDR="http://${DEFAULT_ROUTE_IP}:8200" VAULT_CLUSTER_ADDR="https://${DEFAULT_ROUTE_IP}:8201"
+log "Vault API URL: ${VAULT_API_ADDR}"
+log "Vault Cluster URL: ${VAULT_CLUSTER_ADDR}"
+
 docker-entrypoint.sh server -config=/vault/config

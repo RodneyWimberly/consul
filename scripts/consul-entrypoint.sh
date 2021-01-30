@@ -11,17 +11,14 @@ apk update
 apk add \
   curl \
   jq \
+  iputils \
+  iproute2 \
+  bind-tools \
   gettext \
   openssl
 
 # Get Docker/Node/Hosting information from the Docker API for use in configuration
-NODE_INFO=$(docker_api "info")
-export NUM_OF_MGR_NODES=$(echo ${NODE_INFO} | jq -r -M '.Swarm.Managers')
-export NODE_IP=$(echo ${NODE_INFO} | jq -r -M '.Swarm.NodeAddr')
-export NODE_ID=$(echo ${NODE_INFO} | jq -r -M '.Swarm.NodeID')
-export NODE_NAME=$(echo ${NODE_INFO} | jq -r -M '.Name')
-export NODE_IS_MANAGER=$(echo ${NODE_INFO} | jq -r -M '.Swarm.ControlAvailable')
-show_docker_details
+docker_details
 
 # Merge expanded variables with configuration templates and place in the config folder
 expand_config_file_from "common.json"

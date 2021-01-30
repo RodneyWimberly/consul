@@ -8,13 +8,39 @@ elif [[ -f /tmp/consul/scripts/core.env ]]; then
   source /tmp/consul/scripts/core.env
 fi
 
+function has_adapter() {
+  lshw -class network -short | grep $1
+}
+
+function get_ip_from_adapter() {
+  ip -o -4 addr list $1 | head -n1 | awk '{print $4}' | cut -d/ -f1
+}
+
 function show_docker_details() {
-    log ">=>=>=>=>=>  Swarm/Node Details  <=<=<=<=<=<"
-    log "Number of Manager Nodes: ${NUM_OF_MGR_NODES}"
-    log "Node IP: ${NODE_IP}"
-    log "Node ID: ${NODE_ID}"
-    log "Node Name: ${NODE_NAME}"
-    log "Node Is Manager: ${NODE_IS_MANAGER}"
+  log "Swarm/Node/Container Details"
+  log_detail "Node Name: ${NODE_NAME}"
+  log_detail "Node Address: ${DEFAULT_ROUTE_IP}"
+  log_detail "Container Id: ${CONTAINER_ID}"
+  log_detail "Container Name: ${CONTAINER_NAME}"
+  log_detail "Container Address: ${CONTAINER_IP}"
+  log_detail "Manager Node: ${NODE_IS_MANAGER}"
+  log_detail "Manager Node Count: ${NUM_OF_MGR_NODES}"
+}
+
+function get_docker_details() {
+  NODE_INFO=$(docker_api "info")
+  export NUM_OF_MGR_NODES=$(echo ${NODE_INFO} | jq -r -M '.Swarm.Managers')
+  export CONTAINER_IP=$(echo ${NODE_INFO} | jq -r -M '.Swarm.NodeAddr')
+  export CONTAINER_ID=$(echo ${NODE_INFO} | jq -r -M '.Swarm.NodeID')
+  export CONTAINER_NAME=$(hostname)
+  export NODE_NAME=$(echo ${NODE_INFO} | jq -r -M '.Name')
+  export NODE_IS_MANAGER=$(echo ${NODE_INFO} | jq -r -M '.Swarm.ControlAvailable')
+  export DEFAULT_ROUTE_IP=$(ip -o ro get $(ip ro | awk '$1 == "default" { print $3 }') | awk '{print $5}')
+}
+
+function docker_details() {
+  get_docker_details
+  show_docker_details
 }
 
 # G.et J.SON V.alue

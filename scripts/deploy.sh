@@ -9,10 +9,11 @@ source ./common_functions.sh
 log "*** >=>=>=>  Stack Deployment  <=<=<=< ***"
 
 export NUM_OF_MGR_NODES=$(docker info --format "{{.Swarm.Managers}}")
-export NODE_IP=$(docker info --format "{{.Swarm.NodeAddr}}")
-export NODE_ID=$(docker info --format "{{.Swarm.NodeID}}")
+export CONTAINER_IP=$(docker info --format "{{.Swarm.NodeAddr}}")
+export CONTAINER_ID=$(docker info --format "{{.Swarm.NodeID}}")
 export NODE_NAME=$(docker info --format "{{.Name}}")
 export NODE_IS_MANAGER=$(docker info --format "{{.Swarm.ControlAvailable}}")
+export DEFAULT_ROUTE_IP=$(ip -o ro get $(ip ro | awk '$1 == "default" { print $3 }') | awk '{print $5}')
 show_docker_details
 
 set +e
@@ -33,8 +34,10 @@ log_detail "Creating attachable overlay network 'admin_network'"
 docker network create --driver=overlay --attachable admin_network
 
 log_detail "Creating attachable overlay network 'api_network'"
-#docker network create --driver=overlay --attachable --subnet=${CORE_SUBNET} admin_network
-docker network create --driver=overlay --attachable api_network
+docker network create --driver=overlay --attachable
+
+log_detail "Creating attachable overlay network 'log_network'"
+docker network create --driver=overlay --attachable log_network
 set -e
 
 #log_detail "Logging into GitHub Registry"
