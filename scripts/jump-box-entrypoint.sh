@@ -27,7 +27,7 @@ sudo -u root mount -v -o vers=4,loud storage:/ /mnt/fqdn
 df -h
 
 # Get Docker/Node/Hosting information from the Docker API for use in configuration
-docker_details
+hosting_details
 
 exec sh -c 'while true ;do wait ;done'
 #while true; do :; done & kill -STOP $! && wait $!

@@ -14,7 +14,7 @@ export CONTAINER_ID=$(docker info --format "{{.Swarm.NodeID}}")
 export NODE_NAME=$(docker info --format "{{.Name}}")
 export NODE_IS_MANAGER=$(docker info --format "{{.Swarm.ControlAvailable}}")
 export DEFAULT_ROUTE_IP=$(ip -o ro get $(ip ro | awk '$1 == "default" { print $3 }') | awk '{print $5}')
-show_docker_details
+show_hosting_details
 
 set +e
 log_detail "Removing the following stacks: ${CORE_STACK_NAME}, ${LOGGING_STACK_NAME}, and ${UI_STACK_NAME}"

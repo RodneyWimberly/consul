@@ -33,7 +33,7 @@ log_detail "merging expanded variables with configuration templates and placing 
 cat /etc/dnsmasq.template | envsubst > /etc/dnsmasq/dnsmasq.conf
 
 # Get Docker/Node/Hosting information from the Docker API for use in configuration
-docker_details
+hosting_details
 
 log "Consul IP: ${CONSUL_IP}"
 

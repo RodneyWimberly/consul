@@ -30,6 +30,6 @@ consul-agent.sh --service '{"service": {"name": "portal", "tags": [], "port": 80
   --consul-template-file /index.html index.html.tpl /usr/share/nginx/html/index.html
 
 # Get Docker/Node/Hosting information from the Docker API for use in configuration
-docker_details
+hosting_details
 
 exec nginx -g 'daemon off;'

@@ -16,7 +16,7 @@ function get_ip_from_adapter() {
   ip -o -4 addr list $1 | head -n1 | awk '{print $4}' | cut -d/ -f1
 }
 
-function show_docker_details() {
+function show_hosting_details() {
   log "Swarm/Node/Container Details"
   log_detail "Node Name: ${NODE_NAME}"
   log_detail "Node Address: ${DEFAULT_ROUTE_IP}"
@@ -27,7 +27,7 @@ function show_docker_details() {
   log_detail "Manager Node Count: ${NUM_OF_MGR_NODES}"
 }
 
-function get_docker_details() {
+function get_hosting_details() {
   NODE_INFO=$(docker_api "info")
   export NUM_OF_MGR_NODES=$(echo ${NODE_INFO} | jq -r -M '.Swarm.Managers')
   export CONTAINER_IP=$(echo ${NODE_INFO} | jq -r -M '.Swarm.NodeAddr')
@@ -38,26 +38,26 @@ function get_docker_details() {
   export DEFAULT_ROUTE_IP=$(ip -o ro get $(ip ro | awk '$1 == "default" { print $3 }') | awk '{print $5}')
 }
 
-function docker_details() {
-  get_docker_details
-  show_docker_details
+function hosting_details() {
+  get_hosting_details
+  show_hosting_details
 }
 
 # G.et J.SON V.alue
 function gjv() {
   if [[ -f "${2}" ]]; then
-    cat "${2}" | jq -r -M '."${1}"'
+    cat ${2} | jq -r -M '.${1}'
   else
-    echo "${2}" | jq -r -M '."${1}"'
+    echo ${2} | jq -r -M '.${1}'
   fi
 }
 
 # S.et J.SON V.alue
 function sjv() {
   if [[ -f "${3}" ]]; then
-    cat "${3}" | jq ". + { \"${1}\": \"${2}\" }" > "${3}"
+    cat ${3} | jq ". + { \"${1}\": \"${2}\" }" > ${3}
   else
-    echo "${3}" | jq ". + { \"${1}\": \"${2}\" }" > "${3}"
+    echo ${3} | jq ". + { \"${1}\": \"${2}\" }" > ${3}
   fi
 }
 
