@@ -47,10 +47,10 @@ log_detail "Deploying ${DEVOPS_STACK_NAME} Stack to Swarm"
 docker stack deploy --compose-file=/tmp/consul/"${DEVOPS_STACK_NAME}"-stack.yml "${DEVOPS_STACK_NAME}"
 
 log_detail "Deploying ${UI_STACK_NAME} Stack to Swarm"
-docker stack deploy --compose-file=./"${UI_STACK_NAME}"-stack.yml "${UI_STACK_NAME}"
+docker stack deploy --compose-file=/tmp/consul/"${UI_STACK_NAME}"-stack.yml "${UI_STACK_NAME}"
 
 log_detail "Deploying ${LOGGING_STACK_NAME} Stack to Swarm"
-docker stack deploy --compose-file=./"${LOGGING_STACK_NAME}"-stack.yml "${LOGGING_STACK_NAME}"
+docker stack deploy --compose-file=/tmp/consul/"${LOGGING_STACK_NAME}"-stack.yml "${LOGGING_STACK_NAME}"
 
 log_detail "Deploying ${CORE_STACK_NAME} stack to swarm"
 docker stack deploy --compose-file=/tmp/consul/"${CORE_STACK_NAME}"-stack.yml "${CORE_STACK_NAME}"
