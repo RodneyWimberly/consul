@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Make our stuff available
-source "${CORE_SCRIPT_DIR}"/common_functions.sh
+source "${CORE_SCRIPT_DIR}"/common-functions.sh
 add_path "${CORE_SCRIPT_DIR}"
 
 # Update existing packages

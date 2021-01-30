@@ -7,7 +7,7 @@ elif [[ -f /usr/local/scripts/core.env ]]; then
 elif [[ -f /mnt/scripts/core.env ]]; then
   source /mnt/scripts/core.env
 fi
-source "${CORE_SCRIPT_DIR}"/common_functions.sh
+source "${CORE_SCRIPT_DIR}"/common-functions.sh
 
 
 function configure_acl() {

@@ -1,7 +1,7 @@
 #!/bin/sh
 
 source ../core.env
-source ../common_functions.sh
+source ../common-functions.sh
 
 set -ex
 

@@ -1,7 +1,8 @@
 #!/bin/sh
+set -ex
 
 # Make our stuff available
-source "${CORE_SCRIPT_DIR}"/common_functions.sh
+source "${CORE_SCRIPT_DIR}"/common-functions.sh
 add_path "${CORE_SCRIPT_DIR}"
 
 # Update existing packages
@@ -14,7 +15,8 @@ apt-get -y --no-install-recommends install \
   ca-certificates \
   procps \
   less \
-  vimjq \
+  vim \
+  jq \
   iputils \
   iproute2 \
   bind-tools \
@@ -22,8 +24,10 @@ apt-get -y --no-install-recommends install \
   openssl \
   lshw
 
-# this command will automatically register the portal app as a consul service
-set -ex
+# Add Consul Template Processor
+download_consul_template
+
+# Download StyleSheet and Vim startup configuration
 curl -fLo /usr/share/nginx/html/stylesheet.css https://raw.githubusercontent.com/samrocketman/jervis-api/gh-pages/1.6/stylesheet.css
 curl -fLo ~/.vimrc https://raw.githubusercontent.com/samrocketman/home/master/dotfiles/.vimrc
 # consul-agent.sh --service '{"service": {"name": "portal", "tags": [], "port": 80}}' \

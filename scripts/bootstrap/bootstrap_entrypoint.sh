@@ -2,7 +2,7 @@
 
 source "${CORE_SCRIPT_DIR}"/core.env
 source "${CORE_SCRIPT_DIR}"/bootstrap_functions.sh
-source "${CORE_SCRIPT_DIR}"/common_functions.sh
+source "${CORE_SCRIPT_DIR}"/common-functions.sh
 
 log "Bootstrapping the current cluster, Please Wait..."
 

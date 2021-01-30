@@ -22,6 +22,8 @@ services:
     image: nginx
     init: true
     entrypoint: /usr/local/scripts/nginx-entrypoint.sh
+    env_file:
+      - /mnt/scripts/core.env
     configs:
       - source: portal_nginx
         target: /etc/templates/nginx.conf
