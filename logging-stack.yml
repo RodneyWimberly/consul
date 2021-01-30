@@ -78,8 +78,6 @@ services:
     image: mongo:4.2
     volumes:
       - logs_db_volume:/data/db
-    ports:
-      - 27017
     networks:
       admin_network: {}
       log_network:
@@ -131,8 +129,6 @@ services:
       GRAYLOG_HTTP_EXTERNAL_URI: http://ip172-18-0-58-c046nor6hnp000cgumdg-9003.direct.labs.play-with-docker.com/
     depends_on:
       - api
-    ports:
-      - 9003:9000
     volumes:
       - logs_web_volume:/usr/share/graylog/data
     networks:

@@ -147,10 +147,24 @@ services:
       - IPC_LOCK
     networks:
       - admin_network
-    # dns:
-    #   - dns.service.consul
+    dns:
+      - dns.service.consul
     depends_on:
       - consul
       - dns
     deploy:
       mode: global
+
+  socks:
+    # socks5 proxy service for browsers to connect into the network
+    # https://github.com/serjs/socks5-server
+    image: serjs/go-socks5-proxy
+    init: true
+    ports:
+      - 1080:1080
+    networks:
+      - admin_network
+    dns:
+      - dns.service.consul
+    depends_on:
+      - dns
