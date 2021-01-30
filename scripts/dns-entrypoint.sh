@@ -27,6 +27,7 @@ while [ -z "${CONSUL_IP}" ]; do
   log_detail "querying for service consul.service.consul"
   set +e
   export CONSUL_IP="$(dig +short consul.service.consul | tail -n1)"
+  log "Consul IP: ${CONSUL_IP}"
   set -e
 done
 
