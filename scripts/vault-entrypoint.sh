@@ -19,7 +19,7 @@ apk add \
 
 
 # Get Docker/Node/Hosting information from the Docker API for use in configuration
-docker_details
+hosting_details
 
 set -ex
 export VAULT_API_ADDR="http://${DEFAULT_ROUTE_IP}:8200" VAULT_CLUSTER_ADDR="https://${DEFAULT_ROUTE_IP}:8201"

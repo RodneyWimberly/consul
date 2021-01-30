@@ -18,7 +18,7 @@ apk add \
   openssl
 
 # Get Docker/Node/Hosting information from the Docker API for use in configuration
-docker_details
+hosting_details
 
 # Merge expanded variables with configuration templates and place in the config folder
 expand_config_file_from "common.json"
