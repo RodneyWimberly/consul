@@ -16,6 +16,10 @@ function hostip() {
   ip -o ro get $(ip ro | awk '$1 == "default" { print $3 }') | awk '{print $5}'
 }
 
+function get_ip_from_name() {
+  dig +short $1 | tail -n1
+}
+
 function show_hosting_details() {
   log "-----------------------------------------------------------"
   log "- Swarm Details"

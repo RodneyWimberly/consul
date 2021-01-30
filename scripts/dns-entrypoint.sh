@@ -29,7 +29,7 @@ while [ -z "${CONSUL_IP}" ]; do
 
   log_detail "querying for service consul.service.consul"
   set +e
-  export CONSUL_IP=$(host_ip "consul.service.consul")
+  export CONSUL_IP=$(get_ip_from_name "consul.service.consul")
   set -e
 done
 
