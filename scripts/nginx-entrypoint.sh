@@ -8,7 +8,7 @@ add_path "${CORE_SCRIPT_DIR}"
 apk update
 
 # Add required packages
-apk add \
+apk add --no-cache \
   curl \
   jq \
   iputils \

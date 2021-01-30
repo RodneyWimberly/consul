@@ -4,7 +4,7 @@ set +e
 source "${CORE_SCRIPT_DIR}"/common_functions.sh
 
 apk update
-apk add \
+apk add --no-cache \
   bash \
   curl \
   jq \

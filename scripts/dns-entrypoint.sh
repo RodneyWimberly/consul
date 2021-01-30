@@ -8,7 +8,7 @@ add_path "${CORE_SCRIPT_DIR}"
 apk update
 
 # Add required packages
-apk add \
+apk add --no-cache \
   curl \
   jq \
   iputils \
@@ -36,6 +36,6 @@ cat /etc/dnsmasq.template | envsubst > /etc/dnsmasq/dnsmasq.conf
 # Get Docker/Node/Hosting information from the Docker API for use in configuration
 hosting_details
 
-log "Consul IP: ${CONSUL_IP}"
+log_detail "Consul IP: ${CONSUL_IP}"
 
 dnsmasq --no-daemon --log-queries --server=/"${CONSUL_DOMAIN}"/"${CONSUL_IP}"#8600
