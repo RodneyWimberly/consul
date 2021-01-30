@@ -5,10 +5,10 @@ source "${CORE_SCRIPT_DIR}"/common-functions.sh
 add_path "${CORE_SCRIPT_DIR}"
 set -e
 # Update existing packages
-su apk update
+su -c "apk update"
 
 # Add required packages
-su apk add --no-cache gettext curl jq
+su -c "apk add --no-cache gettext curl jq"
 
 # Get Docker/Node/Hosting information from the Docker API for use in configuration
 hosting_details
