@@ -131,8 +131,8 @@ services:
 
 ###########################################################################################################
   vault:
-    image: 'vault'
-    init: true
+    image: vault
+    #init: true
     entrypoint: /usr/local/scripts/vault-entrypoint.sh
     command: server -config=/vault/config
     volumes:
@@ -147,8 +147,10 @@ services:
       - IPC_LOCK
     networks:
       - admin_network
-    dns:
-      - dns.service.consul
+    # dns:
+    #   - dns.service.consul
     depends_on:
       - consul
       - dns
+    deploy:
+      mode: global
