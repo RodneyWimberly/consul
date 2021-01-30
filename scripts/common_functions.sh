@@ -25,17 +25,41 @@ function show_hosting_details() {
   log_detail "Container Address: ${CONTAINER_IP}"
   log_detail "Manager Node: ${NODE_IS_MANAGER}"
   log_detail "Manager Node Count: ${NUM_OF_MGR_NODES}"
+  log_detail "eth0 IP: ${ETH0_IP}"
+  log_detail "eth1 IP: ${ETH1_IP}"
+  log_detail "eth2 IP: ${ETH2_IP}"
 }
 
 function get_hosting_details() {
   NODE_INFO=$(docker_api "info")
-  export NUM_OF_MGR_NODES=$(gjv "Swarm.Managers"  ${NODE_INFO})
+  export NUM_OF_MGR_NODES=$(echo ${NODE_INFO} | jq -r -M '.Swarm.Managers')
   export CONTAINER_IP=$(echo ${NODE_INFO} | jq -r -M '.Swarm.NodeAddr')
   export CONTAINER_ID=$(echo ${NODE_INFO} | jq -r -M '.Swarm.NodeID')
   export CONTAINER_NAME=$(hostname)
   export NODE_NAME=$(echo ${NODE_INFO} | jq -r -M '.Name')
   export NODE_IS_MANAGER=$(echo ${NODE_INFO} | jq -r -M '.Swarm.ControlAvailable')
   export DEFAULT_ROUTE_IP=$(ip -o ro get $(ip ro | awk '$1 == "default" { print $3 }') | awk '{print $5}')
+  has_eth0=$(has_adapter "eth0")
+  ETH0_IP=
+  if [[ ! -z "${has_eth0}" ]]; then
+    ETH0_IP=$(get_ip_from_adapter  "eth0")
+  fi
+  export ETH0_IP
+
+  has_eth1=$(has_adapter "eth1")
+  ETH1_IP=
+  if [[ ! -z "${has_eth1}" ]]; then
+    ETH1_IP=$(get_ip_from_adapter  "eth1")
+  fi
+  export ETH1_IP
+
+  has_eth2=$(has_adapter "eth2")
+  ETH2_IP=
+  if [[ ! -z "${has_eth2}" ]]; then
+    ETH2_IP=$(get_ip_from_adapter  "eth2")
+  fi
+  export ETH2_IP
+
 }
 
 function hosting_details() {
