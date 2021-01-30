@@ -12,7 +12,7 @@ function get_ip_from_adapter() {
   ip -o -4 addr list $1 | head -n1 | awk '{print $4}' | cut -d/ -f1
 }
 
-fucntion hostip() {
+function hostip() {
   ip -o ro get $(ip ro | awk '$1 == "default" { print $3 }') | awk '{print $5}'
 }
 
@@ -144,7 +144,7 @@ run_consul_template() {
 
 download_consul_template() {
   log "Installing Consul-Template"
-  curl -Lo /tmp/consul_template_0.15.0_linux_amd64.zip https://releases.hashicorp.com/consul-template/0.25.1/consul-template_0.25.1_linux_amd64.zip && \
+  curl -sSLo /tmp/consul_template_0.15.0_linux_amd64.zip https://releases.hashicorp.com/consul-template/0.25.1/consul-template_0.25.1_linux_amd64.zip && \
     unzip /tmp/consul_template_0.15.0_linux_amd64.zip && \
     mv consul-template /bin && \
     rm /tmp/consul_template_0.15.0_linux_amd64.zip
