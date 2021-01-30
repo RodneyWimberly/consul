@@ -12,7 +12,7 @@ networks:
     external: true
 
 configs:
- portal_nginx:
+  portal_nginx:
     file: /mnt/config/portal-nginx-template.conf
   portal_index:
     file: /mnt/config/portal-index-template.html
