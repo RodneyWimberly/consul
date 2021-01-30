@@ -4,8 +4,19 @@
 source "${CORE_SCRIPT_DIR}"/common_functions.sh
 add_path "${CORE_SCRIPT_DIR}"
 
+# Update existing packages
+apk update
+
 # Add required packages
-add_packages
+apk add \
+  curl \
+  jq \
+  iputils \
+  iproute2 \
+  bind-tools \
+  gettext \
+  openssl \
+  lshw
 
 # Get Docker/Node/Hosting information from the Docker API for use in configuration
 hosting_details
