@@ -8,6 +8,10 @@ elif [[ -f /tmp/consul/scripts/core.env ]]; then
   source /tmp/consul/scripts/core.env
 fi
 
+function host_ip() {
+  dig +short $1 | tail -n1
+}
+
 function has_adapter() {
   lshw -class network -short | grep $1
 }
