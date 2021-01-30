@@ -1,5 +1,5 @@
 ###########################################################################################################
-# Service Registry Stack
+# Core Stack
 # HA Service discovery, health checks, load-balancing,
 # DNS name lookup, routing intentions, KV store,
 # DNS Server, Secret Store/Vault
@@ -18,17 +18,15 @@ networks:
 ###########################################################################################################
 configs:
   consul_common:
-    file: /mnt/config/consul-common.json
+    file: /mnt/config/consul-common-template.json
   consul_client:
-    file: /mnt/config/consul-client.json
+    file: /mnt/config/consul-client-template.json
   consul_server:
-    file: /mnt/config/consul-server.json
-  consul_bootstrap:
-    file: /mnt/backups/bootstrap.json
+    file: /mnt/config/consul-server-template.json
   dns:
-    file: /mnt/config/dnsmasq.conf
+    file: /mnt/config/dns-dnsmasq-template.conf
   vault:
-    file: /mnt/config/vault.json
+    file: /mnt/config/vault-server-template.json
 
 ###########################################################################################################
 secrets:
@@ -138,7 +136,8 @@ services:
   vault:
     image: 'vault'
     init: true
-    command: /usr/local/scripts/vault-entrypoint.sh
+    entrypoint: /usr/local/scripts/vault-entrypoint.sh
+
     configs:
       - source: vault
         target: /vault/config/vault.json

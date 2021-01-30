@@ -1,0 +1,35 @@
+###########################################################################################################
+# UI Stack
+# Mani UI, Web Portal, & Reverse Proxy
+###########################################################################################################
+# External Ports
+# 80:/tcp      = portal - HTTP UI
+# 443:/tcp     = portal - HTTPS UI
+version: '3.8'
+
+networks:
+  admin_network:
+    external: true
+
+configs:
+ portal_nginx:
+    file: /mnt/config/portal-nginx-template.conf
+  portal_index:
+    file: /mnt/config/portal-index-template.html
+
+services:
+  portal:
+    image: nginx
+    init: true
+    entrypoint:  /usr/local/scripts/ngnix-entrypoint.sh
+    configs:
+      - source: portal_nginx
+        target: /etc/templates/nginx.conf
+      - source: portal_index
+        target: /etc/templates/index.html
+    networks:
+      - admin_network
+    dns:
+      - dns.service.consul
+    volumes:
+      - /mnt/scripts:/usr/local/scripts:rw

@@ -1,6 +1,7 @@
-#####################################################
-# DevOps Stack - Used to manage dev-ops stuff like Docker
-#####################################################
+###########################################################################################################
+# DevOps Stack
+# Portainer Web & Agent - Used to manage dev-ops stuff like Docker
+###########################################################################################################
 # External Ports
 # 9000:ingress/tcp      = web - HTTP UI
 # 9001:host/tcp:udp     = agent - HTTP REST
