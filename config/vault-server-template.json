@@ -10,7 +10,7 @@
   "default_lease_ttl": "168h",
   "listener": {
     "tcp": {
-      "address": "${VAULT_IP}:8200",
+      "address": "${ETHO_IP}:8200",
       "tls_disable": "1"
     }
   },

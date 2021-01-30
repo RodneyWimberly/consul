@@ -11,7 +11,7 @@ cp -r /tmp/consul/certs/* /mnt/certs/
 cp -r /tmp/consul/backups/* /mnt/backups/
 cp -r /tmp/consul/config/* /mnt/config/
 chmod u+x /mnt/scripts/*.sh
-cd /tmp/consul/scripts
+cd /tmp/consul
 chmod u+x ./*.sh
 ./deploy.sh
 exit

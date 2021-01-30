@@ -34,7 +34,7 @@
   },
   "node_meta": {
     "instance_type": "Docker Swarm",
-    "container_id": "${CONTAINER_ID}",
+    "node_id": "${NODE_ID}",
     "container_name": "${CONTAINER_NAME}",
     "container_ip": "${CONTAINER_IP}",
     "manager_nodes_count": "${NUM_OF_MGR_NODES}",
