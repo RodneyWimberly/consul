@@ -2,7 +2,7 @@
 
 set -e
 source "${CORE_SCRIPT_DIR}"/bootstrap_functions.sh
-source "${CORE_SCRIPT_DIR}"/common_functions.sh
+source "${CORE_SCRIPT_DIR}"/common-functions.sh
 
 # fairly odd we actually need to add an agent acl token to the server since the server has an acl_master_token
 # but well... this lets us get rid of

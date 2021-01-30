@@ -1,7 +1,7 @@
 #!/bin/sh
 
 source ../core.env
-source ../common_functions.sh
+source ../common-functions.sh
 
 log "Creating cluster TLS certificates and encryption keys."
 mkdir ./certs

@@ -2,7 +2,7 @@
 
 set -e
 source "${CORE_SCRIPT_DIR}"/bootstrap_functions.sh
-source "${CORE_SCRIPT_DIR}"/common_functions.sh
+source "${CORE_SCRIPT_DIR}"/common-functions.sh
 
 if [ -z "$CONSUL_ENABLE_ACL" ] || [ "$CONSUL_ENABLE_ACL" -eq "0" ] ; then
     log_warning "ACLs is disabled, skipping configuration"

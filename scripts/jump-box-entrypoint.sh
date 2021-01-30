@@ -1,7 +1,7 @@
 #!/bin/sh
 
 set +e
-source "${CORE_SCRIPT_DIR}"/common_functions.sh
+source "${CORE_SCRIPT_DIR}"/common-functions.sh
 
 apk update
 apk add --no-cache \

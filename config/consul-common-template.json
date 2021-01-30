@@ -40,7 +40,7 @@
     "manager_nodes_count": "${NUM_OF_MGR_NODES}",
     "manager_node": "${NODE_IS_MANAGER}",
     "node_name": "${NODE_NAME}",
-    "node_ip": "${DEFAULT_ROUTE_IP}"
+    "node_ip": "${NODE_IP}"
   },
   "node_name": "${NODE_NAME}",
   "leave_on_terminate" : true,

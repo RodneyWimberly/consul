@@ -4,7 +4,15 @@
 		{
 			"file_exclude_patterns":
 			[
-				"Consul.sublime-project"
+				"Consul.sublime-project",
+				"diagnostics-stack.yml",
+				"nfsclient-stack.yml",
+				"storage-stack.yml"
+			],
+			"folder_exclude_patterns":
+			[
+				"scripts/bootstrap",
+				"backups"
 			],
 			"path": "."
 		}

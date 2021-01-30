@@ -2,7 +2,7 @@
 #   Use this script to test if a given TCP host/port are available
 
 source "${CORE_SCRIPT_DIR}"/bootstrap_functions.sh
-source "${CORE_SCRIPT_DIR}"/common_functions.sh
+source "${CORE_SCRIPT_DIR}"/common-functions.sh
 
 cmdname=$(basename $0)
 

@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Make our stuff available
-source "${CORE_SCRIPT_DIR}"/common_functions.sh
+source "${CORE_SCRIPT_DIR}"/common-functions.sh
 add_path "${CORE_SCRIPT_DIR}"
 
 # Update existing packages
@@ -17,6 +17,9 @@ apk add --no-cache \
   gettext \
   openssl \
   lshw
+
+# Add Consul Template Processor
+download_consul_template
 
 log "Looking up the IP address for Consul to set as Consul domain owner"
 CONSUL_IP=
@@ -35,7 +38,9 @@ cat /etc/templates/dnsmasq.conf | envsubst > /etc/dnsmasq/dnsmasq.conf
 
 # Get Docker/Node/Hosting information from the Docker API for use in configuration
 hosting_details
-
-log_detail "Consul IP: ${CONSUL_IP}"
+log "-----------------------------------------------------------"
+log "- DNS Details"
+log "-----------------------------------------------------------"
+log_detail "${CONSUL_DOMAIN} domain downstream DNS: ${CONSUL_IP}"
 
 dnsmasq --no-daemon --log-queries --server=/"${CONSUL_DOMAIN}"/"${CONSUL_IP}"#8600
