@@ -44,9 +44,10 @@ function show_hosting_details() {
 }
 
 function get_hosting_details() {
-  NODE_INFO=$(docker_api "info")
+  docker_api "info" > docker.info
+  NODE_INFO=$(cat docker.info)
   export NUM_OF_MGR_NODES=$(echo ${NODE_INFO} | jq -r -M '.Swarm.Managers')
-  export NODE_IP=$(gjv Swarm.NodeAddr $NODE_INFO)
+  export NODE_IP=$(gjv Swarm.NodeAddr docker.info)
   export NODE_ID=$(echo ${NODE_INFO} | jq -r -M '.Swarm.NodeID')
   export NODE_NAME=$(echo ${NODE_INFO} | jq -r -M '.Name')
   export NODE_IS_MANAGER=$(echo ${NODE_INFO} | jq -r -M '.Swarm.ControlAvailable')
