@@ -15,7 +15,8 @@ apk add \
   iproute2 \
   bind-tools \
   gettext \
-  openssl
+  openssl \
+  lshw
 
 log "Looking up the IP address for Consul to set as Consul domain owner"
 CONSUL_IP=

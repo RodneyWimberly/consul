@@ -16,7 +16,8 @@ apk add \
   bind-tools \
   openssl \
   sudo \
-  openrc
+  openrc \
+  lshw
 
 apk add curl jq openssl gettext iputils nfs-utils iproute2 sudo
 sudo -u root mount -v -o vers=4,loud nfsserver_storage:/ /mnt/svc

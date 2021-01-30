@@ -15,7 +15,8 @@ apk add \
   iproute2 \
   bind-tools \
   gettext \
-  openssl
+  openssl \
+  lshw
 
 
 # Get Docker/Node/Hosting information from the Docker API for use in configuration

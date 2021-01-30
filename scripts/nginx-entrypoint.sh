@@ -15,7 +15,8 @@ apk add \
   iproute2 \
   bind-tools \
   gettext \
-  openssl
+  openssl \
+  lshw
 
 # this command will automatically register the portal app as a consul service
 set -ex

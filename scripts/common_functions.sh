@@ -25,9 +25,6 @@ function show_hosting_details() {
   log_detail "Container Address: ${CONTAINER_IP}"
   log_detail "Manager Node: ${NODE_IS_MANAGER}"
   log_detail "Manager Node Count: ${NUM_OF_MGR_NODES}"
-  log_detail "eth0 IP: ${ETH0_IP}"
-  log_detail "eth1 IP: ${ETH1_IP}"
-  log_detail "eth2 IP: ${ETH2_IP}"
 }
 
 function get_hosting_details() {
@@ -39,23 +36,6 @@ function get_hosting_details() {
   export NODE_NAME=$(echo ${NODE_INFO} | jq -r -M '.Name')
   export NODE_IS_MANAGER=$(echo ${NODE_INFO} | jq -r -M '.Swarm.ControlAvailable')
   export DEFAULT_ROUTE_IP=$(ip -o ro get $(ip ro | awk '$1 == "default" { print $3 }') | awk '{print $5}')
-  has_eth0=$(has_adapter "eth0")
-  export ETH0_IP=
-  if [[ ! -z "${has_eth0}" ]]; then
-    export ETH0_IP=$(get_ip_from_adapter "eth0")
-  fi
-
-  has_eth1=$(has_adapter "eth1")
-  export ETH1_IP=
-  if [[ ! -z "${has_eth1}" ]]; then
-    export ETH1_IP=$(get_ip_from_adapter "eth1")
-  fi
-
-  has_eth2=$(has_adapter "eth2")
-  export ETH2_IP=
-  if [[ ! -z "${has_eth2}" ]]; then
-    export ETH2_IP=$(get_ip_from_adapter "eth2")
-  fi
 }
 
 function hosting_details() {
