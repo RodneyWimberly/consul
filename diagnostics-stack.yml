@@ -1,9 +1,10 @@
-#####################################################
+###########################################################################################################
 # Diagnostics Stack - Used for debugging and troubleshooting
-#####################################################
+###########################################################################################################
 # External Ports
-# 1080/tcp:udp = proxy:SOCKS4/SOCKS5 Proxy Server
-# 3128/tcp     = proxy:HTTP/HTTPS/FTP Proxy Server
+# 1080/tcp:udp = socks-proxy1:SOCKS4/SOCKS5 Proxy Server
+# 3128/tcp     = http-proxy:HTTP/HTTPS/FTP Proxy Server
+# 8080/tcp:udp = socks-proxy2:SOCKS4/SOCKS5 Proxy Server
 
 version: '3.7'
 
@@ -15,14 +16,26 @@ networks:
     external: true
 
 services:
-  socks-proxy:
+  socks-proxy1:
     image: wernight/dante
     ports:
       - 1080:1080
     networks:
      - admin_network
-    deploy:
-      replicas: 1
+    dns:
+      - dns.service.consul
+
+  socks-proxy2:
+    # socks5 proxy service for browsers to connect into the network
+    # https://github.com/serjs/socks5-server
+    image: serjs/go-socks5-proxy
+    init: true
+    ports:
+      -8080:1080
+    networks:
+      - admin_network
+    dns:
+      - dns.service.consul
 
   http-proxy:
     image: sameersbn/squid:3.5.27-2
@@ -32,8 +45,8 @@ services:
      - admin_network
     volumes:
       - proxy_cache:/var/spool/squid
-    deploy:
-      replicas: 1
+    dns:
+      - dns.service.consul
 
   jump-box:
     image: alpine
@@ -46,6 +59,6 @@ services:
     - /mnt/scripts:/usr/local/scripts
     networks:
       - admin_network
-    deploy:
-      replicas: 1
+    dns:
+      - dns.service.consul
 
