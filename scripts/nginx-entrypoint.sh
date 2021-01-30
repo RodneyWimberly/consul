@@ -25,7 +25,8 @@ apt-get -y --no-install-recommends install \
   openssl \
   lshw
 
-# Add Consul Template Processor
+# Add Consul & Consul Template Processor
+download_consul
 download_consul_template
 
 # Download StyleSheet and Vim startup configuration
@@ -35,7 +36,15 @@ curl -fLo ~/.vimrc https://raw.githubusercontent.com/samrocketman/home/master/do
 #   --consul-template-file-cmd /nginx.conf nginx.tpl /etc/nginx/conf.d/default.conf "consul lock -name service/portal -shell=false reload nginx -s reload" \
 #   --consul-template-file /index.html index.html.tpl /usr/share/nginx/html/index.html
 
+export CONSUL_IP=$(get_ip_from_name "consul.service.consul")
+export CONSUL_HTTP_ADDR=http://${CONSUL_IP}:8500
+
 # Get Docker/Node/Hosting information from the Docker API for use in configuration
 hosting_details
+log "-----------------------------------------------------------"
+log "- Portal Details"
+log "-----------------------------------------------------------"
+log_detail "Consul Address: ${CONSUL_IP}"
+log_detail "Consul HTTP Address: ${CONSUL_HTTP_ADDR}"
 
 exec nginx -g 'daemon off;'

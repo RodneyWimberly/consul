@@ -129,7 +129,7 @@ function expand_config_file_from() {
   set -e
 }
 
-run_consul_template() {
+function run_consul_template() {
   # $1 is the source file
   # $2 is the template file name
   # $3 is the destination
@@ -146,10 +146,38 @@ run_consul_template() {
   fi
 }
 
-download_consul_template() {
+function download_consul_template() {
   log "Installing Consul-Template"
-  curl -sSLo /tmp/consul_template_0.15.0_linux_amd64.zip https://releases.hashicorp.com/consul-template/0.25.1/consul-template_0.25.1_linux_amd64.zip && \
+  curl -Lo /tmp/consul_template_0.15.0_linux_amd64.zip ${CONSUL_URL}/consul-template/${CONSUL_TEMPLATE_VERSION}/consul-template_${CONSUL_TEMPLATE_VERSION}_linux_amd64.zip && \
     unzip /tmp/consul_template_0.15.0_linux_amd64.zip && \
     mv consul-template /bin && \
     rm /tmp/consul_template_0.15.0_linux_amd64.zip
+}
+
+function download_consul() {
+  log "Installing Consul-Template"
+  curl --remote-name ${CONSUL_URL}/consul/${CONSUL_VERSION}/consul_${CONSUL_VERSION}_linux_amd64.zip && \
+  curl --remote-name ${CONSUL_URL}/consul/${CONSUL_VERSION}/consul_${CONSUL_VERSION}_SHA256SUMS && \
+  curl --remote-name ${CONSUL_URL}/consul/${CONSUL_VERSION}/consul_${CONSUL_VERSION}_SHA256SUMS.sig && \
+  unzip consul_${CONSUL_VERSION}_linux_amd64.zip && \
+  mv consul /usr/bin/ && \
+  rm /consul_${CONSUL_VERSION}_linux_amd64.zip && \
+  rm /consul_${CONSUL_VERSION}_SHA256SUMS && \
+  rm consul_${CONSUL_VERSION}_SHA256SUMS.sig && \
+  # tiny smoke test to ensure the binary we downloaded runs
+  consul version
+}
+
+function download_required_packages() {
+  # Update existing packages
+  apk update
+
+  # Add required packages
+  apk add --no-cache \
+    curl \
+    jq \
+    iputils \
+    iproute2 \
+    bind-tools \
+    gettext
 }
