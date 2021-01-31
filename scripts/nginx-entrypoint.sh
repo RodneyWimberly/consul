@@ -1,7 +1,8 @@
 #!/bin/sh
 
 # Make our stuff available
-chmod u+x /etc/scripts/common-functions.sh
+#chmod 755 , u+x
+chmod 755 /etc/scripts/common-functions.sh
 source /etc/scripts/common-functions.sh
 add_path /etc/scripts
 set -e

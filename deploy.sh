@@ -38,11 +38,11 @@ log_detail "Creating attachable overlay network 'admin_network'"
 #docker network create --driver=overlay --attachable --subnet=${CORE_SUBNET} admin_network
 docker network create --driver=overlay --attachable admin_network
 
-log_detail "Creating attachable overlay network 'api_network'"
-docker network create --driver=overlay --attachable api_network
+# log_detail "Creating attachable overlay network 'api_network'"
+# docker network create --driver=overlay --attachable api_network
 
-log_detail "Creating attachable overlay network 'log_network'"
-docker network create --driver=overlay --attachable log_network
+# log_detail "Creating attachable overlay network 'log_network'"
+# docker network create --driver=overlay --attachable log_network
 set -e
 
 #log_detail "Logging into GitHub Registry"
@@ -57,8 +57,8 @@ docker stack deploy --compose-file=./"${DEVOPS_STACK_NAME}"-stack.yml "${DEVOPS_
 log_detail "Deploying ${UI_STACK_NAME} Stack to Swarm"
 docker stack deploy --compose-file=./"${UI_STACK_NAME}"-stack.yml "${UI_STACK_NAME}"
 
-log_detail "Deploying ${LOGGING_STACK_NAME} Stack to Swarm"
-docker stack deploy --compose-file=./"${LOGGING_STACK_NAME}"-stack.yml "${LOGGING_STACK_NAME}"
+# log_detail "Deploying ${LOGGING_STACK_NAME} Stack to Swarm"
+# docker stack deploy --compose-file=./"${LOGGING_STACK_NAME}"-stack.yml "${LOGGING_STACK_NAME}"
 
 log_detail "Deploying ${CORE_STACK_NAME} stack to swarm"
 docker stack deploy --compose-file=./"${CORE_STACK_NAME}"-stack.yml "${CORE_STACK_NAME}"
