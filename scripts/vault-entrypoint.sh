@@ -13,9 +13,9 @@ set +e
 
 # Get Docker/Node/Hosting information from the Docker API for use in configuration
 hosting_details
-export VAULT_ADDR="http://${ETH1_IP}:8200"
-export VAULT_API_ADDR="http://${ETH1_IP}:8200"
-export VAULT_CLUSTER_ADDR="https://${ETH1_IP}:8201"
+export VAULT_ADDR="http://127.0.0.1:8200"
+export VAULT_API_ADDR="http://127.0.0.1:8200"
+export VAULT_CLUSTER_ADDR="https://127.0.0.1:8201"
 log "-----------------------------------------------------------"
 log "- Vault Details"
 log "-----------------------------------------------------------"
