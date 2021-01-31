@@ -13,9 +13,9 @@ set +e
 
 # Get Docker/Node/Hosting information from the Docker API for use in configuration
 hosting_details
-export VAULT_ADDR="http://${ETH0_IP}:8200"
-export VAULT_API_ADDR="http://${ETH0_IP}:8200"
-export VAULT_CLUSTER_ADDR="https://${ETH0_IP}:8201"
+export VAULT_ADDR="http://${ETH1_IP}:8200"
+export VAULT_API_ADDR="http://${ETH1_IP}:8200"
+export VAULT_CLUSTER_ADDR="https://${ETH1_IP}:8201"
 log "-----------------------------------------------------------"
 log "- Vault Details"
 log "-----------------------------------------------------------"
@@ -40,7 +40,7 @@ cat > /vault/config/vault.json <<EOL
   "default_lease_ttl": "168h",
   "listener": {
     "tcp": {
-      "address": "${ETHO_IP}:8200",
+      "address": "${ETH0_IP}:8200",
       "tls_disable": "1"
     }
   },
