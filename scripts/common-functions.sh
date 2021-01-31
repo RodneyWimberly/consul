@@ -129,6 +129,55 @@ function expand_config_file_from() {
   set -e
 }
 
+function get_consul_service_health() {
+  curl http://consul.service.consul:8500/v1/agent/health/service/name/$1?format=text
+}
+
+function list_consul_services() {
+  curl http://consul.service.consul:8500/v1/agent/services
+}
+
+function get_consul_service() {
+  curl http://consul.service.consul:8500/v1/agent/service/$1
+}
+
+function add_consul_service() {
+  (
+    if [ -f "$1" ]; then
+      app_name="$(jq -r '.service.name' < "$1")"
+    else
+      app_name="$(echo "$1" | jq -r '.service.name')"
+    fi
+    if [[ ! -d "/usr/local/tmp" ]]; then
+      mkdir /usr/local/tmp/
+    fi
+    service_file=/usr/local/tmp/"$app_name".json
+    [ -f "$service_file" ] || (
+      if [ -f "$1" ]; then
+        cp "$1" "$service_file"
+      else
+        echo "$1" > "$service_file"
+      fi
+    )
+    curl \
+    --request PUT \
+    --data @"$service_file" \
+    http://consul.service.consul:8500/v1/agent/service/register?replace-existing-checks=true
+  )
+}
+
+function remove_consul_service() {
+  curl \
+    --request PUT \
+    http://consul.service.consul:8500/v1/agent/service/deregister/$1
+}
+
+function mark_consul_service_maintance() {
+  curl \
+    --request PUT \
+    http://consul.service.consul:8500/v1/agent/service/maintenance/$1?enable=$2&reason=$3
+}
+
 function run_consul_template() {
   # $1 is the source file
   # $2 is the template file name
