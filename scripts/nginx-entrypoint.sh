@@ -1,10 +1,10 @@
 #!/bin/sh
-set -ex
 
 # Make our stuff available
-chmod u+x "${CORE_SCRIPT_DIR}"/common-functions.sh
-source "${CORE_SCRIPT_DIR}"/common-functions.sh
-add_path "${CORE_SCRIPT_DIR}"
+chmod u+x /etc/scripts/common-functions.sh
+source /etc/scripts/common-functions.sh
+add_path /etc/scripts
+set -e
 
 # Update existing packages
 apt-get update
