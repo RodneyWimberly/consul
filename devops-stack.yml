@@ -40,8 +40,10 @@ services:
         published: 9001
         protocol: tcp
         mode: host
+    cap_add:
+      -  CAP_HOST_MANAGEMENT
     networks:
-     - admin_network
+      - admin_network
     deploy:
       mode: global
       placement:
