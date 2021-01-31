@@ -131,16 +131,10 @@ services:
 
 ###########################################################################################################
   vault:
-    image: vault
-    #init: true
-    entrypoint: /usr/local/scripts/vault-entrypoint.sh
-    command: server -config=/vault/config
+    image: rodneywimberly/vault
+    init: true
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /mnt/scripts:/usr/local/scripts:rw
-    configs:
-      - source: vault
-        target: /vault/templates/vault.json
     env_file:
       - /mnt/scripts/core.env
     cap_add:
